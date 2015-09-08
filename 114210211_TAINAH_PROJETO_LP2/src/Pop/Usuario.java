@@ -14,6 +14,7 @@ import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.InfoUsuarioException;
+import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.ValidaException;
 
@@ -30,6 +31,7 @@ public class Usuario {
     SimpleDateFormat data2 = new SimpleDateFormat("yyyy-MM-dd");
 	private Scanner ler = new Scanner(System.in);
 	private boolean statusData = false;
+	private Mural mural;
 
     
     public Usuario(String nome, String email, String senha, String dataNascimento, String imagem) throws Exception{
@@ -54,6 +56,7 @@ public class Usuario {
     	
     	this.senha = senha;
     	this.imagem = imagem;
+    	this.mural = new Mural();
     	
     }
 
@@ -83,6 +86,7 @@ public class Usuario {
     	this.senha = senha;
 
     	this.imagem = "resources/default.jpg";
+    	this.mural = new Mural();
     	
     }
 	
@@ -218,6 +222,12 @@ public String validaData(String dataNascimento) throws ParseException{
 				+ ", getImagem()=" + getImagem() + "]";
 	}
     
+	public void criaPost(String mensagem, String data) throws PostException{
+		mural.criaPost(mensagem, data);
+	}
 	
+	public String getPost(int numeroPost){
+		return mural.getPost(numeroPost);
+	}
    
 }

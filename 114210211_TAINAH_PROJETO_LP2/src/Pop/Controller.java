@@ -15,6 +15,7 @@ import Pop.Exceptions.DataException;
 import Pop.Exceptions.InfoUsuarioException;
 import Pop.Exceptions.LoginException;
 import Pop.Exceptions.LogoutException;
+import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
 import Pop.Exceptions.ValidaException;
@@ -247,4 +248,12 @@ public class Controller {
 	        }
 	    	
 	    }
+	    
+	    public void criaPost(String mensagem, String data) throws PostException{
+			usuario.criaPost(mensagem, data);
+		}
+	    
+	    public String getPost(int numeroPost){
+			return usuario.getPost(numeroPost);
+		}
 }
