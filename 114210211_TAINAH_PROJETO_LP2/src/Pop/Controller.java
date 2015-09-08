@@ -249,7 +249,7 @@ public class Controller {
 	    	
 	    }
 	    
-	    public void criaPost(String mensagem, String data) throws PostException{
+	    public void criaPost(String mensagem, String data) throws PostException, ParseException{
 			usuario.criaPost(mensagem, data);
 		}
 	    

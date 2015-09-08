@@ -68,7 +68,7 @@ public class Facade {
 		controller.fechaSistema();
 	}
 	
-	 public void criaPost(String mensagem, String data) throws PostException{
+	 public void criaPost(String mensagem, String data) throws PostException, ParseException{
 			controller.criaPost(mensagem, data);
 		}
 	 

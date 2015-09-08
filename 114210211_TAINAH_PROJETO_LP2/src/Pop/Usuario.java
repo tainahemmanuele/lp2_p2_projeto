@@ -45,10 +45,10 @@ public class Usuario {
     	
     	this.dataNascimento = converteData(dataNascimento);
     	
-    	if((email.endsWith(".com")== true) && (email.endsWith(".com.br")==false)){
+    	if((email.endsWith(".com")== true) && (email.endsWith(".com.br")==false)&& (email.matches("(.*)@(.*)")) == true){
     		this.email = email;
     	}
-    	else if((email.endsWith(".com")== false) && (email.endsWith(".com.br")==true)){
+    	else if((email.endsWith(".com")== false) && (email.endsWith(".com.br")==true)&& (email.matches("(.*)@(.*)")) == true){
     		this.email = email;
     	}else{
     		throw new CadastroUsuarioException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
@@ -222,7 +222,7 @@ public String validaData(String dataNascimento) throws ParseException{
 				+ ", getImagem()=" + getImagem() + "]";
 	}
     
-	public void criaPost(String mensagem, String data) throws PostException{
+	public void criaPost(String mensagem, String data) throws PostException, ParseException{
 		mural.criaPost(mensagem, data);
 	}
 	
