@@ -226,8 +226,8 @@ public String validaData(String dataNascimento) throws ParseException{
 		mural.criaPost(mensagem, data);
 	}
 	
-	public String getPost(int numeroPost){
+	/*public String getPost(int numeroPost){
 		return mural.getPost(numeroPost);
-	}
+	}*/
    
 }

@@ -253,7 +253,7 @@ public class Controller {
 			usuario.criaPost(mensagem, data);
 		}
 	    
-	    public String getPost(int numeroPost){
+	    /*public String getPost(int numeroPost){
 			return usuario.getPost(numeroPost);
-		}
+		}*/
 }

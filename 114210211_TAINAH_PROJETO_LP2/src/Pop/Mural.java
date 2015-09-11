@@ -4,26 +4,42 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
 
 public class Mural {
-    private ArrayList <String> posts;
-    private String mensagem;
+    private ArrayList <Post> posts;
+    private Post mensagem;
    SimpleDateFormat data = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
    SimpleDateFormat data1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
    private String dataPost;
+   private String texto;
+   private String hashtag;
+   private String arquivo;
+   private Factory factory;
+
+
     
 	public Mural(){
-		this.posts = new ArrayList<String>();
+		this.posts = new ArrayList<Post>();
+		this.factory = new Factory();
+		
 	}
 	
 	public void criaPost(String mensagem, String data)throws PostException, ParseException{
-		if (mensagem.length() <= 200 ){;
-			//this.dataPost = converteData(data);
-		    this.mensagem = mensagem + " "+"(" +data+ ")";
-		     posts.add(this.mensagem);
+		this.texto = "";
+		this.hashtag ="";
+		this.arquivo = "";
+	
+		String resultadoString = separaString(mensagem);
+		int tamanhoString = tamanhoString(mensagem, texto, hashtag,arquivo);
+
+		if (tamanhoString<=200){
+			this.mensagem = factory.criaPost(this.texto, this.arquivo, this.hashtag, data);
+			posts.add(this.mensagem);
 		} else{
 			throw new PostException ("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.");
 			
@@ -31,7 +47,7 @@ public class Mural {
 		
 	}
 	
-	public String getPost(int numeroPost){
+	public Post getPost(int numeroPost){
 		return posts.get(numeroPost);
 	}
 	
@@ -68,4 +84,44 @@ public class Mural {
 		        }
 		return data3;
 		}
+	 
+	 public String separaString(String mensagem){
+		 int contador = 0;
+		 if(mensagem.contains("<")){
+		 for (int i =0; i < mensagem.indexOf("<") ; i++){
+				texto += mensagem.charAt(i);
+			}
+		 }
+		if(mensagem.contains("#")){
+			int tamanho = mensagem.length() - texto.length();
+			 for (int i =mensagem.indexOf("#"); i < tamanho; i++){
+					hashtag += mensagem.charAt(i);
+				} 
+		 }
+		if(mensagem.contains("<")){
+			int tamanho = mensagem.length() - texto.length();
+			 for (int i =mensagem.indexOf("<"); i < mensagem.indexOf("#"); i++){
+					arquivo += mensagem.charAt(i);
+				} 
+		 
+		}
+	 else {
+		 texto = mensagem;
+	 }
+
+
+		 //System.out.println(mensagem.indexOf("<"));
+
+		//System.out.println(tamanhoString(mensagem, novaString, novaString2));
+		 return texto;
+	 
+	 }
+	 
+	
+
+	
+
+	public int tamanhoString(String mensagem, String texto, String hashtag,String arquivo){
+	      return mensagem.length() - (hashtag.length()+arquivo.length());
+	 }
 }
