@@ -11,7 +11,7 @@ import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
 
 public class Mural {
-    private ArrayList <Post> posts;
+   private ArrayList <Post> posts;
    private Post mensagem;
    SimpleDateFormat data = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
    SimpleDateFormat data1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -20,29 +20,41 @@ public class Mural {
    private String hashtag;
    private String arquivo;
    private Factory factory;
+   private Post post;
+   private String mensagemPost;
+   private ArrayList<String> mensagens;
+   private String mensagemPostada;
+   private ArrayList<String> hashtags;
+   private String hashtagPostada;
 
 
     
 	public Mural(){
 		this.posts = new ArrayList<Post>();
 		this.factory = new Factory();
+		this.mensagens = new ArrayList<String>();
+		this.hashtags = new ArrayList<String>();
 	}
 	
 	public void criaPost(String mensagem, String data)throws PostException, ParseException{
 		this.texto = "";
 		this.hashtag ="";
 		this.arquivo = "";
+		this.mensagemPost ="";
 	
 		String resultadoString = separaString(mensagem);
 		int tamanhoString = tamanhoString(mensagem, texto, hashtag,arquivo);
+
 
 		if (tamanhoString<=200){
 			//System.out.println(hashtag);
 			this.mensagem = factory.criaPost(this.texto, this.arquivo, this.hashtag, data);
 			//System.out.println(this.mensagem);
 			posts.add(this.mensagem);
+			mensagens.add(mensagemPost);
+			hashtags.add(this.mensagem.getHashtagNova());
+			//System.out.println(posts.toString());
 
-			System.out.println(posts.toString());
 		} else{
 			throw new PostException ("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.");
 			
@@ -54,6 +66,28 @@ public class Mural {
 		return posts.get(numeroPost);
 	}
 	
+	public String getPost (String atributo, int numeroPost){
+	    post = posts.get(numeroPost);
+	    mensagemPostada = mensagens.get(numeroPost);
+	    hashtagPostada = hashtags.get(numeroPost);
+		if(atributo.equals("Mensagem")){
+			return mensagemPostada;
+			
+		}
+		if(atributo.equals("Data")){
+			return post.getDataPost();
+		}
+		if(atributo.equals("Hashtags")){
+			return hashtagPostada;
+		}
+		if(atributo.equals("Arquivo")){
+
+			return post.getArquivo();
+		}
+		return null;
+	}
+	
+
 	 public String converteData(String dataPost) throws ParseException {
 		    data.setLenient(true);
 			data.parse(dataPost);
@@ -116,6 +150,14 @@ public class Mural {
 		 }
 		
 
+		if(mensagem.contains("#")){
+			int tamanho = mensagem.length() - (texto.length()+arquivo.length());
+			 for (int i = 0; i < mensagem.indexOf(" #") ; i++){
+					mensagemPost += mensagem.charAt(i);
+				} 
+			 //System.out.println(tamanho +" "+mensagem.indexOf("#") );
+		 }
+		
 
 		//System.out.println(hashtag);
 		//System.out.println(texto);
@@ -129,7 +171,7 @@ public class Mural {
 	
 
 
-	
+
 
 	public int tamanhoString(String mensagem, String texto, String hashtag,String arquivo){
 	      return mensagem.length() - (hashtag.length()+arquivo.length());

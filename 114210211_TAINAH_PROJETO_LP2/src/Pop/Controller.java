@@ -100,6 +100,7 @@ public class Controller {
 	    public void login (String email, String senha) throws LoginException, PesquisaUsuarioException{
 	    	if (status == false){
 	           nomeUsuario = pesquisaUsuario(email, senha);
+	           this.usuario = retornaUsuario(email);
 	    	}else {
 	    		throw new LoginException ("Nao foi possivel realizar login. Um usuarix ja esta logadx: " +usuario.getNome() + "." );
 	    	}
@@ -250,10 +251,22 @@ public class Controller {
 	    }
 	    
 	    public void criaPost(String mensagem, String data) throws PostException, ParseException{
-			usuario.criaPost(mensagem, data);
+	    	usuario.criaPost(mensagem, data);
 		}
 	    
 	    public Post getPost(int numeroPost){
 			return usuario.getPost(numeroPost);
+		}
+	    
+	    public String getPost(String atributo, int numeroPost){
+	    	return usuario.getPost(atributo, numeroPost);
+	    }
+		public Usuario retornaUsuario(String email){
+			for(Usuario usuario:usuarios){
+				if(usuario.getEmail().equals(email)){
+					return usuario;
+				}
+			}
+			return usuario;
 		}
 }
