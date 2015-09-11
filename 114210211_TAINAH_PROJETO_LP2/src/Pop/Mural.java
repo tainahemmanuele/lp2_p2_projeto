@@ -88,7 +88,7 @@ public class Mural {
 	 public String separaString(String mensagem){
 		 int contador = 0;
 		 if(mensagem.contains("<")){
-		 for (int i =0; i < mensagem.indexOf("<") ; i++){
+		 for (int i =0; i < mensagem.indexOf(" ") ; i++){
 				texto += mensagem.charAt(i);
 			}
 		 }
