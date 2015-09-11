@@ -21,6 +21,7 @@ public class Post {
 	public String testaHashtag(String hashtag) throws PostException{
 		novaHashtag= hashtag.split(" ");
 		for (int i=0 ; i< novaHashtag.length; i++){
+			//System.out.println(novaHashtag[i]);
 			if(novaHashtag[i].startsWith("#")){
 				boolean status = true;
 			}else{
@@ -53,7 +54,7 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return getTexto()+getArquivo()+getHashtag()+ getDataPost();
+		return getTexto()+getArquivo()+" "+getHashtag()+" "+ getDataPost();
 	}
 	
 	

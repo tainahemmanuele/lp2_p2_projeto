@@ -32,6 +32,7 @@ public class Usuario {
 	private Scanner ler = new Scanner(System.in);
 	private boolean statusData = false;
 	private Mural mural;
+	//private ArrayList <Post> posts;
 
     
     public Usuario(String nome, String email, String senha, String dataNascimento, String imagem) throws Exception{
@@ -57,7 +58,7 @@ public class Usuario {
     	this.senha = senha;
     	this.imagem = imagem;
     	this.mural = new Mural();
-    	
+    	//this.posts = new ArrayList<Post>();
     }
 
 
@@ -87,7 +88,7 @@ public class Usuario {
 
     	this.imagem = "resources/default.jpg";
     	this.mural = new Mural();
-    	
+    	//this.posts = new ArrayList<Post>();
     }
 	
   
@@ -226,8 +227,10 @@ public String validaData(String dataNascimento) throws ParseException{
 		mural.criaPost(mensagem, data);
 	}
 	
-	/*public String getPost(int numeroPost){
+	public Post getPost(int numeroPost){
 		return mural.getPost(numeroPost);
-	}*/
+	}
+	
+	
    
 }

@@ -12,7 +12,7 @@ import Pop.Exceptions.PostException;
 
 public class Mural {
     private ArrayList <Post> posts;
-    private Post mensagem;
+   private Post mensagem;
    SimpleDateFormat data = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
    SimpleDateFormat data1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
    private String dataPost;
@@ -26,7 +26,6 @@ public class Mural {
 	public Mural(){
 		this.posts = new ArrayList<Post>();
 		this.factory = new Factory();
-		
 	}
 	
 	public void criaPost(String mensagem, String data)throws PostException, ParseException{
@@ -38,8 +37,12 @@ public class Mural {
 		int tamanhoString = tamanhoString(mensagem, texto, hashtag,arquivo);
 
 		if (tamanhoString<=200){
+			//System.out.println(hashtag);
 			this.mensagem = factory.criaPost(this.texto, this.arquivo, this.hashtag, data);
+			//System.out.println(this.mensagem);
 			posts.add(this.mensagem);
+
+			System.out.println(posts.toString());
 		} else{
 			throw new PostException ("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.");
 			
@@ -87,29 +90,35 @@ public class Mural {
 	 
 	 public String separaString(String mensagem){
 		 int contador = 0;
-		 if(mensagem.contains("<")){
-		 for (int i =0; i < mensagem.indexOf(" ") ; i++){
+		 if(mensagem.contains("<") && mensagem.contains("#")){
+		 for (int i =0; i < mensagem.indexOf(" <") ; i++){
 				texto += mensagem.charAt(i);
 			}
 		 }
+		 if(!(mensagem.contains("<")) && mensagem.contains("#")){
+			 for (int i =0; i < mensagem.indexOf(" #") ; i++){
+					texto += mensagem.charAt(i);
+				}
+			 }
+		 if(mensagem.contains("<")){
+				int tamanho = mensagem.length() - texto.length();
+				 for (int i =mensagem.indexOf(" <"); i < mensagem.indexOf("#"); i++){
+						arquivo += mensagem.charAt(i);
+					} 
+			 
+			}
 		if(mensagem.contains("#")){
-			int tamanho = mensagem.length() - texto.length();
-			 for (int i =mensagem.indexOf("#"); i < tamanho; i++){
+			int tamanho = mensagem.length() - (texto.length()+arquivo.length());
+			 for (int i = mensagem.indexOf("#"); i < mensagem.lastIndexOf("") ; i++){
 					hashtag += mensagem.charAt(i);
 				} 
+			 //System.out.println(tamanho +" "+mensagem.indexOf("#") );
 		 }
-		if(mensagem.contains("<")){
-			int tamanho = mensagem.length() - texto.length();
-			 for (int i =mensagem.indexOf("<"); i < mensagem.indexOf("#"); i++){
-					arquivo += mensagem.charAt(i);
-				} 
-		 
-		}
-	 else {
-		 texto = mensagem;
-	 }
+		
 
 
+		//System.out.println(hashtag);
+		//System.out.println(texto);
 		 //System.out.println(mensagem.indexOf("<"));
 
 		//System.out.println(tamanhoString(mensagem, novaString, novaString2));
@@ -118,6 +127,7 @@ public class Mural {
 	 }
 	 
 	
+
 
 	
 

@@ -72,9 +72,9 @@ public class Facade {
 			controller.criaPost(mensagem, data);
 		}
 	 
-	 /*public String getPost(int numeroPost){
+	 public Post getPost(int numeroPost){
 			return controller.getPost(numeroPost);
-		}*/
+		}
 	
 	public static void main(String[] args) throws UsuarioException, LoginException {
 		Facade facade = new Facade();
