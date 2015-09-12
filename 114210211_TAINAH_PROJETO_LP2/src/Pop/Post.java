@@ -1,5 +1,7 @@
 package Pop;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import Pop.Exceptions.PostException;
@@ -12,11 +14,12 @@ public class Post {
    private String [] novaHashtag;
    private String hashtagNova;
    private String mensagem;
+
 	
 	public Post (String texto, String arquivo, String hashtag, String dataPost) throws PostException{
 		this.texto = texto;
 		this.arquivo = arquivo;
-		this.hashtag = testaHashtag(hashtag);
+		this.hashtag =testaHashtag(hashtag);
 		this.dataPost = dataPost;
 
 	}
@@ -36,6 +39,8 @@ public class Post {
 		return hashtag;
 		
 	}
+	
+	
 
 	public String getDataPost() {
 		return dataPost;
@@ -64,7 +69,7 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return getTexto()+getArquivo()+getHashtag()+" "+ "("+getDataPost()+")";
+		return getTexto()+getArquivo()+" "+getHashtag()+" "+ "("+getDataPost()+")";
 	}
 	
 	
