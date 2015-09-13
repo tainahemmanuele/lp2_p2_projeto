@@ -47,7 +47,6 @@ public class Mural {
 		this.factory = new Factory();
 		this.mensagens = new ArrayList<String>();
 		this.hashtags = new ArrayList<String>();
-		this.conteudos = new HashMap<Integer , String>();
 		this.conteudoPosts = new HashMap<Integer,HashMap <Integer , String>> ();
 		this.numeroPost = 0;
 		this.indice = 0;
@@ -59,6 +58,7 @@ public class Mural {
 		this.arquivo = "";
 		this.mensagemPost ="";
         this.data = converteData(data);
+		this.conteudos = new HashMap<Integer , String>();
 		String resultadoString = separaString(mensagem);
 		int tamanhoString = tamanhoString(mensagem, texto, hashtag,arquivo);
 
@@ -73,9 +73,9 @@ public class Mural {
 			throw new PostException ("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.");
 			
 		}
-		adicionaConteudo(posts);
+		adicionaConteudo(this.mensagem);
 		this.conteudoPosts.put(numeroPost, conteudos);
-		System.out.println(this.conteudoPosts.toString());
+		//System.out.println(this.conteudoPosts.toString());
 		numeroPost+=1;
 		
 
@@ -218,11 +218,9 @@ public class Mural {
 		return hora;
 	}
 	
-	public void adicionaConteudo(ArrayList<Post> posts){
-		for (Post post : posts){
+	public void adicionaConteudo(Post post){
 			conteudos.put(indice, post.getTexto());
 			this.separaArquivo = post.getArquivo().split(" ");
-		}
 			for (int i = 1; i<separaArquivo.length; i ++){
 				indice+=1;
 				arquivoFormatado ="";
@@ -242,10 +240,9 @@ public class Mural {
 					}
 					conteudos.put(indice, arquivoFormatado);
 				}
-				
-		
+	
 		}
-		indice+=1;
+
 		
 	}
 	
