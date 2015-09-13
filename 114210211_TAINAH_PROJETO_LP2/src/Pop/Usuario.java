@@ -231,6 +231,9 @@ public String validaData(String dataNascimento) throws ParseException{
 		return mural.getPost(numeroPost);
 	}
 	
+	public String getConteudoPost(int indice, int numeroPost) throws PostException{
+		return mural.getConteudoPost(indice, numeroPost);
+	}
 	public String getPost(String atributo, int numeroPost){
     	return mural.getPost(atributo, numeroPost);
     }

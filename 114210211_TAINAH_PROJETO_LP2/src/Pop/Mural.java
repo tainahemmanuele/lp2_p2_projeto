@@ -6,8 +6,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
@@ -30,6 +32,13 @@ public class Mural {
    private String mensagemPostada;
    private ArrayList<String> hashtags;
    private String hashtagPostada;
+   private HashMap<Integer,HashMap <Integer , String>> conteudoPosts;
+   //private ArrayList<String> conteudoPostsArquivo;
+   private HashMap <Integer , String> conteudos;
+   private int numeroPost;
+   private int indice;
+   private String arquivoFormatado ;
+   String [] separaArquivo;
 
 
     
@@ -38,6 +47,10 @@ public class Mural {
 		this.factory = new Factory();
 		this.mensagens = new ArrayList<String>();
 		this.hashtags = new ArrayList<String>();
+		this.conteudos = new HashMap<Integer , String>();
+		this.conteudoPosts = new HashMap<Integer,HashMap <Integer , String>> ();
+		this.numeroPost = 0;
+		this.indice = 0;
 	}
 	
 	public void criaPost(String mensagem, String data)throws PostException, ParseException{
@@ -50,19 +63,21 @@ public class Mural {
 		int tamanhoString = tamanhoString(mensagem, texto, hashtag,arquivo);
 
 
+		//System.out.println(numeroPost);
 		if (tamanhoString<=200){
-			//System.out.println(hashtag);
 			this.mensagem = factory.criaPost(this.texto, this.arquivo, this.hashtag, this.data);
-			//System.out.println(this.mensagem);
 			posts.add(this.mensagem);
 			mensagens.add(mensagemPost);
 			hashtags.add(this.mensagem.getHashtagNova());
-			//System.out.println(posts.toString());
-
 		} else{
 			throw new PostException ("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.");
 			
 		}
+		adicionaConteudo(posts);
+		this.conteudoPosts.put(numeroPost, conteudos);
+		System.out.println(this.conteudoPosts.toString());
+		numeroPost+=1;
+		
 
 	}
 	
@@ -76,7 +91,8 @@ public class Mural {
 	    //System.out.println(mensagens.get(numeroPost).g);
 	    hashtagPostada = hashtags.get(numeroPost);
 		if(atributo.equals("Mensagem")){
-			return mensagemPostada;
+			return post.getTexto() + post.getArquivo();
+			//return mensagemPostada;
 			
 		}
 		if(atributo.equals("Data")){
@@ -86,7 +102,6 @@ public class Mural {
 			return hashtagPostada;
 		}
 		if(atributo.equals("Arquivo")){
-
 			return post.getArquivo();
 		}
 		return null;
@@ -143,13 +158,19 @@ public class Mural {
 	
 
 
-	 /*public String getConteudoPost(int indice, int numeroPost){
-	 post = posts.get(numeroPost);
-	 for(int i =0; i < ; i++){
-
+	 public String getConteudoPost(int indicePost, int numeroPost) throws PostException{
+		 //System.out.println(conteudoPosts.get(numeroPost).containsKey(indice));
+		 //System.out.println(conteudoPosts.get(numeroPost).get(indice));
+	  if(indicePost >= 0){
+	   if (conteudoPosts.get(numeroPost).containsKey(indicePost) == true){
+		   return conteudoPosts.get(numeroPost).get(indicePost);  
+	   }else{
+		   throw new PostException("Item #"+indicePost+" nao existe nesse post, ele possui apenas "+ indicePost +" itens distintos.");
+	   }
+	  }else{
+		 throw new PostException ("Requisicao invalida. O indice deve ser maior ou igual a zero.");
+	  }
 	 }
-		 
-	 }*/
 
 
 	public int tamanhoString(String mensagem, String texto, String hashtag,String arquivo){
@@ -196,4 +217,37 @@ public class Mural {
 		}
 		return hora;
 	}
+	
+	public void adicionaConteudo(ArrayList<Post> posts){
+		for (Post post : posts){
+			conteudos.put(indice, post.getTexto());
+			this.separaArquivo = post.getArquivo().split(" ");
+		}
+			for (int i = 1; i<separaArquivo.length; i ++){
+				indice+=1;
+				arquivoFormatado ="";
+				if(separaArquivo[i].contains("<imagem>")){
+					String arquivo = separaArquivo[i];
+					arquivoFormatado += "$arquivo_imagem:";
+					for (int j = arquivo.indexOf(">")+1; j < arquivo.lastIndexOf("</") ; j++){
+						arquivoFormatado += arquivo.charAt(j);
+					}
+					conteudos.put(indice, arquivoFormatado);
+				}
+				if(separaArquivo[i].contains("<audio>")){
+					String arquivo = separaArquivo[i];
+					arquivoFormatado += "$arquivo_audio:";
+					for (int j = arquivo.indexOf(">")+1; j < arquivo.lastIndexOf("</") ; j++){
+						arquivoFormatado += arquivo.charAt(j);
+					}
+					conteudos.put(indice, arquivoFormatado);
+				}
+				
+		
+		}
+		indice+=1;
+		
+	}
+	
+	
 }

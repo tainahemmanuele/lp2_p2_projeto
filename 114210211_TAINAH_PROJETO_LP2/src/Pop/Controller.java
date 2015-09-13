@@ -261,6 +261,10 @@ public class Controller {
 	    public String getPost(String atributo, int numeroPost){
 	    	return usuario.getPost(atributo, numeroPost);
 	    }
+	    
+	    public String getConteudoPost(int indice, int numeroPost) throws PostException{
+			return usuario.getConteudoPost(indice, numeroPost);
+		}
 		public Usuario retornaUsuario(String email){
 			for(Usuario usuario:usuarios){
 				if(usuario.getEmail().equals(email)){
