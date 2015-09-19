@@ -14,6 +14,7 @@ import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.InfoUsuarioException;
+import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.ValidaException;
@@ -32,6 +33,12 @@ public class Usuario {
 	private Scanner ler = new Scanner(System.in);
 	private boolean statusData = false;
 	private Mural mural;
+	private Usuario amigos;
+	private ArrayList<String> notificacoes;
+	private Notificacao notificacao;
+	private String quebraLinha = System.getProperty("line.separator");
+	private String novaNotificacao;
+
 	//private ArrayList <Post> posts;
 
     
@@ -58,6 +65,9 @@ public class Usuario {
     	this.senha = senha;
     	this.imagem = imagem;
     	this.mural = new Mural();
+    	this.notificacao = new Notificacao();
+    	this.notificacoes = new ArrayList <String>();
+
     	//this.posts = new ArrayList<Post>();
     }
 
@@ -88,6 +98,9 @@ public class Usuario {
 
     	this.imagem = "resources/default.jpg";
     	this.mural = new Mural();
+    	this.notificacao = new Notificacao();
+    	this.notificacoes = new ArrayList <String>();
+
     	//this.posts = new ArrayList<Post>();
     }
 	
@@ -238,5 +251,25 @@ public String validaData(String dataNascimento) throws ParseException{
     	return mural.getPost(atributo, numeroPost);
     }
 	
+	public void adicionaNotificacao(String notificacao){
+		notificacoes.add(notificacao);
+	}
+	
+	public void NotificacaoAmizade(String email, String nome, ArrayList<Usuario> usuarios){
+		notificacao.adicionaNotificacaoAmizade(email,nome, usuarios);
+	}
    
+	public int getNotificacoes(){
+		return notificacoes.size();
+	}
+	
+	public String getNextNotificacao() throws NotificacoesException{
+		novaNotificacao="";
+		for(String notificacao:notificacoes){
+			novaNotificacao+= notificacao;
+		}
+		return novaNotificacao;
+	}
+
+	
 }

@@ -7,6 +7,7 @@ import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.InfoUsuarioException;
 import Pop.Exceptions.LoginException;
 import Pop.Exceptions.LogoutException;
+import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
@@ -83,6 +84,19 @@ public class Facade {
 	 public String getConteudoPost(int indice, int numeroPost) throws PostException{
 			return controller.getConteudoPost(indice, numeroPost);
 		}
+	 
+	 
+	 public void adicionaAmigo(String email){
+		 controller.adicionaAmigo(email);
+	 }
+	 
+	 public int getNotificacoes(){
+		 return controller.getNotificacoes();
+	 }
+	 
+	 public String getNextNotificacao() throws NotificacoesException{
+		 return controller.getNextNotificacao();
+	 }
 	public static void main(String[] args) throws UsuarioException, LoginException {
 		Facade facade = new Facade();
 		//facade.cadastraUsuario("Tainah", "tainah@email.com", "21563", "19111995", "25689347", "foto");
@@ -90,7 +104,7 @@ public class Facade {
 
 		
 		//System.out.println(facade.getNome("marina@email.com"));
-		args = new String[] {"Pop.Facade", "diretorio_testes/usecase_1.txt","diretorio_testes/usecase_2.txt","diretorio_testes/usecase_3.txt"};
+		args = new String[] {"Pop.Facade", "diretorio_testes/usecase_1.txt","diretorio_testes/usecase_2.txt","diretorio_testes/usecase_3.txt","diretorio_testes/usecase_4.txt"};
 	    EasyAccept.main(args);
 
 	}

@@ -15,6 +15,7 @@ import Pop.Exceptions.DataException;
 import Pop.Exceptions.InfoUsuarioException;
 import Pop.Exceptions.LoginException;
 import Pop.Exceptions.LogoutException;
+import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
@@ -29,6 +30,8 @@ public class Controller {
 	private boolean statusSistema;
 	private boolean statusUsuario;
 	private String data;
+	private int contadorNotificacao;
+
 
 
 	
@@ -101,6 +104,7 @@ public class Controller {
 	    	if (status == false){
 	           nomeUsuario = pesquisaUsuario(email, senha);
 	           this.usuario = retornaUsuario(email);
+	           this.contadorNotificacao =0;
 	    	}else {
 	    		throw new LoginException ("Nao foi possivel realizar login. Um usuarix ja esta logadx: " +usuario.getNome() + "." );
 	    	}
@@ -272,5 +276,23 @@ public class Controller {
 				}
 			}
 			return usuario;
+		}
+		
+		
+		public void adicionaAmigo(String email){
+              usuario.NotificacaoAmizade(email, usuario.getNome(), usuarios);
+			}
+		
+		public int getNotificacoes(){
+			return usuario.getNotificacoes();
+		}
+		
+		public String getNextNotificacao() throws NotificacoesException{
+			if(contadorNotificacao == getNotificacoes()){
+				throw new NotificacoesException();
+			}else{
+			contadorNotificacao = getNotificacoes();
+			return usuario.getNextNotificacao();
+			}
 		}
 }
