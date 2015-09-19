@@ -33,7 +33,7 @@ public class Usuario {
 	private Scanner ler = new Scanner(System.in);
 	private boolean statusData = false;
 	private Mural mural;
-	private Usuario amigos;
+	private ArrayList<Usuario> amigos;
 	private ArrayList<String> notificacoes;
 	private Notificacao notificacao;
 	private String quebraLinha = System.getProperty("line.separator");
@@ -67,6 +67,7 @@ public class Usuario {
     	this.mural = new Mural();
     	this.notificacao = new Notificacao();
     	this.notificacoes = new ArrayList <String>();
+    	this.amigos = new ArrayList <Usuario>();
 
     	//this.posts = new ArrayList<Post>();
     }
@@ -100,6 +101,7 @@ public class Usuario {
     	this.mural = new Mural();
     	this.notificacao = new Notificacao();
     	this.notificacoes = new ArrayList <String>();
+    	this.amigos = new ArrayList <Usuario>();
 
     	//this.posts = new ArrayList<Post>();
     }
@@ -271,5 +273,15 @@ public String validaData(String dataNascimento) throws ParseException{
 		return novaNotificacao;
 	}
 
+	public void limpaNotificacoes(){
+		notificacoes.clear();
+	}
 	
+	public void aceitaAmigo(Usuario usuario){
+		amigos.add(usuario);
+	}
+	
+	public int getQtdAmigos(){
+		return amigos.size();
+	}
 }

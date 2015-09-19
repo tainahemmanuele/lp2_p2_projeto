@@ -112,6 +112,7 @@ public class Controller {
 	    	
 	    public void logout() throws LogoutException{
 	    		if (status == true){
+	    			usuario.limpaNotificacoes();
 	    			status = false;
 	    		} else{
 	    			throw new LogoutException();
@@ -286,7 +287,22 @@ public class Controller {
 		public int getNotificacoes(){
 			return usuario.getNotificacoes();
 		}
+		public void aceitaAmizade(String email){
+			for (Usuario amigo : usuarios){
+				if(amigo.getEmail().equals(email)){
+					usuario.aceitaAmigo(amigo);
+				}
+			}
+		}
 		
+		public int getQtdAmigos(){
+			return usuario.getQtdAmigos();
+		}
+		
+		public void rejeitaAmizade(String email) throws UsuarioException{
+			getNome(email);
+			
+		}
 		public String getNextNotificacao() throws NotificacoesException{
 			if(contadorNotificacao == getNotificacoes()){
 				throw new NotificacoesException();

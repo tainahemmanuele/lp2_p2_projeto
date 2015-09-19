@@ -97,6 +97,20 @@ public class Facade {
 	 public String getNextNotificacao() throws NotificacoesException{
 		 return controller.getNextNotificacao();
 	 }
+	 
+	 
+	 public void aceitaAmizade(String email){
+		 controller.aceitaAmizade(email);
+	 }
+	 
+	 public int getQtdAmigos(){
+		 return controller.getQtdAmigos();
+	 }
+	 
+	 public void rejeitaAmizade(String email) throws UsuarioException{
+		 controller.rejeitaAmizade(email);
+	 }
+	 
 	public static void main(String[] args) throws UsuarioException, LoginException {
 		Facade facade = new Facade();
 		//facade.cadastraUsuario("Tainah", "tainah@email.com", "21563", "19111995", "25689347", "foto");
