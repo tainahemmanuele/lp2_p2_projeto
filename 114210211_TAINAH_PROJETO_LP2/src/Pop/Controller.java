@@ -113,6 +113,7 @@ public class Controller {
 	    public void logout() throws LogoutException{
 	    		if (status == true){
 	    			usuario.limpaNotificacoes();
+	    			usuario.limpaEmail();
 	    			status = false;
 	    		} else{
 	    			throw new LogoutException();
@@ -281,7 +282,7 @@ public class Controller {
 		
 		
 		public void adicionaAmigo(String email){
-              usuario.NotificacaoAmizade(email, usuario.getNome(), usuarios);
+              usuario.NotificacaoAmizade(email,this.usuario, usuarios);
 			}
 		
 		public int getNotificacoes(){
@@ -291,6 +292,8 @@ public class Controller {
 			for (Usuario amigo : usuarios){
 				if(amigo.getEmail().equals(email)){
 					usuario.aceitaAmigo(amigo);
+					amigo.aceitaAmigo(usuario);
+					amigo.adicionaNotificacao(usuario.getNome() + " aceitou sua amizade.");
 				}
 			}
 		}
@@ -300,9 +303,22 @@ public class Controller {
 		}
 		
 		public void rejeitaAmizade(String email) throws UsuarioException{
-			getNome(email);
+			String usuarioNome= getNome(email);
+			boolean statusConvite = false;
+			for (Usuario amigoFuturo: usuario.getNotificacaoAmizade()){
+				if(amigoFuturo.getEmail().equals(email)){
+					statusConvite = true;
+				}else{
+					statusConvite = false;
+				}
+			}if(statusConvite == false){
+				throw new UsuarioException(usuarioNome + " nao lhe enviou solicitacoes de amizade.");
+			}
+			
 			
 		}
+		
+		
 		public String getNextNotificacao() throws NotificacoesException{
 			if(contadorNotificacao == getNotificacoes()){
 				throw new NotificacoesException();
@@ -310,5 +326,10 @@ public class Controller {
 			contadorNotificacao = getNotificacoes();
 			return usuario.getNextNotificacao();
 			}
+		}
+		
+		
+		public void removeAmigo(String email){
+			usuario.removeAmigo(email, this.usuario.getNome());
 		}
 }

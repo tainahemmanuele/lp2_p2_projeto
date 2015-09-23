@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import Pop.Exceptions.AtualizaUsuarioException;
@@ -38,6 +39,7 @@ public class Usuario {
 	private Notificacao notificacao;
 	private String quebraLinha = System.getProperty("line.separator");
 	private String novaNotificacao;
+	private ArrayList<Usuario> notificacaoAmizade;
 
 	//private ArrayList <Post> posts;
 
@@ -68,6 +70,7 @@ public class Usuario {
     	this.notificacao = new Notificacao();
     	this.notificacoes = new ArrayList <String>();
     	this.amigos = new ArrayList <Usuario>();
+    	this.notificacaoAmizade = new ArrayList <Usuario>();
 
     	//this.posts = new ArrayList<Post>();
     }
@@ -102,6 +105,7 @@ public class Usuario {
     	this.notificacao = new Notificacao();
     	this.notificacoes = new ArrayList <String>();
     	this.amigos = new ArrayList <Usuario>();
+    	this.notificacaoAmizade = new ArrayList <Usuario>();
 
     	//this.posts = new ArrayList<Post>();
     }
@@ -257,8 +261,8 @@ public String validaData(String dataNascimento) throws ParseException{
 		notificacoes.add(notificacao);
 	}
 	
-	public void NotificacaoAmizade(String email, String nome, ArrayList<Usuario> usuarios){
-		notificacao.adicionaNotificacaoAmizade(email,nome, usuarios);
+	public void NotificacaoAmizade(String email, Usuario usuario, ArrayList<Usuario> usuarios){
+		notificacao.adicionaNotificacaoAmizade(email,usuario, usuarios);
 	}
    
 	public int getNotificacoes(){
@@ -277,11 +281,35 @@ public String validaData(String dataNascimento) throws ParseException{
 		notificacoes.clear();
 	}
 	
+	public void limpaEmail(){
+		notificacaoAmizade.clear();
+	}
+	
+	public ArrayList<Usuario> getNotificacaoAmizade() {
+		return notificacaoAmizade;
+	}
+
+
 	public void aceitaAmigo(Usuario usuario){
 		amigos.add(usuario);
 	}
 	
+	public void adicionaEmail(Usuario usuario){
+		notificacaoAmizade.add(usuario);
+	}
+	
 	public int getQtdAmigos(){
 		return amigos.size();
+	}
+	
+	public void removeAmigo(String email,String usuarioLogadoNome){
+		Iterator itr = amigos.iterator(); 
+        while(itr.hasNext()) {
+              Usuario usuario = (Usuario) itr.next();
+              if (usuario.getEmail().equals(email)){
+            	  usuario.adicionaNotificacao(usuarioLogadoNome+" removeu a sua amizade.");
+                  itr.remove();
+              }
+	}
 	}
 }

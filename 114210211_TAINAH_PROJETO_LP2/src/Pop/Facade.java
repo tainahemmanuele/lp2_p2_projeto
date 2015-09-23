@@ -111,6 +111,9 @@ public class Facade {
 		 controller.rejeitaAmizade(email);
 	 }
 	 
+	 public void removeAmigo(String email){
+		 controller.removeAmigo(email);
+	 }
 	public static void main(String[] args) throws UsuarioException, LoginException {
 		Facade facade = new Facade();
 		//facade.cadastraUsuario("Tainah", "tainah@email.com", "21563", "19111995", "25689347", "foto");

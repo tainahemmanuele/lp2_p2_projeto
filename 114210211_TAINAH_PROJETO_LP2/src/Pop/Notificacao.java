@@ -9,12 +9,13 @@ public class Notificacao {
 
 	}
 	
-	public void adicionaNotificacaoAmizade(String emailUsuario, String nomeUsuario, ArrayList <Usuario> usuarios) {
+	public void adicionaNotificacaoAmizade(String emailUsuario, Usuario usuarioLogado, ArrayList <Usuario> usuarios) {
 		String novaNotificacao = "";
 		for (Usuario usuario: usuarios){
 			if (usuario.getEmail().equals(emailUsuario)){
-				novaNotificacao += nomeUsuario + " quer sua amizade.";
+				novaNotificacao += usuarioLogado.getNome() + " quer sua amizade.";
 				usuario.adicionaNotificacao(novaNotificacao);
+				usuario.adicionaEmail(usuarioLogado);
 
 			}
 		}
