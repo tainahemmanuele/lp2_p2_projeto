@@ -308,6 +308,7 @@ public class Controller {
 			for (Usuario amigoFuturo: usuario.getNotificacaoAmizade()){
 				if(amigoFuturo.getEmail().equals(email)){
 					statusConvite = true;
+					amigoFuturo.adicionaNotificacao(this.usuario.getNome() +" rejeitou sua amizade.");
 				}else{
 					statusConvite = false;
 				}
@@ -323,7 +324,7 @@ public class Controller {
 			if(contadorNotificacao == getNotificacoes()){
 				throw new NotificacoesException();
 			}else{
-			contadorNotificacao = getNotificacoes();
+			contadorNotificacao += 1;
 			return usuario.getNextNotificacao();
 			}
 		}
@@ -331,5 +332,9 @@ public class Controller {
 		
 		public void removeAmigo(String email){
 			usuario.removeAmigo(email, this.usuario.getNome());
+		}
+		
+		public void curtirPost(String email, int numeroPost){
+			usuario.curtirPost(email, numeroPost, this.usuario.getNome());
 		}
 }

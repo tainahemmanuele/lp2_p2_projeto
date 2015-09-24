@@ -40,6 +40,7 @@ public class Usuario {
 	private String quebraLinha = System.getProperty("line.separator");
 	private String novaNotificacao;
 	private ArrayList<Usuario> notificacaoAmizade;
+	private int contadorNotificacoes = 0;
 
 	//private ArrayList <Post> posts;
 
@@ -272,7 +273,13 @@ public String validaData(String dataNascimento) throws ParseException{
 	public String getNextNotificacao() throws NotificacoesException{
 		novaNotificacao="";
 		for(String notificacao:notificacoes){
-			novaNotificacao+= notificacao;
+			if(notificacoes.size()>=2){
+			novaNotificacao = notificacoes.get(contadorNotificacoes);
+			contadorNotificacoes +=1;
+			return novaNotificacao;
+		}else{
+			novaNotificacao = notificacao;
+		}
 		}
 		return novaNotificacao;
 	}
@@ -302,6 +309,21 @@ public String validaData(String dataNascimento) throws ParseException{
 		return amigos.size();
 	}
 	
+	public ArrayList<Usuario> getAmigos() {
+		return amigos;
+	}
+
+
+	public void removeAmigo(String nome){
+		Iterator itr = amigos.iterator(); 
+        while(itr.hasNext()) {
+              Usuario usuario = (Usuario) itr.next();
+              if (usuario.getNome().equals(nome)){
+                  itr.remove();
+              }
+        }
+	}
+	
 	public void removeAmigo(String email,String usuarioLogadoNome){
 		Iterator itr = amigos.iterator(); 
         while(itr.hasNext()) {
@@ -309,7 +331,18 @@ public String validaData(String dataNascimento) throws ParseException{
               if (usuario.getEmail().equals(email)){
             	  usuario.adicionaNotificacao(usuarioLogadoNome+" removeu a sua amizade.");
                   itr.remove();
+                  usuario.removeAmigo(usuarioLogadoNome);
+                  
               }
 	}
+	}
+	
+	public void curtirPost(String email, int numeroPost, String nome){
+		for(Usuario amigo : amigos){
+			if (amigo.getEmail().equals(email)){
+				Post post = amigo.getPost(numeroPost);
+				amigo.adicionaNotificacao(nome+ " curtiu seu post de "+ post.getDataPost()+".");
+			}
+		}
 	}
 }
