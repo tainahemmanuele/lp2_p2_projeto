@@ -123,6 +123,8 @@ public class Controller {
 	 
 	    
 	    public String getInfoUsuario(String atributo, String email) throws InfoUsuarioException{
+	    	//Note que esse for se repete. Modularize isso por mei de um metodo:
+	    	// buscaUsuario(String email);
 	    	for(Usuario usuarioLogado : usuarios){
 	    		if(usuarioLogado.getEmail().equals(email)){
 	    			usuario = usuarioLogado;
@@ -179,6 +181,11 @@ public class Controller {
     	
 	    
 	    public void fechaSistema() throws InfoUsuarioException{
+	    	//Nao precisa de um booleano. Pode manter uma referencia para um usuarioLogado.
+	    	// Ao realizar login, buscamos esse usuario no cadastro e fazemos
+	    	// usuarioLogado = usuarioEncontrado.
+	    	// Ao fazer logout, fazemos: usuarioLogado = null;
+	    	// Dai toda a verificacao para saber se temos alguem logado vira: usuarioLogado == null?
 	    	if(status == true){
 	    		throw new InfoUsuarioException("Nao foi possivel fechar o sistema. Um usuarix ainda esta logadx.");
 	    	}else{
@@ -212,6 +219,8 @@ public class Controller {
 	    
 	    public void atualizaPerfil(String atributo,String valor) throws ParseException, AtualizaUsuarioException{
 	    	if(status == true){
+	    		//Note que esse trecho se repete muito... crie um metodo para isso. ;)
+	    		//Se esse metodo nao achar o usuario, retorne null.
 	    		for(Usuario usuarioLogado: usuarios){
 	    			if (usuarioLogado.getEmail().equals(nomeUsuario)){
 	    				usuario = usuarioLogado;
@@ -221,6 +230,9 @@ public class Controller {
 	    	if (status == false){
 	    		throw new AtualizaUsuarioException("Nao eh possivel atualizar um perfil. Nenhum usuarix esta logadx no +pop.");
 	    	}
+	    	//Essa logica eh perigosa. Procure usar if/else, jah que a logica eh
+	    	// atualizar apenas um deles por vez. Caso contrario, eu poderia
+	    	// atualizar todos (vai que o equals dispara true em mais de um).	    	
 	    	if (atributo.equals("Nome")){
 	        	usuario.atualizaNome(valor);
 	        }
