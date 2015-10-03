@@ -23,14 +23,16 @@ import Pop.Exceptions.ValidaException;
 
 public class Controller {
 	private Usuario usuario;
+	private Usuario usuarioLogado;
 	private ArrayList <Usuario> usuarios;
 	private boolean retorno;
-	private boolean status;
-	private String nomeUsuario;
+	private String emailUsuario;
 	private boolean statusSistema;
 	private boolean statusUsuario;
 	private String data;
 	private int contadorNotificacao;
+	private Usuario usuarioBusca;
+	private boolean status;
 
 
 
@@ -38,9 +40,11 @@ public class Controller {
 	public Controller(){
 		this.usuarios = new ArrayList<Usuario>();
 		this.retorno = false;
-		this.status = false;
 		this.statusSistema = false;
 		this.statusUsuario = false;
+		this.usuarioLogado = null;
+		this.usuarioBusca = null;
+		this.status = false;
 	}
 
 	public void iniciaSistema(){
@@ -85,7 +89,7 @@ public class Controller {
 	    public String pesquisaUsuario(String email, String senha) throws PesquisaUsuarioException {
 	    	for (Usuario usuario :usuarios){
 	    		if (usuario.getEmail().equals(email) && usuario.getSenha().equals(senha)){
-	    			status = true;
+	    			usuarioLogado = usuario;
 	    			return usuario.getEmail();
 	    			
 	    		}
@@ -93,7 +97,7 @@ public class Controller {
 	    			throw new PesquisaUsuarioException("Nao foi possivel realizar login. Senha invalida.");
 	    		}
 	    	}
-    		if (status == false){
+    		if (usuarioLogado == null){
     			throw new PesquisaUsuarioException("Nao foi possivel realizar login. Um usuarix com email " + email+ " nao esta cadastradx.");
     		}
 			return usuario.getEmail();
@@ -101,8 +105,8 @@ public class Controller {
 	    
 	    
 	    public void login (String email, String senha) throws LoginException, PesquisaUsuarioException{
-	    	if (status == false){
-	           nomeUsuario = pesquisaUsuario(email, senha);
+	    	if (this.usuarioLogado == null){
+	           emailUsuario = pesquisaUsuario(email, senha);
 	           this.usuario = retornaUsuario(email);
 	           this.contadorNotificacao =0;
 	    	}else {
@@ -111,10 +115,10 @@ public class Controller {
 	    }
 	    	
 	    public void logout() throws LogoutException{
-	    		if (status == true){
+	    		if (usuarioLogado != null){
 	    			usuario.limpaNotificacoes();
 	    			usuario.limpaEmail();
-	    			status = false;
+	    			usuarioLogado = null;
 	    		} else{
 	    			throw new LogoutException();
 	    		}
@@ -125,58 +129,52 @@ public class Controller {
 	    public String getInfoUsuario(String atributo, String email) throws InfoUsuarioException{
 	    	//Note que esse for se repete. Modularize isso por mei de um metodo:
 	    	// buscaUsuario(String email);
-	    	for(Usuario usuarioLogado : usuarios){
-	    		if(usuarioLogado.getEmail().equals(email)){
-	    			usuario = usuarioLogado;
+	    	usuarioBusca = buscaUsuario(email);
+	    	if (status == false){
+	    		throw new InfoUsuarioException("Um usuarix com email " + email + " nao esta cadastradx.");
+	    	}
 	    			if (atributo.equals("Nome")){
-		            	return usuario.getNome();
+		            	return usuarioBusca.getNome();
 		            }
 		            if (atributo.equals("Email")){
-		            	return usuario.getEmail();
+		            	return usuarioBusca.getEmail();
 		            }
 		            if (atributo.equals("Senha")){
 		            	throw new InfoUsuarioException();
 		            }
 		            if(atributo.equals("Foto")){
-		            	return usuario.getImagem();
+		            	return usuarioBusca.getImagem();
 		            }
 		            if(atributo.equals("Data de Nascimento")){
-		            	return usuario.getDataNascimento();
+		            	return usuarioBusca.getDataNascimento();
 		            }	
-	    	}
-	    	}
-	    		
-	    	 throw new InfoUsuarioException("Um usuarix com email " + email + " nao esta cadastradx.");	
-	
+	    	
+			return email;
 
 	    }
 	   
 
 	    public String getInfoUsuario(String atributo) throws InfoUsuarioException{
-	    	if (status ==true){
-    		for(Usuario usuarioLogado: usuarios){
-    			if (usuarioLogado.getEmail().equals(nomeUsuario)){
-    				usuario = usuarioLogado;
-    			}
-    		}
+	    	if (this.usuarioLogado != null){
+	    		usuarioBusca = buscaUsuario(emailUsuario);
 	    	}
         if (atributo.equals("Nome")){
-        	return usuario.getNome();
+        	return usuarioBusca.getNome();
         }
         if (atributo.equals("Email")){
-        	return usuario.getEmail();
+        	return usuarioBusca.getEmail();
         }
         if (atributo.equals("Senha")){
         	throw new InfoUsuarioException();
         }
         if(atributo.equals("Foto")){
-        	return usuario.getImagem();
+        	return usuarioBusca.getImagem();
         }
         if(atributo.equals("Data de Nascimento")){
-        	return usuario.getDataNascimento();
+        	return usuarioBusca.getDataNascimento();
         }	
       
-		return usuario.getEmail();
+		return usuarioBusca.getEmail();
     }
     	
 	    
@@ -186,15 +184,16 @@ public class Controller {
 	    	// usuarioLogado = usuarioEncontrado.
 	    	// Ao fazer logout, fazemos: usuarioLogado = null;
 	    	// Dai toda a verificacao para saber se temos alguem logado vira: usuarioLogado == null?
-	    	if(status == true){
+	    	if(usuarioLogado != null){
 	    		throw new InfoUsuarioException("Nao foi possivel fechar o sistema. Um usuarix ainda esta logadx.");
 	    	}else{
 	    		statusSistema = false;
+
 	    	}
 	    }
 	    
 	    public void removeUsuario(String email)throws UsuarioException{
-	    	if (status == false){
+	    	if (usuarioLogado == null){
 	    		/*for(Usuario usuarioLogado:usuarios){
 	    			if(usuarioLogado.getEmail().equals(email)){
 	    				usuario = usuarioLogado;
@@ -218,16 +217,12 @@ public class Controller {
 	    }
 	    
 	    public void atualizaPerfil(String atributo,String valor) throws ParseException, AtualizaUsuarioException{
-	    	if(status == true){
+	    	if(usuarioLogado != null){
 	    		//Note que esse trecho se repete muito... crie um metodo para isso. ;)
 	    		//Se esse metodo nao achar o usuario, retorne null.
-	    		for(Usuario usuarioLogado: usuarios){
-	    			if (usuarioLogado.getEmail().equals(nomeUsuario)){
-	    				usuario = usuarioLogado;
-	    			}
+	    		usuarioBusca = buscaUsuario(emailUsuario);
 	    	}
-	    	}
-	    	if (status == false){
+	    	if (usuarioLogado == null){
 	    		throw new AtualizaUsuarioException("Nao eh possivel atualizar um perfil. Nenhum usuarix esta logadx no +pop.");
 	    	}
 	    	//Essa logica eh perigosa. Procure usar if/else, jah que a logica eh
@@ -255,12 +250,8 @@ public class Controller {
 	    }
 	    
 	    public void atualizaPerfil(String atributo,String valor,String valor2) throws InfoUsuarioException{
-	    	if(status == true){
-	    		for(Usuario usuarioLogado: usuarios){
-	    			if (usuarioLogado.getEmail().equals(nomeUsuario)){
-	    				usuario = usuarioLogado;
-	    			}
-	    	}
+	    	if(usuarioLogado != null){
+	    		usuario = buscaUsuario(emailUsuario);
 	    	}
 	        if (atributo.equals("Senha")){
 	        	usuario.atualizaSenha(valor,valor2);
@@ -349,4 +340,21 @@ public class Controller {
 		public void curtirPost(String email, int numeroPost){
 			usuario.curtirPost(email, numeroPost, this.usuario.getNome());
 		}
+		
+		
+		
+		public Usuario buscaUsuario(String email) {
+			for(Usuario usuarioLogado : usuarios){
+	    		if(usuarioLogado.getEmail().equals(email)){
+	    			usuario = usuarioLogado;
+	    			status = true;
+	    			return usuario;
+	    		}else{
+	    			status = false;
+	    		}
+			}
+			return usuario;
+		}
+			
+	
 }

@@ -42,18 +42,18 @@ public class Facade {
 	}
 	
 	
-	public void atualizaPerfil(String atributo,String valor) throws ParseException, AtualizaUsuarioException{
+	public void atualizaPerfil(String atributo,String valor) throws ParseException, UsuarioException{
 		controller.atualizaPerfil(atributo, valor);
 	}
 	
-	public void atualizaPerfil(String atributo,String valor,String valor2) throws InfoUsuarioException{
+	public void atualizaPerfil(String atributo,String valor,String valor2) throws UsuarioException{
 		controller.atualizaPerfil(atributo, valor, valor2);
 	}
-	public String getInfoUsuario(String atributo,String email) throws InfoUsuarioException{
+	public String getInfoUsuario(String atributo,String email) throws UsuarioException{
 		return controller.getInfoUsuario(atributo,email);
 	}
 	
-	public String getInfoUsuario(String atributo) throws InfoUsuarioException{
+	public String getInfoUsuario(String atributo) throws UsuarioException{
 		return controller.getInfoUsuario(atributo);
 	}
 	
