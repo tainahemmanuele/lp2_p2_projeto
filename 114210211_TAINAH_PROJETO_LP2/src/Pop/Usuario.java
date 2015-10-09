@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,6 +19,7 @@ import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.ValidaException;
+import Util.Util;
 
 public class Usuario {
 	// Voce tem muitos atributos de auxilio.
@@ -30,19 +32,21 @@ public class Usuario {
 	private String nome;
 	private String email;
 	private String senha;
-	private String dataNascimento; // <-- isso vira objeto.
+	private LocalDate dataNascimento; // <-- isso vira objeto.
 	private String telefone;
 	private String imagem;
 	private String atualiza;
 	private String senhaAtual;
 	SimpleDateFormat data1 = new SimpleDateFormat("dd/MM/yyyy");
 	SimpleDateFormat data2 = new SimpleDateFormat("yyyy-MM-dd");
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private Scanner ler = new Scanner(System.in);
 	private boolean statusData = false;
 	private Mural mural;
 	private ArrayList<Usuario> amigos;
 	private ArrayList<String> notificacoes;
-	private Notificacao notificacao;
+	private LocalDate data = LocalDate.now();
+	private Util  util = new Util();
 	private String quebraLinha = System.getProperty("line.separator"); // <--
 																		// isso
 																		// pode
@@ -76,7 +80,11 @@ public class Usuario {
 			this.nome = nome;
 		}
 
-		this.dataNascimento = converteData(dataNascimento);
+		//this.dataNascimento = converteData(dataNascimento);
+		data.format(formatter);
+		this.dataNascimento = util.converteData(dataNascimento);
+
+
 
 		if ((email.endsWith(".com") == true)
 				&& (email.endsWith(".com.br") == false)
@@ -94,7 +102,6 @@ public class Usuario {
 		this.senha = senha;
 		this.imagem = imagem;
 		this.mural = new Mural();
-		this.notificacao = new Notificacao();
 		this.notificacoes = new ArrayList<String>();
 		this.amigos = new ArrayList<Usuario>();
 		this.notificacaoAmizade = new ArrayList<Usuario>();
@@ -114,8 +121,11 @@ public class Usuario {
 			this.nome = nome;
 		}
 
-		this.dataNascimento = converteData(dataNascimento);
+		//this.dataNascimento = converteData(dataNascimento);
+		data.format(formatter);
+		//data.parse(dataNascimento, formatter);
 
+		this.dataNascimento= util.converteData(dataNascimento);
 		if ((email.endsWith(".com") == true)
 				&& (email.endsWith(".com.br") == false)
 				&& (email.matches("(.*)@(.*)")) == true) {
@@ -135,10 +145,10 @@ public class Usuario {
 
 		this.imagem = "resources/default.jpg";
 		this.mural = new Mural();
-		this.notificacao = new Notificacao();
 		this.notificacoes = new ArrayList<String>();
 		this.amigos = new ArrayList<Usuario>();
 		this.notificacaoAmizade = new ArrayList<Usuario>();
+		
 
 		// this.posts = new ArrayList<Post>();
 	}
@@ -189,7 +199,7 @@ public class Usuario {
 	}
 
 	public String getDataNascimento() {
-		return dataNascimento;
+		return dataNascimento.toString();
 	}
 
 	public String getTelefone() {
@@ -235,7 +245,7 @@ public class Usuario {
 
 	public void atualizaDataNascimento(String dataNascimento)
 			throws ParseException {
-		this.dataNascimento = converteDataAtualizacao(dataNascimento);
+		this.dataNascimento = util.converteDataAtualizacao(dataNascimento);
 	}
 
 	public void atualizaTelefone(String telefone) {
@@ -325,9 +335,18 @@ public class Usuario {
 		notificacoes.add(notificacao);
 	}
 
-	public void NotificacaoAmizade(String email, Usuario usuario,
+	public void NotificacaoAmizade(String emailUsuario, Usuario usuarioLogado,
 			ArrayList<Usuario> usuarios) {
-		notificacao.adicionaNotificacaoAmizade(email, usuario, usuarios);
+		String novaNotificacao = "";
+		for (Usuario usuario: usuarios){
+			if (usuario.getEmail().equals(emailUsuario)){
+				novaNotificacao += usuarioLogado.getNome() + " quer sua amizade.";
+				usuario.adicionaNotificacao(novaNotificacao);
+				usuario.adicionaEmail(usuarioLogado);
+
+			}
+		}
+		
 	}
 
 	public int getNotificacoes() {

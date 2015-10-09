@@ -19,23 +19,5 @@ public class Factory {
 		return post;
 	}
 	
-	public String getDataPost() {
-		return post.getDataPost();
-	}
 
-	public String getTexto() {
-		return post.getTexto();
-	}
-
-	public String getHashtag() {
-		return post.getHashtag();
-	}
-
-	public String getArquivo() {
-		return post.getArquivo();
-	}
-
-	public String[] getNovaHashtag() {
-		return post.getNovaHashtag();
-	}
 }

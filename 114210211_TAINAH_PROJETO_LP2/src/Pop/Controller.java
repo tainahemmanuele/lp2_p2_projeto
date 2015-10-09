@@ -146,7 +146,7 @@ public class Controller {
 		            	return usuarioBusca.getImagem();
 		            }
 		            if(atributo.equals("Data de Nascimento")){
-		            	return usuarioBusca.getDataNascimento();
+		            	return usuarioBusca.getDataNascimento().toString();
 		            }	
 	    	
 			return email;
