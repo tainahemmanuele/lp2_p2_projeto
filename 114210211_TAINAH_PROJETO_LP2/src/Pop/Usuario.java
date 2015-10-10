@@ -20,6 +20,7 @@ import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.ValidaException;
 import Util.Util;
+import Util.Verificacao;
 
 public class Usuario {
 	// Voce tem muitos atributos de auxilio.
@@ -47,6 +48,7 @@ public class Usuario {
 	private ArrayList<String> notificacoes;
 	private LocalDate data = LocalDate.now();
 	private Util  util = new Util();
+	private Verificacao verificacao = new Verificacao();
 	private String quebraLinha = System.getProperty("line.separator"); // <--
 																		// isso
 																		// pode
@@ -69,36 +71,11 @@ public class Usuario {
 	// estaticos para facilitar
 	// o acesso.
 	public Usuario(String nome, String email, String senha,
-			String dataNascimento, String imagem) throws Exception {
-		if (nome.equals("")) {
-			throw new CadastroUsuarioException(
-					"Erro no cadastro de Usuarios. Nome dx usuarix nao pode ser vazio.");
-		} else if (nome.startsWith(" ")) {
-			throw new CadastroUsuarioException(
-					"Erro no cadastro de Usuarios. Nome dx usuarix nao pode ser vazio.");
-		} else {
-			this.nome = nome;
-		}
+			LocalDate dataNascimento, String imagem) throws Exception {
 
-		//this.dataNascimento = converteData(dataNascimento);
-		data.format(formatter);
-		this.dataNascimento = util.converteData(dataNascimento);
-
-
-
-		if ((email.endsWith(".com") == true)
-				&& (email.endsWith(".com.br") == false)
-				&& (email.matches("(.*)@(.*)")) == true) {
-			this.email = email;
-		} else if ((email.endsWith(".com") == false)
-				&& (email.endsWith(".com.br") == true)
-				&& (email.matches("(.*)@(.*)")) == true) {
-			this.email = email;
-		} else {
-			throw new CadastroUsuarioException(
-					"Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
-		}
-
+		this.nome = nome;
+		this.dataNascimento = dataNascimento;
+		this.email = email;
 		this.senha = senha;
 		this.imagem = imagem;
 		this.mural = new Mural();
@@ -106,85 +83,28 @@ public class Usuario {
 		this.amigos = new ArrayList<Usuario>();
 		this.notificacaoAmizade = new ArrayList<Usuario>();
 
-		// this.posts = new ArrayList<Post>();
 	}
 
 	public Usuario(String nome, String email, String senha,
-			String dataNascimento) throws Exception {
-		if (nome.equals("")) {
-			throw new CadastroUsuarioException(
-					"Erro no cadastro de Usuarios. Nome dx usuarix nao pode ser vazio.");
-		} else if (nome.startsWith(" ")) {
-			throw new CadastroUsuarioException(
-					"Erro no cadastro de Usuarios. Nome dx usuarix nao pode ser vazio.");
-		} else {
-			this.nome = nome;
-		}
-
-		//this.dataNascimento = converteData(dataNascimento);
-		data.format(formatter);
-		//data.parse(dataNascimento, formatter);
-
-		this.dataNascimento= util.converteData(dataNascimento);
-		if ((email.endsWith(".com") == true)
-				&& (email.endsWith(".com.br") == false)
-				&& (email.matches("(.*)@(.*)")) == true) {
-			this.email = email;
-		} else if ((email.endsWith(".com") == false)
-				&& (email.endsWith(".com.br") == true)
-				&& (email.matches("(.*)@(.*)")) == true) {
-			this.email = email;
-			// }else if((email.matches("(.*)@(.*)")) == true){
-			// this.email = email;
-		} else {
-			throw new CadastroUsuarioException(
-					"Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
-		}
-
+			LocalDate dataNascimento) throws Exception {
+		this.nome = nome;
+		this.dataNascimento = dataNascimento;
+		this.email = email;
 		this.senha = senha;
-
 		this.imagem = "resources/default.jpg";
 		this.mural = new Mural();
 		this.notificacoes = new ArrayList<String>();
 		this.amigos = new ArrayList<Usuario>();
 		this.notificacaoAmizade = new ArrayList<Usuario>();
 		
-
-		// this.posts = new ArrayList<Post>();
 	}
+
 
 	// Isso pode ser feito jah na camada de Controller e passado para o usuario
 	// jah como uma data.
 	// Pensando em Coesao: Eh responsabilidade de um usuario converter Strings
 	// para uma data?
-	public String converteData(String dataNascimento) throws ParseException {
-		data1.setLenient(true);
-		data1.parse(dataNascimento);
-		String[] s = dataNascimento.split("/");
-		if ((s[0].length() == 2) && (s[1].length() == 2)
-				&& (s[2].length() == 4)) {
-			validaData(dataNascimento);
-		} else {
-			throw new DataException(
-					"Erro no cadastro de Usuarios. Formato de data esta invalida.",
-					2);
-		}
-
-		return data2.format(data1.parse(dataNascimento));
-	}
-
-	public String validaData(String dataNascimento) throws ParseException {
-		try {
-			Calendar dataValida = Calendar.getInstance();
-			dataValida.setLenient(true);
-			data1.setLenient(false);
-			dataValida.setTime(data1.parse(dataNascimento));
-		} catch (ParseException e) {
-			throw new DataException(
-					"Erro no cadastro de Usuarios. Data nao existe.", 1);
-		}
-		return dataNascimento;
-	}
+	//R:Não, por isso modifiquei os metodos.
 
 	public String getNome() {
 		return nome;
@@ -211,15 +131,7 @@ public class Usuario {
 	}
 
 	public void atualizaNome(String nome) throws AtualizaUsuarioException {
-		if (nome.equals("")) {
-			throw new AtualizaUsuarioException(
-					"Erro na atualizacao de perfil. Nome dx usuarix nao pode ser vazio.");
-		} else if (nome.startsWith(" ")) {
-			throw new AtualizaUsuarioException(
-					"Erro na atualizacao de perfil. Nome dx usuarix nao pode ser vazio.");
-		} else {
-			this.nome = nome;
-		}
+		this.nome = verificacao.verificaNomeAtualizacao(nome);
 	}
 
 	public void atualizaImagem(String imagem) {
@@ -228,19 +140,7 @@ public class Usuario {
 
 	//Mesma coisa com essa verificacao de formato de email.
 	public void atualizaEmail(String email) throws AtualizaUsuarioException {
-		if ((email.endsWith(".com") == true)
-				&& (email.endsWith(".com.br") == false)
-				&& (email.matches("(.*)@(.*)")) == true) {
-			this.email = email;
-			System.out.println(email);
-		} else if ((email.endsWith(".com") == false)
-				&& (email.endsWith(".com.br") == true)
-				&& (email.matches("(.*)@(.*)")) == true) {
-			this.email = email;
-		} else {
-			throw new AtualizaUsuarioException(
-					"Erro na atualizacao de perfil. Formato de e-mail esta invalido.");
-		}
+		this.email = verificacao.verificaEmailAtualizacao(email);
 	}
 
 	public void atualizaDataNascimento(String dataNascimento)
@@ -262,44 +162,6 @@ public class Usuario {
 		}
 	}
 
-	public String converteDataAtualizacao(String dataNascimento)
-			throws ParseException {
-		data1.setLenient(true);
-		data1.parse(dataNascimento);
-		String[] s = dataNascimento.split("/");
-		if ((s[0].length() == 2) && (s[1].length() == 2)
-				&& (s[2].length() == 4)) {
-			if ((s[0].matches("\\d+")) == true
-					&& (s[1].matches("\\d+")) == true
-					&& (s[2].matches("\\d+")) == true) {
-				validaDataAtualizacao(dataNascimento);
-			} else {
-				throw new DataException(
-						"Erro na atualizacao de perfil. Formato de data esta invalida.",
-						2);
-			}
-		} else {
-			throw new DataException(
-					"Erro na atualizacao de perfil. Formato de data esta invalida.",
-					2);
-		}
-
-		return data2.format(data1.parse(dataNascimento));
-	}
-
-	public String validaDataAtualizacao(String dataNascimento)
-			throws ParseException {
-		try {
-			Calendar dataValida = Calendar.getInstance();
-			dataValida.setLenient(true);
-			data1.setLenient(false);
-			dataValida.setTime(data1.parse(dataNascimento));
-		} catch (ParseException e) {
-			throw new DataException(
-					"Erro na atualizacao de perfil. Data nao existe.", 1);
-		}
-		return dataNascimento;
-	}
 
 	@Override
 	public String toString() {

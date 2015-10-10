@@ -3,6 +3,7 @@ package Pop;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,6 +21,8 @@ import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
 import Pop.Exceptions.ValidaException;
+import Util.Util;
+import Util.Verificacao;
 
 public class Controller {
 	private Usuario usuario;
@@ -29,10 +32,12 @@ public class Controller {
 	private String emailUsuario;
 	private boolean statusSistema;
 	private boolean statusUsuario;
-	private String data;
+	private LocalDate dataNascimento;
 	private int contadorNotificacao;
 	private Usuario usuarioBusca;
 	private boolean status;
+	private Verificacao verificacao;
+	private Util util;
 
 
 
@@ -48,6 +53,8 @@ public class Controller {
 	}
 
 	public void iniciaSistema(){
+		this.verificacao = new Verificacao();
+		this.util = new Util();
 		statusSistema = true;
 		
 	}
@@ -55,14 +62,14 @@ public class Controller {
 	
 	
 	public String cadastraUsuario(String nome, String email, String senha, String dataNascimento, String imagem) throws Exception{
-		this.usuario = new Usuario(nome,email,senha,dataNascimento,imagem);
+		this.usuario = new Usuario(verificacao.verificaNome(nome), verificacao.verificaEmail(email), senha,util.converteData(dataNascimento), imagem);
 		this.usuarios.add(this.usuario);
 		return usuario.getEmail();
 	}
 	
 	
 	public String cadastraUsuario(String nome, String email, String senha, String dataNascimento) throws Exception {
-		this.usuario= new Usuario(nome,email,senha,dataNascimento);
+		this.usuario= new Usuario(verificacao.verificaNome(nome), verificacao.verificaEmail(email), senha,util.converteData(dataNascimento));
 		this.usuarios.add(this.usuario);
 		return usuario.getEmail();
 		
