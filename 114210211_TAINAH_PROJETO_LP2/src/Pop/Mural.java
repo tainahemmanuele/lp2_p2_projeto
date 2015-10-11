@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -11,8 +12,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+
+
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
+import Util.Util;
 
 public class Mural {
    private ArrayList <Post> posts;
@@ -38,7 +42,9 @@ public class Mural {
    private int numeroPost;
    private int indice;
    private String arquivoFormatado ;
-   String [] separaArquivo;
+  private String [] separaArquivo;
+  private Util util;
+
 
 
     
@@ -50,6 +56,7 @@ public class Mural {
 		this.conteudoPosts = new HashMap<Integer,HashMap <Integer , String>> ();
 		this.numeroPost = 0;
 		this.indice = 0;
+		this.util = new Util();
 	}
 	
 	public void criaPost(String mensagem, String data)throws PostException, ParseException{
@@ -58,6 +65,7 @@ public class Mural {
 		this.arquivo = "";
 		this.mensagemPost ="";
         this.data = converteData(data);
+        
 		this.conteudos = new HashMap<Integer , String>();
 		String resultadoString = separaString(mensagem);
 		int tamanhoString = tamanhoString(mensagem, texto, hashtag,arquivo);

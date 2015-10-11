@@ -104,7 +104,7 @@ public class Usuario {
 	// jah como uma data.
 	// Pensando em Coesao: Eh responsabilidade de um usuario converter Strings
 	// para uma data?
-	//R:Não, por isso modifiquei os metodos.
+	//R:Nao, por isso modifiquei os metodos.
 
 	public String getNome() {
 		return nome;
