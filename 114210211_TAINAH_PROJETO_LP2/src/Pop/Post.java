@@ -2,25 +2,30 @@ package Pop;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
+import Util.Util;
 
 public class Post {
-   private String dataPost;
+   private LocalDateTime dataPost;
    private String texto;
    private String hashtag;
    private String arquivo;
    private String [] novaHashtag;
    private String hashtagNova;
    private String mensagem;
+   private Util util = new Util();
+
 
 	
-	public Post (String texto, String arquivo, String hashtag, String dataPost) throws PostException{
+	public Post (String texto, String arquivo, String hashtag, LocalDateTime data) throws PostException, DataException{
 		this.texto = texto;
 		this.arquivo = arquivo;
 		this.hashtag =testaHashtag(hashtag);
-		this.dataPost = dataPost;
+		this.dataPost =data;
 
 	}
 	
@@ -43,9 +48,18 @@ public class Post {
 	
 
 	public String getDataPost() {
-		return dataPost;
+		if (this.dataPost.getSecond() ==0){
+			return dataPost.toString().replace("T", " ") + ":00";
+		}else{
+			return dataPost.toString();
+		}
+
 	}
 
+	public LocalDateTime getDataPostLocalDate() {
+		return dataPost;
+
+	}
 	public String getTexto() {
 		return texto;
 	}

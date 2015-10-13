@@ -2,13 +2,8 @@ package Util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.Locale.Builder;
-import java.util.TimeZone;
+
 
 import Pop.Exceptions.DataException;
 
@@ -18,13 +13,13 @@ public class Util {
 	private LocalDateTime dataHora = LocalDateTime.now();
 	private DateTimeFormatter formatterPost = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-
-
-
+	
 	public Util(){
 
 
 	}
+	
+	
 	
 
 	public LocalDate converteData(String dataNascimento) throws DataException{
@@ -82,16 +77,13 @@ public class Util {
 		
 	}
 	
-	public LocalDateTime converteDataPost(String data) throws DataException{
+	public LocalDateTime converteHoraData(String data) throws DataException{
 		dataHora.format(formatterPost);
 		String[] s1 = data.split(" ");
 		String []s =s1[0].split("/");
 		if ((s[0].length() == 2) && (s[1].length() == 2)
 				&& (s[2].length() == 4)) {
 		    if ( Integer.parseInt(s[0])<=31 && Integer.parseInt(s[1])<=12 && Integer.parseInt(s[2])>= 1){
-		    	if(dataHora.parse(data, formatterPost).getSecond() ==0){
-		    		return dataHora.parse(data, formatterPost);
-		    	}
 		    	return dataHora.parse(data, formatterPost);
 		    }else {
 				throw new DataException(
@@ -104,6 +96,12 @@ public class Util {
 					2);
 		}
 		
-	}
+	}	
+	
+		
+	
+
+		
+	
 
 }

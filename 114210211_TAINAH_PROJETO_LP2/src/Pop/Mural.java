@@ -21,7 +21,7 @@ import Util.Util;
 public class Mural {
    private ArrayList <Post> posts;
    private Post mensagem;
-   private String data;
+   private LocalDateTime data;
    SimpleDateFormat data1 = new SimpleDateFormat("dd/MM/yyyy");
    SimpleDateFormat data2 = new SimpleDateFormat("yyyy-MM-dd");
    SimpleDateFormat horaPost = new SimpleDateFormat("HH:mm:ss");
@@ -64,14 +64,12 @@ public class Mural {
 		this.hashtag ="";
 		this.arquivo = "";
 		this.mensagemPost ="";
-        this.data = converteData(data);
+        this.data = util.converteHoraData(data);
         
 		this.conteudos = new HashMap<Integer , String>();
 		String resultadoString = separaString(mensagem);
 		int tamanhoString = tamanhoString(mensagem, texto, hashtag,arquivo);
 
-
-		//System.out.println(numeroPost);
 		if (tamanhoString<=200){
 			this.mensagem = factory.criaPost(this.texto, this.arquivo, this.hashtag, this.data);
 			posts.add(this.mensagem);
@@ -83,7 +81,6 @@ public class Mural {
 		}
 		adicionaConteudo(this.mensagem);
 		this.conteudoPosts.put(numeroPost, conteudos);
-		//System.out.println(this.conteudoPosts.toString());
 		numeroPost+=1;
 		
 
@@ -96,11 +93,9 @@ public class Mural {
 	public String getPost (String atributo, int numeroPost){
 	    post = posts.get(numeroPost);
 	    mensagemPostada = mensagens.get(numeroPost);
-	    //System.out.println(mensagens.get(numeroPost).g);
 	    hashtagPostada = hashtags.get(numeroPost);
 		if(atributo.equals("Mensagem")){
 			return post.getTexto() + post.getArquivo();
-			//return mensagemPostada;
 			
 		}
 		if(atributo.equals("Data")){
@@ -141,7 +136,6 @@ public class Mural {
 			 for (int i = mensagem.indexOf("#"); i < mensagem.lastIndexOf("") ; i++){
 					hashtag += mensagem.charAt(i);
 				} 
-			 //System.out.println(tamanho +" "+mensagem.indexOf("#") );
 		 }
 		
 
@@ -150,15 +144,9 @@ public class Mural {
 			 for (int i = 0; i < mensagem.indexOf(" #") ; i++){
 					mensagemPost += mensagem.charAt(i);
 				} 
-			 //System.out.println(tamanho +" "+mensagem.indexOf("#") );
 		 }
 		
 
-		//System.out.println(hashtag);
-		//System.out.println(texto);
-		 //System.out.println(mensagem.indexOf("<"));
-
-		//System.out.println(tamanhoString(mensagem, novaString, novaString2));
 		 return texto;
 	 
 	 }
@@ -167,8 +155,6 @@ public class Mural {
 
 
 	 public String getConteudoPost(int indicePost, int numeroPost) throws PostException{
-		 //System.out.println(conteudoPosts.get(numeroPost).containsKey(indice));
-		 //System.out.println(conteudoPosts.get(numeroPost).get(indice));
 	  if(indicePost >= 0){
 	   if (conteudoPosts.get(numeroPost).containsKey(indicePost) == true){
 		   return conteudoPosts.get(numeroPost).get(indicePost);  
@@ -185,46 +171,7 @@ public class Mural {
 	      return mensagem.length() - (hashtag.length()+arquivo.length());
 	 }
 	
-	 public String converteData(String dataNascimento) throws ParseException {
-		    data1.setLenient(true);
-			data1.parse(dataNascimento);
-			String[] s1 = dataNascimento.split(" ");
-			String[] s =s1[0].split("/");
-			String hora = validaHora(s1[1]);
-			if ((s[0].length() == 2) && (s[1].length() == 2) && (s[2].length() == 4)){
-				if ((s[0].matches("\\d+")) == true && (s[1].matches("\\d+")) == true && (s[2].matches("\\d+")) == true){
-					validaData(s1[0]);
-				}
-				else{
-					throw new DataException("Erro na atualizacao de perfil. Formato de data esta invalida.", 2);
-				}
-			}else{
-				throw new DataException("Erro na atualizacao de perfil. Formato de data esta invalida.", 2);
-			}
-		return data2.format(data1.parse(s1[0]))+ " "+ hora;	
-	}
 
-	public String validaData(String dataNascimento) throws ParseException{
-		try {  
-		    Calendar dataValida = Calendar.getInstance();
-		    dataValida.setLenient(true);
-		    data1.setLenient(false);
-			dataValida.setTime(data1.parse(dataNascimento));
-	     } catch (ParseException e){  
-	         throw new DataException("Erro na atualizacao de perfil. Data nao existe.",1);
-	        }
-		return dataNascimento;
-	}
-	
-	public String validaHora(String hora) throws ParseException{
-		try{
-			horaPost.setLenient(false);
-			horaPost.parse(hora);
-		}catch(DataException e){
-			throw new DataException("Hora invalida!",1);
-		}
-		return hora;
-	}
 	
 	public void adicionaConteudo(Post post){
 			conteudos.put(indice, post.getTexto());

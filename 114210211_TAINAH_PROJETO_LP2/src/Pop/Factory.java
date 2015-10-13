@@ -1,5 +1,8 @@
 package Pop;
 
+import java.time.LocalDateTime;
+
+import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
 
 public class Factory {
@@ -14,8 +17,8 @@ public class Factory {
 		
 	}
 	
-	public Post criaPost(String texto, String arquivo, String hashtag, String dataPost) throws PostException{
-		this.post = new Post(texto, arquivo, hashtag, dataPost);
+	public Post criaPost(String texto, String arquivo, String hashtag, LocalDateTime data) throws PostException, DataException{
+		this.post = new Post(texto, arquivo, hashtag, data);
 		return post;
 	}
 	
