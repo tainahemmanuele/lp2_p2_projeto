@@ -22,10 +22,6 @@ public class Mural {
    private ArrayList <Post> posts;
    private Post mensagem;
    private LocalDateTime data;
-   SimpleDateFormat data1 = new SimpleDateFormat("dd/MM/yyyy");
-   SimpleDateFormat data2 = new SimpleDateFormat("yyyy-MM-dd");
-   SimpleDateFormat horaPost = new SimpleDateFormat("HH:mm:ss");
-   private String dataPost;
    private String texto;
    private String hashtag;
    private String arquivo;
@@ -37,7 +33,6 @@ public class Mural {
    private ArrayList<String> hashtags;
    private String hashtagPostada;
    private HashMap<Integer,HashMap <Integer , String>> conteudoPosts;
-   //private ArrayList<String> conteudoPostsArquivo;
    private HashMap <Integer , String> conteudos;
    private int numeroPost;
    private int indice;

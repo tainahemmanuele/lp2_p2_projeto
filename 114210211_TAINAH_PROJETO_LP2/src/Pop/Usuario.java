@@ -18,7 +18,7 @@ import Pop.Exceptions.InfoUsuarioException;
 import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
-import Pop.Exceptions.ValidaException;
+
 import Util.Util;
 import Util.Verificacao;
 
@@ -38,15 +38,9 @@ public class Usuario {
 	private String imagem;
 	private String atualiza;
 	private String senhaAtual;
-	SimpleDateFormat data1 = new SimpleDateFormat("dd/MM/yyyy");
-	SimpleDateFormat data2 = new SimpleDateFormat("yyyy-MM-dd");
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	private Scanner ler = new Scanner(System.in);
-	private boolean statusData = false;
 	private Mural mural;
 	private ArrayList<Usuario> amigos;
 	private ArrayList<String> notificacoes;
-	private LocalDate data = LocalDate.now();
 	private Util  util = new Util();
 	private Verificacao verificacao = new Verificacao();
 	private String quebraLinha = System.getProperty("line.separator"); // <--

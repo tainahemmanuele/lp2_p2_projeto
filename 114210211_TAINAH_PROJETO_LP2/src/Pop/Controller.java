@@ -20,7 +20,6 @@ import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
-import Pop.Exceptions.ValidaException;
 import Util.Util;
 import Util.Verificacao;
 
@@ -32,7 +31,6 @@ public class Controller {
 	private String emailUsuario;
 	private boolean statusSistema;
 	private boolean statusUsuario;
-	private LocalDate dataNascimento;
 	private int contadorNotificacao;
 	private Usuario usuarioBusca;
 	private boolean status;
