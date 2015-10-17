@@ -27,12 +27,9 @@ public class Controller {
 	private Usuario usuario;
 	private Usuario usuarioLogado;
 	private ArrayList <Usuario> usuarios;
-	private boolean retorno;
-	private String emailUsuario;
 	private boolean statusSistema;
 	private boolean statusUsuario;
 	private int contadorNotificacao;
-	private Usuario usuarioBusca;
 	private boolean status;
 	private Verificacao verificacao;
 	private Util util;
@@ -42,11 +39,9 @@ public class Controller {
 	
 	public Controller(){
 		this.usuarios = new ArrayList<Usuario>();
-		this.retorno = false;
 		this.statusSistema = false;
 		this.statusUsuario = false;
 		this.usuarioLogado = null;
-		this.usuarioBusca = null;
 		this.status = false;
 	}
 
@@ -75,6 +70,7 @@ public class Controller {
 
 		
 	public String getNome(String email) throws UsuarioException {
+		boolean retorno = false;
 		for(Usuario usuario: usuarios){
 			if (usuario.getEmail().equals(email)){
 				retorno = true;
@@ -91,29 +87,20 @@ public class Controller {
 			
 	}
 	    
-	    public String pesquisaUsuario(String email, String senha) throws PesquisaUsuarioException {
-	    	for (Usuario usuario :usuarios){
-	    		if (usuario.getEmail().equals(email) && usuario.getSenha().equals(senha)){
-	    			usuarioLogado = usuario;
-	    			return usuario.getEmail();
-	    			
-	    		}
-	    		if ((usuario.getEmail().equals(email)) && !(usuario.getSenha().equals(senha))){
-	    			throw new PesquisaUsuarioException("Nao foi possivel realizar login. Senha invalida.");
-	    		}
-	    	}
-    		if (usuarioLogado == null){
-    			throw new PesquisaUsuarioException("Nao foi possivel realizar login. Um usuarix com email " + email+ " nao esta cadastradx.");
-    		}
-			return usuario.getEmail();
-	    }
-	    
 	    
 	    public void login (String email, String senha) throws LoginException, PesquisaUsuarioException{
 	    	if (this.usuarioLogado == null){
-	           emailUsuario = pesquisaUsuario(email, senha);
-	           this.usuario = retornaUsuario(email);
-	           this.contadorNotificacao =0;
+	           this.usuario = buscaUsuario(email);
+	           if(this.usuario == null){
+	        	   throw new PesquisaUsuarioException("Nao foi possivel realizar login. Um usuarix com email " + email+ " nao esta cadastradx.");  
+	           }
+	           if(usuario.getSenha().equals(senha)){
+	        	   usuarioLogado = usuario;  
+		           this.contadorNotificacao =0;
+	           }else {
+	        	   throw new PesquisaUsuarioException("Nao foi possivel realizar login. Senha invalida.");
+	           }
+
 	    	}else {
 	    		throw new LoginException ("Nao foi possivel realizar login. Um usuarix ja esta logadx: " +usuario.getNome() + "." );
 	    	}
@@ -121,8 +108,8 @@ public class Controller {
 	    	
 	    public void logout() throws LogoutException{
 	    		if (usuarioLogado != null){
-	    			usuario.limpaNotificacoes();
-	    			usuario.limpaEmail();
+	    			usuarioLogado.limpaNotificacoes();
+	    			usuarioLogado.limpaEmail();
 	    			usuarioLogado = null;
 	    		} else{
 	    			throw new LogoutException();
@@ -134,7 +121,7 @@ public class Controller {
 	    public String getInfoUsuario(String atributo, String email) throws InfoUsuarioException{
 	    	//Note que esse for se repete. Modularize isso por mei de um metodo:
 	    	// buscaUsuario(String email);
-	    	usuarioBusca = buscaUsuario(email);
+	    	Usuario usuarioBusca = buscaUsuario(email);
 	    	if (status == false){
 	    		throw new InfoUsuarioException("Um usuarix com email " + email + " nao esta cadastradx.");
 	    	}
@@ -161,25 +148,25 @@ public class Controller {
 
 	    public String getInfoUsuario(String atributo) throws InfoUsuarioException{
 	    	if (this.usuarioLogado != null){
-	    		usuarioBusca = buscaUsuario(emailUsuario);
-	    	}
+	    	
 	    	if(atributo.equals("Nome")){
-        	return usuarioBusca.getNome();
+        	return usuarioLogado.getNome();
         }
 	    	else if (atributo.equals("Email")){
-        	return usuarioBusca.getEmail();
+        	return usuarioLogado.getEmail();
         }
 	    	else if (atributo.equals("Senha")){
         	throw new InfoUsuarioException();
         }
 	    	else if(atributo.equals("Foto")){
-        	return usuarioBusca.getImagem();
+        	return usuarioLogado.getImagem();
         }
 	    	else if(atributo.equals("Data de Nascimento")){
-        	return usuarioBusca.getDataNascimento();
+        	return usuarioLogado.getDataNascimento();
         }	
+	    	}
       
-		return usuarioBusca.getEmail();
+		return null;
     }
     	
 	    
@@ -216,11 +203,6 @@ public class Controller {
 	    }
 	    
 	    public void atualizaPerfil(String atributo,String valor) throws ParseException, AtualizaUsuarioException{
-	    	if(usuarioLogado != null){
-	    		//Note que esse trecho se repete muito... crie um metodo para isso. ;)
-	    		//Se esse metodo nao achar o usuario, retorne null.
-	    		usuarioBusca = buscaUsuario(emailUsuario);
-	    	}
 	    	if (usuarioLogado == null){
 	    		throw new AtualizaUsuarioException("Nao eh possivel atualizar um perfil. Nenhum usuarix esta logadx no +pop.");
 	    	}
@@ -228,63 +210,51 @@ public class Controller {
 	    	// atualizar apenas um deles por vez. Caso contrario, eu poderia
 	    	// atualizar todos (vai que o equals dispara true em mais de um).	    	
 	    	if (atributo.equals("Nome")){
-	        	usuario.atualizaNome(valor);
+	        	usuarioLogado.atualizaNome(valor);
 	        }
 	    	else if (atributo.equals("E-mail")){
-	        	usuario.atualizaEmail(valor);
+	        	usuarioLogado.atualizaEmail(valor);
 	        }
 	    	else if(atributo.equals("Foto")){
-	        	usuario.atualizaImagem(valor);
+	        	usuarioLogado.atualizaImagem(valor);
 	        }
 	    	else if(atributo.equals("Data de Nascimento")){
-	        	usuario.atualizaDataNascimento(valor);
+	        	usuarioLogado.atualizaDataNascimento(valor);
 	        }
 	        
 	        
 	    	else if (atributo.equals("Telefone")){
-	        	usuario.atualizaTelefone(valor);
+	        	usuarioLogado.atualizaTelefone(valor);
 	        }
 	        	
 	    	
 	    }
 	    
 	    public void atualizaPerfil(String atributo,String valor,String valor2) throws InfoUsuarioException{
-	    	if(usuarioLogado != null){
-	    		usuario = buscaUsuario(emailUsuario);
-	    	}
 	        if (atributo.equals("Senha")){
-	        	usuario.atualizaSenha(valor,valor2);
+	        	usuarioLogado.atualizaSenha(valor,valor2);
 	        }
 	    	
 	    }
 	    
 	    public void criaPost(String mensagem, String data) throws PostException, ParseException{
-	    	usuario.criaPost(mensagem, data);
+	    	usuarioLogado.criaPost(mensagem, data);
 		}
 	    
 	    public String getPost(int numeroPost){
-			return usuario.getPost(numeroPost);
+			return usuarioLogado.getPost(numeroPost);
 		}
 	    
 	    public String getPost(String atributo, int numeroPost){
-	    	return usuario.getPost(atributo, numeroPost);
+	    	return usuarioLogado.getPost(atributo, numeroPost);
 	    }
 	    
 	    public String getConteudoPost(int indice, int numeroPost) throws PostException{
-			return usuario.getConteudoPost(indice, numeroPost);
+			return usuarioLogado.getConteudoPost(indice, numeroPost);
 		}
-		public Usuario retornaUsuario(String email){
-			for(Usuario usuario:usuarios){
-				if(usuario.getEmail().equals(email)){
-					return usuario;
-				}
-			}
-			return usuario;
-		}
-		
-		
+
 		public void adicionaAmigo(String email){
-              usuario.NotificacaoAmizade(email,this.usuario, usuarios);
+              usuarioLogado.NotificacaoAmizade(email,this.usuarioLogado, usuarios);
 			}
 		
 		public int getNotificacoes(){
@@ -293,15 +263,15 @@ public class Controller {
 		public void aceitaAmizade(String email){
 			for (Usuario amigo : usuarios){
 				if(amigo.getEmail().equals(email)){
-					usuario.aceitaAmigo(amigo);
-					amigo.aceitaAmigo(usuario);
-					amigo.adicionaNotificacao(usuario.getNome() + " aceitou sua amizade.");
+					usuarioLogado.aceitaAmigo(amigo);
+					amigo.aceitaAmigo(usuarioLogado);
+					amigo.adicionaNotificacao(usuarioLogado.getNome() + " aceitou sua amizade.");
 				}
 			}
 		}
 		
 		public int getQtdAmigos(){
-			return usuario.getQtdAmigos();
+			return usuarioLogado.getQtdAmigos();
 		}
 		
 		public void rejeitaAmizade(String email) throws UsuarioException{
@@ -333,11 +303,11 @@ public class Controller {
 		
 		
 		public void removeAmigo(String email){
-			usuario.removeAmigo(email, this.usuario.getNome());
+			usuarioLogado.removeAmigo(email, this.usuario.getNome());
 		}
 		
 		public void curtirPost(String email, int numeroPost) throws PostException{
-			usuario.curtirPost(email, numeroPost, this.usuario.getNome());
+			usuarioLogado.curtirPost(email, numeroPost, this.usuario.getNome());
 		}
 		
 		
@@ -352,7 +322,7 @@ public class Controller {
 	    			status = false;
 	    		}
 			}
-			return usuario;
+			return null;
 		}
 			
 	

@@ -29,26 +29,13 @@ import Util.Util;
 
 public class Mural {
    private ArrayList <String> posts;
-   private Post mensagem;
-   //private LocalDateTime data;
-   //private String texto;
-   //private String hashtag;
-   //private String arquivo;
    private FactoryPost factory;
    private Post post;
-   private int tamanhoString;
    private ArrayList<String> postagem;
-   //private String mensagemPost;
    private ArrayList<String> mensagens;
-   private String mensagemPostada;
    private ArrayList<String> hashtags;
-   private String hashtagPostada;
-   private int numeroPost;
-   private int indice;
    private ArrayList<ArrayList<String>>conteudoPost;
-   private String arquivoFormatado ;
-  private String [] separaArquivo;
-  private Util util;
+    private Util util;
 
 
 
@@ -59,8 +46,6 @@ public class Mural {
 		this.posts = new ArrayList<String>();
 		this.hashtags = new ArrayList<String>();
 		this.conteudoPost = new ArrayList<ArrayList<String>>();
-		this.numeroPost = 0;
-		this.indice = 0;
 		this.util = new Util();
 		this.postagem = new ArrayList<String>();
 	}

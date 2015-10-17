@@ -19,7 +19,7 @@ public class FactoryPost {
 	   private ArrayList<String> mensagemPost;
 	   private ArrayList<String> datas;
 	   private ArrayList<String> hashtags;
-	  private ArrayList <ArrayList<String>> postsConteudos;
+	   private ArrayList <ArrayList<String>> postsConteudos;
 
 
 	

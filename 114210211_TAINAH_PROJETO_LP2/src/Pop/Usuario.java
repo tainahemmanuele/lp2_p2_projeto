@@ -40,8 +40,8 @@ public class Usuario {
 	private Mural mural;
 	private ArrayList<Usuario> amigos;
 	private ArrayList<String> notificacoes;
-	private Util  util = new Util();
-	private Verificacao verificacao = new Verificacao();
+	private Util  util ;
+	private Verificacao verificacao ;
 	private String quebraLinha = System.getProperty("line.separator"); // <--
 																		// isso
 																		// pode
@@ -75,6 +75,8 @@ public class Usuario {
 		this.notificacoes = new ArrayList<String>();
 		this.amigos = new ArrayList<Usuario>();
 		this.notificacaoAmizade = new ArrayList<Usuario>();
+		this.util = new Util();
+		this.verificacao = new Verificacao();
 
 	}
 
@@ -89,6 +91,8 @@ public class Usuario {
 		this.notificacoes = new ArrayList<String>();
 		this.amigos = new ArrayList<Usuario>();
 		this.notificacaoAmizade = new ArrayList<Usuario>();
+		this.util = new Util();
+		this.verificacao = new Verificacao();
 		
 	}
 
