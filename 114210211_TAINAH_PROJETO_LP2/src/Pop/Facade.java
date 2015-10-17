@@ -73,7 +73,7 @@ public class Facade {
 			controller.criaPost(mensagem, data);
 		}
 	 
-	 public Post getPost(int numeroPost){
+	 public String getPost(int numeroPost){
 			return controller.getPost(numeroPost);
 		}
 	
@@ -115,7 +115,7 @@ public class Facade {
 		 controller.removeAmigo(email);
 	 }
 	 
-	 public void curtirPost(String email, int numeroPost){
+	 public void curtirPost(String email, int numeroPost) throws PostException{
 			controller.curtirPost(email, numeroPost);
 		}
 	public static void main(String[] args) throws UsuarioException, LoginException {

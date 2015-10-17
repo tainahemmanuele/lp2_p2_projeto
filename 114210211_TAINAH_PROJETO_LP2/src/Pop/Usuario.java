@@ -18,7 +18,6 @@ import Pop.Exceptions.InfoUsuarioException;
 import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
-
 import Util.Util;
 import Util.Verificacao;
 
@@ -170,7 +169,7 @@ public class Usuario {
 		mural.criaPost(mensagem, data);
 	}
 
-	public Post getPost(int numeroPost) {
+	public String getPost(int numeroPost) {
 		return mural.getPost(numeroPost);
 	}
 
@@ -275,12 +274,12 @@ public class Usuario {
 		}
 	}
 
-	public void curtirPost(String email, int numeroPost, String nome) {
+	public void curtirPost(String email, int numeroPost, String nome) throws PostException {
 		for (Usuario amigo : amigos) {
 			if (amigo.getEmail().equals(email)) {
-				Post post = amigo.getPost(numeroPost);
+				amigo.getPost(numeroPost);
 				amigo.adicionaNotificacao(nome + " curtiu seu post de "
-						+ post.getDataPost() + ".");
+						 +amigo.getPost("Data", numeroPost)+ ".");
 			}
 		}
 	}

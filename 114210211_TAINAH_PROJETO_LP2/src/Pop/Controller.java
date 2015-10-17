@@ -163,19 +163,19 @@ public class Controller {
 	    	if (this.usuarioLogado != null){
 	    		usuarioBusca = buscaUsuario(emailUsuario);
 	    	}
-        if (atributo.equals("Nome")){
+	    	if(atributo.equals("Nome")){
         	return usuarioBusca.getNome();
         }
-        if (atributo.equals("Email")){
+	    	else if (atributo.equals("Email")){
         	return usuarioBusca.getEmail();
         }
-        if (atributo.equals("Senha")){
+	    	else if (atributo.equals("Senha")){
         	throw new InfoUsuarioException();
         }
-        if(atributo.equals("Foto")){
+	    	else if(atributo.equals("Foto")){
         	return usuarioBusca.getImagem();
         }
-        if(atributo.equals("Data de Nascimento")){
+	    	else if(atributo.equals("Data de Nascimento")){
         	return usuarioBusca.getDataNascimento();
         }	
       
@@ -199,22 +199,16 @@ public class Controller {
 	    
 	    public void removeUsuario(String email)throws UsuarioException{
 	    	if (usuarioLogado == null){
-	    		/*for(Usuario usuarioLogado:usuarios){
-	    			if(usuarioLogado.getEmail().equals(email)){
-	    				usuario = usuarioLogado;
-	    				usuarios.remove(usuario);
-	    				statusUsuario = true;
-	    			}
-	    		}*/
              Iterator itr = usuarios.iterator(); 
              while(itr.hasNext()) {
                    Usuario usuario = (Usuario) itr.next();
                    if (usuario.getEmail().equals(email)){
                 	   itr.remove();
+                	   //sinaliza que usuario existe por isso pode ser deletado :)
                 	   statusUsuario = true;
                    }
 }
-	    		
+	    		//sin
 	    		if(statusUsuario == false){
 	    			throw new UsuarioException("Um usuarix com email "+ email +"nao esta cadastradx.");
 	    		}
@@ -236,18 +230,18 @@ public class Controller {
 	    	if (atributo.equals("Nome")){
 	        	usuario.atualizaNome(valor);
 	        }
-	        if (atributo.equals("E-mail")){
+	    	else if (atributo.equals("E-mail")){
 	        	usuario.atualizaEmail(valor);
 	        }
-	    	if(atributo.equals("Foto")){
+	    	else if(atributo.equals("Foto")){
 	        	usuario.atualizaImagem(valor);
 	        }
-	    	if(atributo.equals("Data de Nascimento")){
+	    	else if(atributo.equals("Data de Nascimento")){
 	        	usuario.atualizaDataNascimento(valor);
 	        }
 	        
 	        
-	    	if (atributo.equals("Telefone")){
+	    	else if (atributo.equals("Telefone")){
 	        	usuario.atualizaTelefone(valor);
 	        }
 	        	
@@ -268,7 +262,7 @@ public class Controller {
 	    	usuario.criaPost(mensagem, data);
 		}
 	    
-	    public Post getPost(int numeroPost){
+	    public String getPost(int numeroPost){
 			return usuario.getPost(numeroPost);
 		}
 	    
@@ -342,7 +336,7 @@ public class Controller {
 			usuario.removeAmigo(email, this.usuario.getNome());
 		}
 		
-		public void curtirPost(String email, int numeroPost){
+		public void curtirPost(String email, int numeroPost) throws PostException{
 			usuario.curtirPost(email, numeroPost, this.usuario.getNome());
 		}
 		
