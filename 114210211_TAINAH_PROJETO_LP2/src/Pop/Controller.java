@@ -1,14 +1,11 @@
+/* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Pop;
 
-import java.text.DateFormat;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
@@ -27,7 +24,6 @@ public class Controller {
 	private Usuario usuarioLogado;
 	private ArrayList <Usuario> usuarios;
 	private boolean statusSistema;
-	private boolean statusUsuario;
 	private int contadorNotificacao;
 	private boolean status;
 	private Verificacao verificacao;
@@ -39,7 +35,6 @@ public class Controller {
 	public Controller(){
 		this.usuarios = new ArrayList<Usuario>();
 		this.statusSistema = false;
-		this.statusUsuario = false;
 		this.usuarioLogado = null;
 		this.status = false;
 	}
@@ -98,8 +93,6 @@ public class Controller {
 	 
 	    
 	    public String getInfoUsuario(String atributo, String email) throws UsuarioException{
-	    	//Note que esse for se repete. Modularize isso por mei de um metodo:
-	    	// buscaUsuario(String email);
 	    	Usuario usuarioBusca = buscaUsuario(email);
 	    	if (status == false){
 	    		throw new InfoUsuarioException("Um usuarix com email " + email + " nao esta cadastradx.");
@@ -107,16 +100,16 @@ public class Controller {
 	    			if (atributo.equals("Nome")){
 		            	return usuarioBusca.getNome();
 		            }
-		            if (atributo.equals("Email")){
+	    			else if (atributo.equals("Email")){
 		            	return usuarioBusca.getEmail();
 		            }
-		            if (atributo.equals("Senha")){
+	    			else if (atributo.equals("Senha")){
 		            	throw new InfoUsuarioException();
 		            }
-		            if(atributo.equals("Foto")){
+	    			else if(atributo.equals("Foto")){
 		            	return usuarioBusca.getImagem();
 		            }
-		            if(atributo.equals("Data de Nascimento")){
+	    			else if(atributo.equals("Data de Nascimento")){
 		            	return usuarioBusca.getDataNascimento().toString();
 		            }	
 	    	
@@ -159,6 +152,7 @@ public class Controller {
 	    }
 	    
 	    public void removeUsuario(String email)throws UsuarioException{
+	    	boolean statusUsuario = false;
 	    	if (usuarioLogado == null){
              Iterator itr = usuarios.iterator(); 
              while(itr.hasNext()) {

@@ -1,3 +1,4 @@
+/* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Pop;
 
 import java.time.LocalDateTime;
@@ -8,19 +9,14 @@ import Pop.Exceptions.PostException;
 import Util.Util;
 
 public class FactoryPost {
-	   private Util util = new Util();
-	   private ArrayList<String> posts;
 	   private ArrayList<String> conteudoPost ;
 	   private String mensagemPost;
-	   private ArrayList<String> datas;
 	   private String hashtag;
-	   private ArrayList <ArrayList<String>> postsConteudos;
 
 
 	
 	public FactoryPost(){
-		this.postsConteudos=new ArrayList<ArrayList<String>>();
-		
+	
 	}
 	
 
@@ -109,7 +105,7 @@ public class FactoryPost {
 				} 
 		 }
 
-		this.mensagemPost = mensagemPost;
+		 this.mensagemPost = mensagemPost;
 
          tamanhoString(mensagem,hashtag, arquivo);
          conteudoPost.add(texto);
@@ -129,6 +125,7 @@ public class FactoryPost {
 	 }
 
 	 }
+	 
 		
 	public String formataArquivo(String arquivo){
 		String arquivoFormatado = "";
