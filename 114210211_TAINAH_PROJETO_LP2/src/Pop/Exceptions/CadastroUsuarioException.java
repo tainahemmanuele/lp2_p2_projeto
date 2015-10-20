@@ -3,7 +3,6 @@ package Pop.Exceptions;
 
 public class CadastroUsuarioException extends UsuarioException {
 
-
 	public CadastroUsuarioException(String string) {
 		super(string);
 	}

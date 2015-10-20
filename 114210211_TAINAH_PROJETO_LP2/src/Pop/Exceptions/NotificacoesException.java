@@ -3,11 +3,11 @@ package Pop.Exceptions;
 
 public class NotificacoesException extends Exception {
 
-	public NotificacoesException (String string) {
+	public NotificacoesException(String string) {
 		super(string);
 	}
 
-	public NotificacoesException () {
+	public NotificacoesException() {
 		super("Nao ha mais notificacoes.");
 	}
 }

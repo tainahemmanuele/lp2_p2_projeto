@@ -26,7 +26,7 @@ public class Usuario {
 	private String nome;
 	private String email;
 	private String senha;
-	private LocalDate dataNascimento; 
+	private LocalDate dataNascimento;
 	private String telefone;
 	private String imagem;
 	private String atualiza;
@@ -34,13 +34,12 @@ public class Usuario {
 	private Mural mural;
 	private ArrayList<Usuario> amigos;
 	private ArrayList<String> notificacoes;
-	private Util  util ;
-	private Verificacao verificacao ;
+	private Util util;
+	private Verificacao verificacao;
 	private String quebraLinha = System.getProperty("line.separator");
 	private String novaNotificacao;
 	private ArrayList<Usuario> notificacaoAmizade;
 	private int contadorNotificacoes = 0;
-
 
 	public Usuario(String nome, String email, String senha,
 			LocalDate dataNascimento, String imagem) throws Exception {
@@ -58,8 +57,6 @@ public class Usuario {
 		this.verificacao = new Verificacao();
 
 	}
-
-
 
 	public String getNome() {
 		return nome;
@@ -93,7 +90,7 @@ public class Usuario {
 		this.imagem = imagem;
 	}
 
-	//Mesma coisa com essa verificacao de formato de email.
+	// Mesma coisa com essa verificacao de formato de email.
 	public void atualizaEmail(String email) throws AtualizaUsuarioException {
 		this.email = verificacao.verificaEmailAtualizacao(email);
 	}
@@ -116,7 +113,6 @@ public class Usuario {
 					"Erro na atualizacao de perfil. A senha fornecida esta incorreta.");
 		}
 	}
-
 
 	@Override
 	public String toString() {
@@ -151,15 +147,16 @@ public class Usuario {
 	public void NotificacaoAmizade(String emailUsuario, Usuario usuarioLogado,
 			ArrayList<Usuario> usuarios) {
 		String novaNotificacao = "";
-		for (Usuario usuario: usuarios){
-			if (usuario.getEmail().equals(emailUsuario)){
-				novaNotificacao += usuarioLogado.getNome() + " quer sua amizade.";
+		for (Usuario usuario : usuarios) {
+			if (usuario.getEmail().equals(emailUsuario)) {
+				novaNotificacao += usuarioLogado.getNome()
+						+ " quer sua amizade.";
 				usuario.adicionaNotificacao(novaNotificacao);
 				usuario.adicionaEmail(usuarioLogado);
 
 			}
 		}
-		
+
 	}
 
 	public int getNotificacoes() {
@@ -209,7 +206,7 @@ public class Usuario {
 	}
 
 	public void removeAmigo(String nome) {
-		Iterator <Usuario>itr = amigos.iterator();
+		Iterator<Usuario> itr = amigos.iterator();
 		while (itr.hasNext()) {
 			Usuario usuario = itr.next();
 			if (usuario.getNome().equals(nome)) {
@@ -219,7 +216,7 @@ public class Usuario {
 	}
 
 	public void removeAmigo(String email, String usuarioLogadoNome) {
-		Iterator <Usuario> itr = amigos.iterator();
+		Iterator<Usuario> itr = amigos.iterator();
 		while (itr.hasNext()) {
 			Usuario usuario = itr.next();
 			if (usuario.getEmail().equals(email)) {
@@ -232,12 +229,13 @@ public class Usuario {
 		}
 	}
 
-	public void curtirPost(String email, int numeroPost, String nome) throws PostException {
+	public void curtirPost(String email, int numeroPost, String nome)
+			throws PostException {
 		for (Usuario amigo : amigos) {
 			if (amigo.getEmail().equals(email)) {
 				amigo.getPost(numeroPost);
 				amigo.adicionaNotificacao(nome + " curtiu seu post de "
-						 +amigo.getPost("Data", numeroPost)+ ".");
+						+ amigo.getPost("Data", numeroPost) + ".");
 			}
 		}
 	}

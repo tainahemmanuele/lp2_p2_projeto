@@ -2,7 +2,7 @@
 package Pop.Exceptions;
 
 public class PostException extends Exception {
-	
+
 	public PostException(String string) {
 		super(string);
 	}
