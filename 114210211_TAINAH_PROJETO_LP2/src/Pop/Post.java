@@ -13,25 +13,31 @@ import Util.Util;
 public class Post {
    private Util util = new Util();
    private ArrayList<String> conteudoPost;
-   private ArrayList<String> mensagemPost;
-   private ArrayList<String> datas;
-   private ArrayList<String> hashtags;
+   private String mensagemPost;
+   private LocalDateTime data;
+   private String hashtags;
    private ArrayList <ArrayList<String>> postsConteudos;
+   private String texto;
 
 
    
 
 
 	
-	public Post (ArrayList <ArrayList<String>> postsConteudos,ArrayList<String> mensagemPost,ArrayList<String> datas,ArrayList<String> hashtags) throws PostException, DataException{
+	public Post (String texto,ArrayList <String >conteudoPost,String mensagemPost,LocalDateTime data,String hashtags) throws PostException, DataException{
 		this.mensagemPost = mensagemPost;
-		this.datas = datas;
+		this.data = data;
 		this.hashtags = hashtags;	
-		this.postsConteudos = postsConteudos;
+		this.conteudoPost = conteudoPost;
+		this.texto = texto;
+		
 
 	}
 	
 
+	public String getPost(){
+		return texto +" "+ "("+getData()+")";
+	}
 
 	public ArrayList<ArrayList<String>> getPostsConteudos() {
 		return postsConteudos;
@@ -43,21 +49,6 @@ public class Post {
 	}
 
 
-	public void testaHashtag(String hashtag) throws PostException{
-		String [] novaHashtag= hashtag.split(" ");
-		String hashtagNova="";
-		for (int i=0 ; i< novaHashtag.length; i++){
-			//System.out.println(novaHashtag[i]);
-			if(novaHashtag[i].startsWith("#")){
-				boolean status = true;
-				hashtagNova += novaHashtag[i]+",";
-			}else{
-				throw new PostException ("Nao eh possivel criar o post. As hashtags devem comecar com '#'. Erro na hashtag: "+ "'" + novaHashtag[i]+"'.");
-			}
-		}
-		hashtags.add(hashtagNova.substring(0, hashtagNova.length() -1));
-		
-	}
 	
 	
 	public ArrayList<String> getConteudoPost() {
@@ -67,21 +58,29 @@ public class Post {
 
 
 
-	public ArrayList<String> getMensagemPost() {
+	public String getMensagemPost() {
 		return mensagemPost;
 	}
 
 
 
 
-	public ArrayList<String> getDatas() {
-		return datas;
+	public  LocalDateTime getDataLocalDate() {
+		return data;
+	}
+
+	public String getData(){
+		if (data.getSecond() ==0){
+			return data.toString().replace("T", " ") + ":00";
+		}else{
+			return data.toString();
+		}
+		
 	}
 
 
 
-
-	public ArrayList<String> getHashtags() {
+	public String getHashtags() {
 		return hashtags;
 	}
 

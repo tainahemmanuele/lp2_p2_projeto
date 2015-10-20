@@ -11,32 +11,27 @@ public class FactoryPost {
 	   private Util util = new Util();
 	   private ArrayList<String> posts;
 	   private ArrayList<String> conteudoPost ;
-	   private ArrayList<String> mensagemPost;
+	   private String mensagemPost;
 	   private ArrayList<String> datas;
-	   private ArrayList<String> hashtags;
+	   private String hashtag;
 	   private ArrayList <ArrayList<String>> postsConteudos;
 
 
 	
 	public FactoryPost(){
-		this.posts = new ArrayList<String>();
-		this.datas=new ArrayList<String>();
-		this.hashtags=new ArrayList<String>();
 		this.postsConteudos=new ArrayList<ArrayList<String>>();
-		this.mensagemPost = new ArrayList<String>();
 		
 	}
 	
 
-	public Post criaPost(String texto, String data) throws DataException, PostException {
+	public Post criaPost(String texto, LocalDateTime data) throws DataException, PostException {
 		this.conteudoPost= new ArrayList<String>();
 		separaString(texto);
-		datas.add(data);
-		Post post = new Post(postsConteudos, mensagemPost, datas, hashtags);
+		Post post = new Post(texto,conteudoPost, mensagemPost, data, testaHashtag(hashtag));
 		return post;
 	}
 	
-	public void testaHashtag(String hashtag) throws PostException{
+	public String testaHashtag(String hashtag) throws PostException{
 		String [] novaHashtag= hashtag.split(" ");
 		String hashtagNova="";
 		for (int i=0 ; i< novaHashtag.length; i++){
@@ -47,7 +42,7 @@ public class FactoryPost {
 				throw new PostException ("Nao eh possivel criar o post. As hashtags devem comecar com '#'. Erro na hashtag: "+ "'" + novaHashtag[i]+"'.");
 			}
 		}
-		hashtags.add(hashtagNova.substring(0, hashtagNova.length() -1));
+		return hashtagNova.substring(0, hashtagNova.length() -1);
 		
 	}
 	
@@ -58,18 +53,12 @@ public class FactoryPost {
 			String arquivoFormatado ="";
 			if(separaArquivo[i].contains("<imagem>")){
 				String arquivo = separaArquivo[i];
-				arquivoFormatado += "$arquivo_imagem:";
-				for (int j = arquivo.indexOf(">")+1; j < arquivo.lastIndexOf("</") ; j++){
-					arquivoFormatado += arquivo.charAt(j);
-				}
+				arquivoFormatado += "$arquivo_imagem:"+formataArquivo(arquivo);
 				conteudoPost.add(arquivoFormatado);
 			}
 			if(separaArquivo[i].contains("<audio>")){
 				String arquivo = separaArquivo[i];
-				arquivoFormatado += "$arquivo_audio:";
-				for (int j = arquivo.indexOf(">")+1; j < arquivo.lastIndexOf("</") ; j++){
-					arquivoFormatado += arquivo.charAt(j);
-				}
+				arquivoFormatado += "$arquivo_audio:"+formataArquivo(arquivo);
 				conteudoPost.add(arquivoFormatado);
 			}
 		}
@@ -109,6 +98,7 @@ public class FactoryPost {
 					hashtag += mensagem.charAt(i);
 				} 
 		 }
+		this.hashtag = hashtag;
 
 		
 
@@ -119,13 +109,11 @@ public class FactoryPost {
 				} 
 		 }
 
+		this.mensagemPost = mensagemPost;
 
          tamanhoString(mensagem,hashtag, arquivo);
          conteudoPost.add(texto);
          adicionaConteudo(arquivo);
-         testaHashtag(hashtag);
-         this.mensagemPost.add(mensagemPost);
-         postsConteudos.add(conteudoPost);
 		 return texto;
 	 
 	 }
@@ -142,7 +130,13 @@ public class FactoryPost {
 
 	 }
 		
-	
+	public String formataArquivo(String arquivo){
+		String arquivoFormatado = "";
+		for (int j = arquivo.indexOf(">")+1; j < arquivo.lastIndexOf("</") ; j++){
+			arquivoFormatado += arquivo.charAt(j);
+		}
+		return arquivoFormatado;
+	}
 	
 
 

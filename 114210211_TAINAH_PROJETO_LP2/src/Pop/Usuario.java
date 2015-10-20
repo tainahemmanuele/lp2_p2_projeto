@@ -22,17 +22,10 @@ import Util.Util;
 import Util.Verificacao;
 
 public class Usuario {
-	// Voce tem muitos atributos de auxilio.
-	// Recomendo esquecer essa string data. Faz
-	// com que a data seja um objeto LocalDate
-	// que jah vem pronto. Ou seja, transforma as
-	// datas de String no Controller. Ou melhor ainda,
-	// Numa classe util que faz essas conversoes de String em objetos como
-	// LocalDate e LocalDateTime.
 	private String nome;
 	private String email;
 	private String senha;
-	private LocalDate dataNascimento; // <-- isso vira objeto.
+	private LocalDate dataNascimento; 
 	private String telefone;
 	private String imagem;
 	private String atualiza;
@@ -141,10 +134,6 @@ public class Usuario {
 		return mural.getPost(numeroPost);
 	}
 
-	// Esse forwarding tah bem bonito. :)
-	// Jah que o Usuario eh algo complexo, o mural facilita muito em modularizar
-	// e deixar
-	// o usuario Mural mais enxuto.
 	public String getConteudoPost(int indice, int numeroPost)
 			throws PostException {
 		return mural.getConteudoPost(indice, numeroPost);

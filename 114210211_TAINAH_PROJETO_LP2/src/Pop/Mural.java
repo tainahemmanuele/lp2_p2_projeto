@@ -28,14 +28,10 @@ import Pop.Exceptions.PostException;
 import Util.Util;
 
 public class Mural {
-   private ArrayList <String> posts;
+   private ArrayList <Post> posts;
    private FactoryPost factory;
    private Post post;
-   private ArrayList<String> postagem;
-   private ArrayList<String> mensagens;
-   private ArrayList<String> hashtags;
-   private ArrayList<ArrayList<String>>conteudoPost;
-    private Util util;
+   private Util util;
 
 
 
@@ -43,46 +39,44 @@ public class Mural {
     
 	public Mural(){
 		this.factory = new FactoryPost();
-		this.posts = new ArrayList<String>();
-		this.hashtags = new ArrayList<String>();
-		this.conteudoPost = new ArrayList<ArrayList<String>>();
+		this.posts = new ArrayList<Post>();;
 		this.util = new Util();
-		this.postagem = new ArrayList<String>();
 	}
 	
 	public void criaPost(String texto, String data)throws PostException, ParseException{
 	  LocalDateTime dataPost =util.converteHoraData(data);
-      this.post = factory.criaPost(texto, testaData(dataPost));
-   	  posts.add(texto+" "+"("+testaData(dataPost)+")");
+      this.post = factory.criaPost(texto, dataPost);
+   	  posts.add(post);
 	}
 	
 	public String getPost(int numeroPost){
-		return posts.get(numeroPost);
+		return posts.get(numeroPost).getPost();
 	}
 	
 	public String getPost (String atributo, int numeroPost){
+		Post post = posts.get(numeroPost);
 		if(atributo.equals("Mensagem")){
-			return post.getMensagemPost().get(numeroPost);
+			return post.getMensagemPost();
 			
 		}
 		else if (atributo.equals("Data")){
-			return post.getDatas().get(numeroPost);
+			return post.getData().toString();
 		}
 		else if (atributo.equals("Hashtags")){
-			return post.getHashtags().get(numeroPost);
+			return post.getHashtags();
 		}
 		return null;
 	}
 	
 	
 	 public String getConteudoPost(int indicePost, int numeroPost) throws PostException{
+			Post post = posts.get(numeroPost);
 	  if(indicePost >= 0){
-	     if (!(post.getPostsConteudos().get(numeroPost).size() == indicePost)){
-	   		   return post.getPostsConteudos().get(numeroPost).get(indicePost);
+	     if (!(post.getConteudoPost().size() == indicePost)){
+	    	 return  post.getConteudoPost().get(indicePost);
 	      }else{
-	    	  throw new PostException("Item #"+indicePost+" nao existe nesse post, ele possui apenas "+ indicePost +" itens distintos.");
 
-		   
+	    	  throw new PostException("Item #"+indicePost+" nao existe nesse post, ele possui apenas "+ indicePost +" itens distintos.");  
 	   }
 	  }else{
 		 throw new PostException ("Requisicao invalida. O indice deve ser maior ou igual a zero.");
