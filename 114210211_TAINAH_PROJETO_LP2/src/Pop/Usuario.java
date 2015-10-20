@@ -42,27 +42,12 @@ public class Usuario {
 	private ArrayList<String> notificacoes;
 	private Util  util ;
 	private Verificacao verificacao ;
-	private String quebraLinha = System.getProperty("line.separator"); // <--
-																		// isso
-																		// pode
-																		// ser
-																		// constante.
-																		// Bota
-																		// um
-																		// final.
+	private String quebraLinha = System.getProperty("line.separator");
 	private String novaNotificacao;
-	//Voce precisa desse contador? Se eu quero saber quantas notificacoes
-	// tenho, posso usar uma lista de notificacoes. Note que o usuario pode ter varias notificacoes de curtida, por exemplo.
 	private ArrayList<Usuario> notificacaoAmizade;
 	private int contadorNotificacoes = 0;
 
-	// private ArrayList <Post> posts;
 
-	// Refatora para melhorar essa verificacao. Pensa numa classe cuja unica
-	// responsabilidade
-	// eh verificar esses foramtos. Pode ateh ser uma classe com metodos
-	// estaticos para facilitar
-	// o acesso.
 	public Usuario(String nome, String email, String senha,
 			LocalDate dataNascimento, String imagem) throws Exception {
 
@@ -80,28 +65,7 @@ public class Usuario {
 
 	}
 
-	public Usuario(String nome, String email, String senha,
-			LocalDate dataNascimento) throws Exception {
-		this.nome = nome;
-		this.dataNascimento = dataNascimento;
-		this.email = email;
-		this.senha = senha;
-		this.imagem = "resources/default.jpg";
-		this.mural = new Mural();
-		this.notificacoes = new ArrayList<String>();
-		this.amigos = new ArrayList<Usuario>();
-		this.notificacaoAmizade = new ArrayList<Usuario>();
-		this.util = new Util();
-		this.verificacao = new Verificacao();
-		
-	}
 
-
-	// Isso pode ser feito jah na camada de Controller e passado para o usuario
-	// jah como uma data.
-	// Pensando em Coesao: Eh responsabilidade de um usuario converter Strings
-	// para uma data?
-	//R:Nao, por isso modifiquei os metodos.
 
 	public String getNome() {
 		return nome;
@@ -255,9 +219,9 @@ public class Usuario {
 	}
 
 	public void removeAmigo(String nome) {
-		Iterator itr = amigos.iterator();
+		Iterator <Usuario>itr = amigos.iterator();
 		while (itr.hasNext()) {
-			Usuario usuario = (Usuario) itr.next();
+			Usuario usuario = itr.next();
 			if (usuario.getNome().equals(nome)) {
 				itr.remove();
 			}
@@ -265,9 +229,9 @@ public class Usuario {
 	}
 
 	public void removeAmigo(String email, String usuarioLogadoNome) {
-		Iterator itr = amigos.iterator();
+		Iterator <Usuario> itr = amigos.iterator();
 		while (itr.hasNext()) {
-			Usuario usuario = (Usuario) itr.next();
+			Usuario usuario = itr.next();
 			if (usuario.getEmail().equals(email)) {
 				usuario.adicionaNotificacao(usuarioLogadoNome
 						+ " removeu a sua amizade.");

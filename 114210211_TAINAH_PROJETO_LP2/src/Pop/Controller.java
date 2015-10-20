@@ -24,7 +24,6 @@ import Util.Util;
 import Util.Verificacao;
 
 public class Controller {
-	private Usuario usuario;
 	private Usuario usuarioLogado;
 	private ArrayList <Usuario> usuarios;
 	private boolean statusSistema;
@@ -55,43 +54,23 @@ public class Controller {
 	
 	
 	public String cadastraUsuario(String nome, String email, String senha, String dataNascimento, String imagem) throws Exception{
-		this.usuario = new Usuario(verificacao.verificaNome(nome), verificacao.verificaEmail(email), senha,util.converteData(dataNascimento), imagem);
-		this.usuarios.add(this.usuario);
+		Usuario usuario = new Usuario(verificacao.verificaNome(nome), verificacao.verificaEmail(email), verificacao.verificaSenha(senha),util.converteData(dataNascimento), imagem);
+		this.usuarios.add(usuario);
 		return usuario.getEmail();
 	}
 	
 	
 	public String cadastraUsuario(String nome, String email, String senha, String dataNascimento) throws Exception {
-		this.usuario= new Usuario(verificacao.verificaNome(nome), verificacao.verificaEmail(email), senha,util.converteData(dataNascimento));
-		this.usuarios.add(this.usuario);
-		return usuario.getEmail();
+		return cadastraUsuario(nome, email, senha, dataNascimento, "resources/default.jpg");
 		
 	}
 
-		
-	public String getNome(String email) throws UsuarioException {
-		boolean retorno = false;
-		for(Usuario usuario: usuarios){
-			if (usuario.getEmail().equals(email)){
-				retorno = true;
-				return usuario.getNome();
-			}
-			else{
-				retorno = false;
-			}
-		}
-		if (retorno == false){
-			throw new UsuarioException ("Um usuarix com email "+email + " nao esta cadastradx.");
-		}
-	   return email;
-			
-	}
 	    
-	    
-	    public void login (String email, String senha) throws LoginException, PesquisaUsuarioException{
+	    public void login (String email, String senha) throws LoginException, UsuarioException{
+	    	Usuario usuario = null;
 	    	if (this.usuarioLogado == null){
-	           this.usuario = buscaUsuario(email);
-	           if(this.usuario == null){
+	           usuario = buscaUsuario(email);
+	           if(usuario == null){
 	        	   throw new PesquisaUsuarioException("Nao foi possivel realizar login. Um usuarix com email " + email+ " nao esta cadastradx.");  
 	           }
 	           if(usuario.getSenha().equals(senha)){
@@ -102,7 +81,7 @@ public class Controller {
 	           }
 
 	    	}else {
-	    		throw new LoginException ("Nao foi possivel realizar login. Um usuarix ja esta logadx: " +usuario.getNome() + "." );
+	    		throw new LoginException ("Nao foi possivel realizar login. Um usuarix ja esta logadx: " +this.usuarioLogado.getNome() + "." );
 	    	}
 	    }
 	    	
@@ -118,7 +97,7 @@ public class Controller {
 	    
 	 
 	    
-	    public String getInfoUsuario(String atributo, String email) throws InfoUsuarioException{
+	    public String getInfoUsuario(String atributo, String email) throws UsuarioException{
 	    	//Note que esse for se repete. Modularize isso por mei de um metodo:
 	    	// buscaUsuario(String email);
 	    	Usuario usuarioBusca = buscaUsuario(email);
@@ -171,11 +150,6 @@ public class Controller {
     	
 	    
 	    public void fechaSistema() throws InfoUsuarioException{
-	    	//Nao precisa de um booleano. Pode manter uma referencia para um usuarioLogado.
-	    	// Ao realizar login, buscamos esse usuario no cadastro e fazemos
-	    	// usuarioLogado = usuarioEncontrado.
-	    	// Ao fazer logout, fazemos: usuarioLogado = null;
-	    	// Dai toda a verificacao para saber se temos alguem logado vira: usuarioLogado == null?
 	    	if(usuarioLogado != null){
 	    		throw new InfoUsuarioException("Nao foi possivel fechar o sistema. Um usuarix ainda esta logadx.");
 	    	}else{
@@ -191,11 +165,9 @@ public class Controller {
                    Usuario usuario = (Usuario) itr.next();
                    if (usuario.getEmail().equals(email)){
                 	   itr.remove();
-                	   //sinaliza que usuario existe por isso pode ser deletado :)
                 	   statusUsuario = true;
                    }
 }
-	    		//sin
 	    		if(statusUsuario == false){
 	    			throw new UsuarioException("Um usuarix com email "+ email +"nao esta cadastradx.");
 	    		}
@@ -205,10 +177,7 @@ public class Controller {
 	    public void atualizaPerfil(String atributo,String valor) throws ParseException, AtualizaUsuarioException{
 	    	if (usuarioLogado == null){
 	    		throw new AtualizaUsuarioException("Nao eh possivel atualizar um perfil. Nenhum usuarix esta logadx no +pop.");
-	    	}
-	    	//Essa logica eh perigosa. Procure usar if/else, jah que a logica eh
-	    	// atualizar apenas um deles por vez. Caso contrario, eu poderia
-	    	// atualizar todos (vai que o equals dispara true em mais de um).	    	
+	    	}    	
 	    	if (atributo.equals("Nome")){
 	        	usuarioLogado.atualizaNome(valor);
 	        }
@@ -258,7 +227,7 @@ public class Controller {
 			}
 		
 		public int getNotificacoes(){
-			return usuario.getNotificacoes();
+			return usuarioLogado.getNotificacoes();
 		}
 		public void aceitaAmizade(String email){
 			for (Usuario amigo : usuarios){
@@ -275,17 +244,21 @@ public class Controller {
 		}
 		
 		public void rejeitaAmizade(String email) throws UsuarioException{
-			String usuarioNome= getNome(email);
+			Usuario usuarioNome = buscaUsuario(email);
+			if (usuarioNome == null){
+					throw new UsuarioException ("Um usuarix com email "+email + " nao esta cadastradx.");
+					
+				}
 			boolean statusConvite = false;
-			for (Usuario amigoFuturo: usuario.getNotificacaoAmizade()){
+			for (Usuario amigoFuturo: usuarioLogado.getNotificacaoAmizade()){
 				if(amigoFuturo.getEmail().equals(email)){
 					statusConvite = true;
-					amigoFuturo.adicionaNotificacao(this.usuario.getNome() +" rejeitou sua amizade.");
+					amigoFuturo.adicionaNotificacao(this.usuarioLogado.getNome() +" rejeitou sua amizade.");
 				}else{
 					statusConvite = false;
 				}
 			}if(statusConvite == false){
-				throw new UsuarioException(usuarioNome + " nao lhe enviou solicitacoes de amizade.");
+				throw new UsuarioException(usuarioNome.getNome() + " nao lhe enviou solicitacoes de amizade.");
 			}
 			
 			
@@ -297,22 +270,23 @@ public class Controller {
 				throw new NotificacoesException();
 			}else{
 			contadorNotificacao += 1;
-			return usuario.getNextNotificacao();
+			return usuarioLogado.getNextNotificacao();
 			}
 		}
 		
 		
 		public void removeAmigo(String email){
-			usuarioLogado.removeAmigo(email, this.usuario.getNome());
+			usuarioLogado.removeAmigo(email, this.usuarioLogado.getNome());
 		}
 		
 		public void curtirPost(String email, int numeroPost) throws PostException{
-			usuarioLogado.curtirPost(email, numeroPost, this.usuario.getNome());
+			usuarioLogado.curtirPost(email, numeroPost, this.usuarioLogado.getNome());
 		}
 		
 		
 		
-		public Usuario buscaUsuario(String email) {
+		public Usuario buscaUsuario(String email)  {
+			Usuario usuario = null;
 			for(Usuario usuarioLogado : usuarios){
 	    		if(usuarioLogado.getEmail().equals(email)){
 	    			usuario = usuarioLogado;

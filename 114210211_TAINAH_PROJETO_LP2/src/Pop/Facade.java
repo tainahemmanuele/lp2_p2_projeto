@@ -29,11 +29,8 @@ public class Facade {
 		return controller.cadastraUsuario(nome, email, senha, dataNascimento);
 	}
 	
-	public String getNome(String email) throws UsuarioException {
-		return controller.getNome(email);
-	}
 	
-	public void login (String email, String senha) throws LoginException, PesquisaUsuarioException{
+	public void login (String email, String senha) throws LoginException, UsuarioException{
 		controller.login(email, senha);
 	}
 	
@@ -118,13 +115,9 @@ public class Facade {
 	 public void curtirPost(String email, int numeroPost) throws PostException{
 			controller.curtirPost(email, numeroPost);
 		}
+	 
+	 
 	public static void main(String[] args) throws UsuarioException, LoginException {
-		Facade facade = new Facade();
-		//facade.cadastraUsuario("Tainah", "tainah@email.com", "21563", "19111995", "25689347", "foto");
-		//facade.login("tainah@email.com", "21563");
-
-		
-		//System.out.println(facade.getNome("marina@email.com"));
 		args = new String[] {"Pop.Facade", "diretorio_testes/usecase_1.txt","diretorio_testes/usecase_2.txt","diretorio_testes/usecase_3.txt","diretorio_testes/usecase_4.txt"};
 	    EasyAccept.main(args);
 

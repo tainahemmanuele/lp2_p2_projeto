@@ -8,12 +8,7 @@ import Pop.Exceptions.PostException;
 import Util.Util;
 
 public class FactoryPost {
-	//Tainah, isso nao eh responsabilidade de Factory. Ela nao deve compor
-	// e funcionar como uma criacao e um acesso... ela deve apenas criar.
-	// Pode remover essa composicao, e usar o Mural para compor uma lista de posts.
-	// Depois que o post eh criado, passa para o Mural, e jah coloca ele na lista.
-	// Qualquer acesso a esse post criado deve ser feito na lista e nao pela Factory.
-	 private Util util = new Util();
+	   private Util util = new Util();
 	   private ArrayList<String> posts;
 	   private ArrayList<String> conteudoPost ;
 	   private ArrayList<String> mensagemPost;
@@ -59,9 +54,7 @@ public class FactoryPost {
 	
 	public void adicionaConteudo(String arquivoMensagem){
 		String [] separaArquivo= arquivoMensagem.split(" ");
-		int indice =0;
 		for (int i = 1; i<separaArquivo.length; i ++){
-			indice += 1;
 			String arquivoFormatado ="";
 			if(separaArquivo[i].contains("<imagem>")){
 				String arquivo = separaArquivo[i];
@@ -103,7 +96,6 @@ public class FactoryPost {
 
 			 }
 		 if(mensagem.contains("<")){
-				int tamanho = mensagem.length() - texto.length();
 				 for (int i =mensagem.indexOf(" <"); i < mensagem.indexOf(" #"); i++){
 						arquivo += mensagem.charAt(i);
 					} 
@@ -132,7 +124,6 @@ public class FactoryPost {
          conteudoPost.add(texto);
          adicionaConteudo(arquivo);
          testaHashtag(hashtag);
-         //conteudoPost.add(hashtag);
          this.mensagemPost.add(mensagemPost);
          postsConteudos.add(conteudoPost);
 		 return texto;
