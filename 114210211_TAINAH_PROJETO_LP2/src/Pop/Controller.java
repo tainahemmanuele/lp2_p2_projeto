@@ -24,7 +24,6 @@ public class Controller {
 	private ArrayList<Usuario> usuarios;
 	private boolean statusSistema;
 	private int contadorNotificacao;
-	private boolean status;
 	private Verificacao verificacao;
 	private Util util;
 
@@ -32,7 +31,6 @@ public class Controller {
 		this.usuarios = new ArrayList<Usuario>();
 		this.statusSistema = false;
 		this.usuarioLogado = null;
-		this.status = false;
 	}
 
 	public void iniciaSistema() {
@@ -97,7 +95,7 @@ public class Controller {
 	public String getInfoUsuario(String atributo, String email)
 			throws UsuarioException {
 		Usuario usuarioBusca = buscaUsuario(email);
-		if (status == false) {
+		if (usuarioBusca == null) {
 			throw new InfoUsuarioException("Um usuarix com email " + email
 					+ " nao esta cadastradx.");
 		}
@@ -279,6 +277,7 @@ public class Controller {
 
 	public Usuario buscaUsuario(String email) {
 		Usuario usuario = null;
+		boolean status = false;
 		for (Usuario usuarioLogado : usuarios) {
 			if (usuarioLogado.getEmail().equals(email)) {
 				usuario = usuarioLogado;

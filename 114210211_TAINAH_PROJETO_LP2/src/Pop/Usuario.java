@@ -29,7 +29,6 @@ public class Usuario {
 	private LocalDate dataNascimento;
 	private String telefone;
 	private String imagem;
-	private String atualiza;
 	private String senhaAtual;
 	private Mural mural;
 	private ArrayList<Usuario> amigos;
@@ -39,7 +38,7 @@ public class Usuario {
 	private String quebraLinha = System.getProperty("line.separator");
 	private String novaNotificacao;
 	private ArrayList<Usuario> notificacaoAmizade;
-	private int contadorNotificacoes = 0;
+	private int contadorNotificacoes;
 
 	public Usuario(String nome, String email, String senha,
 			LocalDate dataNascimento, String imagem) throws Exception {
@@ -55,6 +54,7 @@ public class Usuario {
 		this.notificacaoAmizade = new ArrayList<Usuario>();
 		this.util = new Util();
 		this.verificacao = new Verificacao();
+		this.contadorNotificacoes =0;
 
 	}
 
