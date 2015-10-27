@@ -48,19 +48,16 @@ public class Util {
 			if ((s[0].matches("\\d+")) == true
 					&& (s[1].matches("\\d+")) == true
 					&& (s[2].matches("\\d+")) == true) {
-				if (Integer.parseInt(s[0]) <= 31
+				if (Integer.parseInt(s[0]) <= 31 && Integer.parseInt(s[0])>=1
 						&& Integer.parseInt(s[1]) <= 12
 						&& Integer.parseInt(s[2]) >= 1) {
-					if (data.parse(dataNascimento, formatter).isLeapYear() == true) {
+					if (!(s[0].equals("29") && s[1].equals("02"))){
 						return data.parse(dataNascimento, formatter);
-					} else {
-						throw new DataException(
-								"Erro na atualizacao de perfil. Data nao existe.",
-								2);
 					}
+					if (s[0].equals("29") &&  s[1].equals("02") && data.parse(dataNascimento, formatter).isLeapYear() == true){
+						 return data.parse(dataNascimento, formatter);	
 
 				} else {
-					System.out.println(2);
 					throw new DataException(
 							"Erro na atualizacao de perfil. Data nao existe.",
 							2);
@@ -75,6 +72,8 @@ public class Util {
 					"Erro na atualizacao de perfil. Formato de data esta invalida.",
 					2);
 		}
+		}
+		return null;
 
 	}
 

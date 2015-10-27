@@ -18,6 +18,7 @@ public class Post {
 	private String hashtags;
 	private String texto;
 	private int popularidade;
+	private int curtidas;
 
 	public Post(String texto, ArrayList<String> conteudoPost,
 			String mensagemPost, LocalDateTime data, String hashtags)
@@ -28,6 +29,7 @@ public class Post {
 		this.conteudoPost = conteudoPost;
 		this.texto = texto;
 		this.popularidade = 0;
+		this.curtidas = 0;
 
 	}
 
@@ -55,21 +57,23 @@ public class Post {
 		}
 
 	}
+	
+	public void adicionaHashtag(String hashtag){
+		hashtags += hashtag;
+	}
 
 	public String getHashtags() {
 		return hashtags;
 	}
 
-	public void curtirPost() {
-		this.popularidade += 10;
+	public void curtirPost(int pontos) {
+		this.curtidas +=1;
+		this.popularidade += pontos;
 	}
 
-	public void rejeitaPost() {
-		if (this.popularidade >= 10) {
-			this.popularidade -= 10;
-		} else {
-			this.popularidade = 0;
-		}
+	public void rejeitaPost(int pontos) {
+		this.curtidas -=1;
+		this.popularidade -=pontos;
 	}
 
 }
