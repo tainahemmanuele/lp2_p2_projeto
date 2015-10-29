@@ -32,7 +32,7 @@ public class Mural {
 	}
 
 	public void criaPost(String texto, String data) throws PostException,
-			ParseException {
+			DataException {
 		LocalDateTime dataPost = util.converteHoraData(data);
 		this.post = factory.criaPost(texto, dataPost);
 		posts.add(post);

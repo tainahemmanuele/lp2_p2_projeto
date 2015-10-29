@@ -42,12 +42,17 @@ public class Controller {
 
 	public String cadastraUsuario(String nome, String email, String senha,
 			String dataNascimento, String imagem) throws Exception {
-		Usuario usuario = new Usuario(verificacao.verificaNome(nome),
-				verificacao.verificaEmail(email),
-				verificacao.verificaSenha(senha),
-				util.converteData(dataNascimento), imagem);
-		this.usuarios.add(usuario);
-		return usuario.getEmail();
+		try{
+			
+			Usuario usuario = new Usuario(verificacao.verificaNome(nome),
+					verificacao.verificaEmail(email),
+					verificacao.verificaSenha(senha),
+					util.converteData(dataNascimento), imagem);
+			this.usuarios.add(usuario);
+			return usuario.getEmail();
+		}catch(Exception e){
+			throw new CadastroUsuarioException(e);
+		}
 	}
 
 	public String cadastraUsuario(String nome, String email, String senha,
@@ -65,7 +70,8 @@ public class Controller {
 			if (usuario == null) {
 				throw new PesquisaUsuarioException(
 						"Nao foi possivel realizar login. Um usuarix com email "
-								+ email + " nao esta cadastradx.");
+								+ email + 
+										" nao esta cadastradx.");
 			}
 			if (usuario.getSenha().equals(senha)) {
 				usuarioLogado = usuario;
@@ -168,6 +174,7 @@ public class Controller {
 			throw new AtualizaUsuarioException(
 					"Nao eh possivel atualizar um perfil. Nenhum usuarix esta logadx no +pop.");
 		}
+		try{
 		if (atributo.equals("Nome")) {
 			usuarioLogado.atualizaNome(valor);
 		} else if (atributo.equals("E-mail")) {
@@ -181,6 +188,9 @@ public class Controller {
 		else if (atributo.equals("Telefone")) {
 			usuarioLogado.atualizaTelefone(valor);
 		}
+		}catch(Exception e){
+			throw new AtualizaUsuarioException(e);
+		}
 
 	}
 
@@ -193,7 +203,7 @@ public class Controller {
 	}
 
 	public void criaPost(String mensagem, String data) throws PostException,
-			ParseException {
+			DataException {
 		usuarioLogado.criaPost(mensagem, data);
 	}
 

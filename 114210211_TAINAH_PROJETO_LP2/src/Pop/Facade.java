@@ -5,6 +5,7 @@ import java.text.ParseException;
 
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
+import Pop.Exceptions.DataException;
 import Pop.Exceptions.InfoUsuarioException;
 import Pop.Exceptions.LoginException;
 import Pop.Exceptions.LogoutException;
@@ -73,7 +74,7 @@ public class Facade {
 	}
 
 	public void criaPost(String mensagem, String data) throws PostException,
-			ParseException {
+			DataException {
 		controller.criaPost(mensagem, data);
 	}
 

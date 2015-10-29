@@ -3,10 +3,10 @@ package Pop.Exceptions;
 
 import java.text.ParseException;
 
-public class DataException extends ParseException {
+public class DataException extends Exception {
 
-	public DataException(String s, int e) {
-		super(s, e);
+	public DataException(String s) {
+		super(s);
 		// TODO Auto-generated constructor stub
 	}
 

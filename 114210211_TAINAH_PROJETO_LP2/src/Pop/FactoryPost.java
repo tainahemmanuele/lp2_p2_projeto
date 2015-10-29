@@ -31,7 +31,6 @@ public class FactoryPost {
 		String hashtagNova = "";
 		for (int i = 0; i < novaHashtag.length; i++) {
 			if (novaHashtag[i].startsWith("#")) {
-				boolean status = true;
 				hashtagNova += novaHashtag[i] + ",";
 			} else {
 				throw new PostException(

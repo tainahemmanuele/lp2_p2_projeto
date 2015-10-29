@@ -1,6 +1,7 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Util;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,82 +21,65 @@ public class Util {
 	}
 
 	public LocalDate converteData(String dataNascimento) throws DataException {
-		data.format(formatter);
-		String[] s = dataNascimento.split("/");
-		if ((s[0].length() == 2) && (s[1].length() == 2)
-				&& (s[2].length() == 4)) {
-			if (Integer.parseInt(s[0]) <= 31 && Integer.parseInt(s[1]) <= 12
-					&& Integer.parseInt(s[2]) >= 1) {
-				return data.parse(dataNascimento, formatter);
-			} else {
-				throw new DataException(
-						"Erro no cadastro de Usuarios. Data nao existe.", 2);
-			}
-		} else {
-			throw new DataException(
-					"Erro no cadastro de Usuarios. Formato de data esta invalida.",
-					2);
-		}
-
-	}
-
-	public LocalDate converteDataAtualizacao(String dataNascimento)
-			throws DataException {
-		data.format(formatter);
-		String[] s = dataNascimento.split("/");
-		if ((s[0].length() == 2) && (s[1].length() == 2)
-				&& (s[2].length() == 4)) {
-			if ((s[0].matches("\\d+")) == true
-					&& (s[1].matches("\\d+")) == true
-					&& (s[2].matches("\\d+")) == true) {
-				if (Integer.parseInt(s[0]) <= 31 && Integer.parseInt(s[0])>=1
-						&& Integer.parseInt(s[1]) <= 12
-						&& Integer.parseInt(s[2]) >= 1) {
-					if (!(s[0].equals("29") && s[1].equals("02"))){
-						return data.parse(dataNascimento, formatter);
+		String[] parteDaData = dataNascimento.split("/");		
+		if ((parteDaData[0].length() == 2) && (parteDaData[1].length() == 2) && (parteDaData[2].length() == 4)) {
+				try{
+					int dia = Integer.valueOf(parteDaData[0]);
+					int mes = Integer.valueOf(parteDaData[1]);
+					int ano = Integer.valueOf(parteDaData[2]);
+					LocalDate dataTemporaria = LocalDate.of(ano, mes, dia);
+					if(dia == 29){
+						if(!(dataTemporaria.isLeapYear() && dia == 29 && mes == 2)){
+							throw new DataException("Data nao existe."); 
+						}
 					}
-					if (s[0].equals("29") &&  s[1].equals("02") && data.parse(dataNascimento, formatter).isLeapYear() == true){
-						 return data.parse(dataNascimento, formatter);	
+					return dataTemporaria;
+					
+				}catch(NumberFormatException exception){
+					throw new DataException("Formato de data esta invalida.");
 
-				} else {
-					throw new DataException(
-							"Erro na atualizacao de perfil. Data nao existe.",
-							2);
+				}catch(DateTimeException exception){
+					throw new DataException("Data nao existe.");
+
 				}
-			} else {
-				throw new DataException(
-						"Erro na atualizacao de perfil. Formato de data esta invalida.",
-						2);
-			}
-		} else {
-			throw new DataException(
-					"Erro na atualizacao de perfil. Formato de data esta invalida.",
-					2);
-		}
-		}
-		return null;
+		}else {
+			throw new DataException("Formato de data esta invalida.");
+		}	
 
 	}
+
 
 	public LocalDateTime converteHoraData(String data) throws DataException {
 		dataHora.format(formatterPost);
-		String[] s1 = data.split(" ");
-		String[] s = s1[0].split("/");
-		if ((s[0].length() == 2) && (s[1].length() == 2)
-				&& (s[2].length() == 4)) {
-			if (Integer.parseInt(s[0]) <= 31 && Integer.parseInt(s[1]) <= 12
-					&& Integer.parseInt(s[2]) >= 1) {
-				return dataHora.parse(data, formatterPost);
-			} else {
-				throw new DataException(
-						"Erro no cadastro de Usuarios. Data nao existe.", 2);
-			}
-		} else {
-			throw new DataException(
-					"Erro no cadastro de Usuarios. Formato de data esta invalida.",
-					2);
-		}
+		String[] quebraDataHora = data.split(" ");
+		String[] parteDaData= quebraDataHora[0].split("/");
+		String [] parteDaHora = quebraDataHora[1].split(":");
+		if ((parteDaData[0].length() == 2) && (parteDaData[1].length() == 2) && (parteDaData[2].length() == 4)) {
+			try{
+				int dia = Integer.valueOf(parteDaData[0]);
+				int mes = Integer.valueOf(parteDaData[1]);
+				int ano = Integer.valueOf(parteDaData[2]);
+				int hora = Integer.valueOf(parteDaHora[0]);
+				int minuto = Integer.valueOf(parteDaHora[1]);
+				int segundo = Integer.valueOf(parteDaHora[2]);
+				LocalDateTime dataTemporaria = LocalDateTime.of(ano, mes, dia, hora, minuto, segundo);
+				if(dia == 29){
+					if(!(dataTemporaria.toLocalDate().isLeapYear() && dia == 29 && mes == 2)){
+						throw new DataException("Erro na atualizacao de perfil. Data nao existe."); 
+					}
+				}
+				return dataTemporaria;
+				
+			}catch(NumberFormatException exception){
+				throw new DataException("Erro na atualizacao de perfil. Formato de data esta invalida.");
 
+			}catch(DateTimeException exception){
+				throw new DataException("Erro na atualizacao de perfil. Data nao existe.");
+
+			}
+	}else {
+		throw new DataException("Erro na atualizacao de perfil. Formato de data esta invalida.");
+	}	
 	}
 
 }

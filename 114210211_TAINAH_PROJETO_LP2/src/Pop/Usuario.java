@@ -82,8 +82,8 @@ public class Usuario {
 		return imagem;
 	}
 
-	public void atualizaNome(String nome) throws AtualizaUsuarioException {
-		this.nome = verificacao.verificaNomeAtualizacao(nome);
+	public void atualizaNome(String nome) throws InfoUsuarioException {
+		this.nome = verificacao.verificaNome(nome);
 	}
 
 	public void atualizaImagem(String imagem) {
@@ -91,13 +91,13 @@ public class Usuario {
 	}
 
 	// Mesma coisa com essa verificacao de formato de email.
-	public void atualizaEmail(String email) throws AtualizaUsuarioException {
-		this.email = verificacao.verificaEmailAtualizacao(email);
+	public void atualizaEmail(String email) throws InfoUsuarioException {
+		this.email = verificacao.verificaEmail(email);
 	}
 
 	public void atualizaDataNascimento(String dataNascimento)
-			throws ParseException {
-		this.dataNascimento = util.converteDataAtualizacao(dataNascimento);
+			throws DataException {
+		this.dataNascimento = util.converteData(dataNascimento);
 	}
 
 	public void atualizaTelefone(String telefone) {
@@ -123,7 +123,7 @@ public class Usuario {
 	}
 
 	public void criaPost(String mensagem, String data) throws PostException,
-			ParseException {
+			DataException {
 		mural.criaPost(mensagem, data);
 	}
 
