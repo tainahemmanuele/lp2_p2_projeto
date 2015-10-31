@@ -1,4 +1,4 @@
-package Pop.TipoUsuario;
+package Pop.Usuario.TipoUsuario;
 
 import Pop.Post.Post;
 
