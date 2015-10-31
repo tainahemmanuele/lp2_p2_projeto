@@ -14,11 +14,11 @@ import java.util.regex.Pattern;
 
 import org.omg.Messaging.SyncScopeHelper;
 
-import Pop.ArquivosPost.Arquivo;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
 import Pop.Post.FactoryPost;
 import Pop.Post.Post;
+import Pop.Post.ArquivosPost.Arquivo;
 import Util.FormataData;
 
 public class Mural {
@@ -40,8 +40,8 @@ public class Mural {
 		posts.add(post);
 	}
 
-	public String getPost(int numeroPost) {
-		return posts.get(numeroPost).getPost().toString();
+	public Post getPost(int numeroPost) {
+		return posts.get(numeroPost);
 	}
 
 	public String getPost(String atributo, int numeroPost) {

@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import Pop.ArquivosPost.Arquivo;
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.DataException;
@@ -20,10 +19,16 @@ import Pop.Exceptions.InfoUsuarioException;
 import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
+import Pop.Post.Post;
+import Pop.Post.ArquivosPost.Arquivo;
+import Pop.Usuario.TipoUsuario.CelebridadePop;
+import Pop.Usuario.TipoUsuario.IconePop;
+import Pop.Usuario.TipoUsuario.Normal;
+import Pop.Usuario.TipoUsuario.Popularidade;
 import Util.FormataData;
 import Util.Verificacao;
 
-public class Usuario {
+public class Usuario implements Comparable <Usuario>{
 	private String nome;
 	private String email;
 	private String senha;
@@ -40,6 +45,8 @@ public class Usuario {
 	private String novaNotificacao;
 	private ArrayList<Usuario> notificacaoAmizade;
 	private int contadorNotificacoes;
+	private Popularidade popularidade;
+	private int quantidadePops;
 
 	public Usuario(String nome, String email, String senha,
 			LocalDate dataNascimento, String imagem) throws Exception {
@@ -56,6 +63,8 @@ public class Usuario {
 		this.util = new FormataData();
 		this.verificacao = new Verificacao();
 		this.contadorNotificacoes =0;
+		this.popularidade = new Normal();
+		this.quantidadePops = 0;
 
 	}
 
@@ -91,7 +100,6 @@ public class Usuario {
 		this.imagem = imagem;
 	}
 
-	// Mesma coisa com essa verificacao de formato de email.
 	public void atualizaEmail(String email) throws InfoUsuarioException {
 		this.email = verificacao.verificaEmail(email);
 	}
@@ -115,20 +123,13 @@ public class Usuario {
 		}
 	}
 
-	@Override
-	public String toString() {
-		return "Usuario [getNome()=" + getNome() + ", getEmail()=" + getEmail()
-				+ ", getSenha()=" + getSenha() + ", getDataNascimento()="
-				+ getDataNascimento() + ", getTelefone()=" + getTelefone()
-				+ ", getImagem()=" + getImagem() + "]";
-	}
 
 	public void criaPost(String mensagem, String data) throws PostException,
 			DataException {
 		mural.criaPost(mensagem, data);
 	}
 
-	public String getPost(int numeroPost) {
+	public Post getPost(int numeroPost) {
 		return mural.getPost(numeroPost);
 	}
 
@@ -229,15 +230,66 @@ public class Usuario {
 			}
 		}
 	}
+	
 
-	public void curtirPost(String email, int numeroPost, String nome)
+	public void curtirPost(String email, int numeroPost)
 			throws PostException {
 		for (Usuario amigo : amigos) {
 			if (amigo.getEmail().equals(email)) {
-				amigo.getPost(numeroPost);
+				Post post= amigo.getPost(numeroPost);
+				popularidade.adicionaPop(post);
+				popsUsuario(post.getPopularidade());
 				amigo.adicionaNotificacao(nome + " curtiu seu post de "
 						+ amigo.getPost("Data", numeroPost) + ".");
 			}
 		}
 	}
+	
+	public void descurtirPost(String email, int numeroPost)
+			throws PostException {
+		for (Usuario amigo : amigos) {
+			if (amigo.getEmail().equals(email)) {
+				Post post= amigo.getPost(numeroPost);
+				popularidade.diminuiPop(post);
+				popsUsuario(post.getPopularidade());
+				amigo.adicionaNotificacao(nome + " curtiu seu post de "
+						+ amigo.getPost("Data", numeroPost) + ".");
+			}
+		}
+	}
+	
+	public void popsUsuario(int pops){
+		this.quantidadePops += pops;
+		if (getQuantidadePops()<=500 && !(this.popularidade instanceof Normal)){
+			this.popularidade = new Normal();
+		}else if((getQuantidadePops()>=500 && getQuantidadePops()<=1000)&& !(this.popularidade instanceof CelebridadePop)){
+			this.popularidade = new CelebridadePop();
+		}else if (getQuantidadePops()>=1000 && !(this.popularidade instanceof IconePop)){
+			this.popularidade = new IconePop();
+		}
+	}
+	
+	public int getQuantidadePops() {
+		return quantidadePops;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "Usuario [getNome()=" + getNome() + ", getEmail()=" + getEmail()
+				+ ", getSenha()=" + getSenha() + ", getDataNascimento()="
+				+ getDataNascimento() + ", getTelefone()=" + getTelefone()
+				+ ", getImagem()=" + getImagem() + "]";
+	}
+	
+
+	@Override
+	public int compareTo(Usuario usuario) {
+		return Integer.compare(quantidadePops, usuario.getQuantidadePops());
+	}
+
+
+
+
+
 }

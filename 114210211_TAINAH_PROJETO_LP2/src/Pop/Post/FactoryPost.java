@@ -4,12 +4,12 @@ package Pop.Post;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import Pop.ArquivosPost.Arquivo;
-import Pop.ArquivosPost.Audio;
-import Pop.ArquivosPost.Imagem;
-import Pop.ArquivosPost.Texto;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
+import Pop.Post.ArquivosPost.Arquivo;
+import Pop.Post.ArquivosPost.Audio;
+import Pop.Post.ArquivosPost.Imagem;
+import Pop.Post.ArquivosPost.Texto;
 import Util.FormataData;
 
 public class FactoryPost {

@@ -7,9 +7,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import Pop.ArquivosPost.Arquivo;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
+import Pop.Post.ArquivosPost.Arquivo;
 import Util.FormataData;
 
 public class Post {
@@ -33,10 +33,8 @@ public class Post {
 
 	}
 
-	public String getPost() {
-		return mensagemPost +" " + hashtag()+ " " + "(" + getData() + ")";
-	}
 
+	
 	public ArrayList<Arquivo> getConteudoPost() {
 		return conteudoPost;
 	}
@@ -91,6 +89,16 @@ public class Post {
 
 	}
 
+	public int getPopularidade() {
+		return popularidade;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return mensagemPost +" " + hashtag()+ " " + "(" + getData() + ")";
+	}
 
 	
 }

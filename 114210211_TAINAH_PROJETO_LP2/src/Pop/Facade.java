@@ -3,7 +3,6 @@ package Pop;
 
 import java.text.ParseException;
 
-import Pop.ArquivosPost.Arquivo;
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.DataException;
@@ -14,6 +13,8 @@ import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
+import Pop.Post.Post;
+import Pop.Post.ArquivosPost.Arquivo;
 import easyaccept.EasyAccept;
 
 public class Facade {
@@ -79,7 +80,7 @@ public class Facade {
 		controller.criaPost(mensagem, data);
 	}
 
-	public String getPost(int numeroPost) {
+	public Post getPost(int numeroPost) {
 		return controller.getPost(numeroPost);
 	}
 
@@ -123,6 +124,10 @@ public class Facade {
 	public void curtirPost(String email, int numeroPost) throws PostException {
 		controller.curtirPost(email, numeroPost);
 	}
+	public void decurtirPost(String email, int numeroPost) throws PostException {
+		controller.descurtirPost(email, numeroPost);
+	}
+
 
 	public static void main(String[] args) throws UsuarioException,
 			LoginException {

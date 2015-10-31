@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import Pop.ArquivosPost.Arquivo;
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.DataException;
@@ -17,6 +16,8 @@ import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
+import Pop.Post.Post;
+import Pop.Post.ArquivosPost.Arquivo;
 import Pop.Usuario.Usuario;
 import Util.FormataData;
 import Util.Verificacao;
@@ -209,7 +210,7 @@ public class Controller {
 		usuarioLogado.criaPost(mensagem, data);
 	}
 
-	public String getPost(int numeroPost) {
+	public Post getPost(int numeroPost) {
 		return usuarioLogado.getPost(numeroPost);
 	}
 
@@ -283,8 +284,11 @@ public class Controller {
 	}
 
 	public void curtirPost(String email, int numeroPost) throws PostException {
-		usuarioLogado.curtirPost(email, numeroPost,
-				this.usuarioLogado.getNome());
+		usuarioLogado.curtirPost(email, numeroPost);
+	}
+
+	public void descurtirPost(String email, int numeroPost) throws PostException {
+		usuarioLogado.descurtirPost(email, numeroPost);
 	}
 
 	public Usuario buscaUsuario(String email) {

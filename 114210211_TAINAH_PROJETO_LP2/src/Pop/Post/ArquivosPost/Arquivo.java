@@ -1,4 +1,4 @@
-package Pop.ArquivosPost;
+package Pop.Post.ArquivosPost;
 
 public abstract class Arquivo {
 	private String arquivo;
