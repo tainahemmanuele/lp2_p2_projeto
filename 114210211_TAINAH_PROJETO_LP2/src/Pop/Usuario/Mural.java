@@ -1,5 +1,5 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
-package Pop;
+package Pop.Usuario;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,32 +14,34 @@ import java.util.regex.Pattern;
 
 import org.omg.Messaging.SyncScopeHelper;
 
+import Pop.ArquivosPost.Arquivo;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
-import Util.Util;
+import Pop.Post.FactoryPost;
+import Pop.Post.Post;
+import Util.FormataData;
 
 public class Mural {
 	private ArrayList<Post> posts;
 	private FactoryPost factory;
 	private Post post;
-	private Util util;
+	private FormataData formataData;
 
 	public Mural() {
 		this.factory = new FactoryPost();
 		this.posts = new ArrayList<Post>();
-		;
-		this.util = new Util();
+		this.formataData = new FormataData();
 	}
 
 	public void criaPost(String texto, String data) throws PostException,
 			DataException {
-		LocalDateTime dataPost = util.converteHoraData(data);
+		LocalDateTime dataPost = formataData.converteHoraData(data);
 		this.post = factory.criaPost(texto, dataPost);
 		posts.add(post);
 	}
 
 	public String getPost(int numeroPost) {
-		return posts.get(numeroPost).getPost();
+		return posts.get(numeroPost).getPost().toString();
 	}
 
 	public String getPost(String atributo, int numeroPost) {
@@ -50,7 +52,7 @@ public class Mural {
 		} else if (atributo.equals("Data")) {
 			return post.getData().toString();
 		} else if (atributo.equals("Hashtags")) {
-			return post.getHashtags();
+			return post.hashtagPost();
 		}
 		return null;
 	}
@@ -60,7 +62,7 @@ public class Mural {
 		Post post = posts.get(numeroPost);
 		if (indicePost >= 0) {
 			if (!(post.getConteudoPost().size() == indicePost)) {
-				return post.getConteudoPost().get(indicePost);
+				return post.getConteudoPost().get(indicePost).toString();
 			} else {
 
 				throw new PostException("Item #" + indicePost
@@ -73,13 +75,6 @@ public class Mural {
 		}
 	}
 
-	public String testaData(LocalDateTime dataPost) {
-		if (dataPost.getSecond() == 0) {
-			return dataPost.toString().replace("T", " ") + ":00";
-		} else {
-			return dataPost.toString();
-		}
-
-	}
+	
 
 }

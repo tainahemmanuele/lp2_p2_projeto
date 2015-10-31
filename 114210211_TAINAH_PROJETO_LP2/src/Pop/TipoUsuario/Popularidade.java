@@ -1,4 +1,6 @@
-package Pop;
+package Pop.TipoUsuario;
+
+import Pop.Post.Post;
 
 public interface Popularidade {
 

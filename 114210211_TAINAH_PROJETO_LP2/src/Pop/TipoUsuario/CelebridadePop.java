@@ -1,7 +1,9 @@
-package Pop;
+package Pop.TipoUsuario;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import Pop.Post.Post;
 
 public class CelebridadePop implements Popularidade{
 	public static final int POP_PONTOS = 25;

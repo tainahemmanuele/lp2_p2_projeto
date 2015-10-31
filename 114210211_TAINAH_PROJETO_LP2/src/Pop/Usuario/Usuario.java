@@ -1,5 +1,5 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
-package Pop;
+package Pop.Usuario;
 
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import Pop.ArquivosPost.Arquivo;
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.DataException;
@@ -19,7 +20,7 @@ import Pop.Exceptions.InfoUsuarioException;
 import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
-import Util.Util;
+import Util.FormataData;
 import Util.Verificacao;
 
 public class Usuario {
@@ -33,7 +34,7 @@ public class Usuario {
 	private Mural mural;
 	private ArrayList<Usuario> amigos;
 	private ArrayList<String> notificacoes;
-	private Util util;
+	private FormataData util;
 	private Verificacao verificacao;
 	private String quebraLinha = System.getProperty("line.separator");
 	private String novaNotificacao;
@@ -52,7 +53,7 @@ public class Usuario {
 		this.notificacoes = new ArrayList<String>();
 		this.amigos = new ArrayList<Usuario>();
 		this.notificacaoAmizade = new ArrayList<Usuario>();
-		this.util = new Util();
+		this.util = new FormataData();
 		this.verificacao = new Verificacao();
 		this.contadorNotificacoes =0;
 

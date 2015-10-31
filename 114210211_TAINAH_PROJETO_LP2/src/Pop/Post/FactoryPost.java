@@ -1,17 +1,23 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
-package Pop;
+package Pop.Post;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import Pop.ArquivosPost.Arquivo;
+import Pop.ArquivosPost.Audio;
+import Pop.ArquivosPost.Imagem;
+import Pop.ArquivosPost.Texto;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
-import Util.Util;
+import Util.FormataData;
 
 public class FactoryPost {
-	private ArrayList<String> conteudoPost;
+	private ArrayList<Arquivo> conteudoPost;
 	private String mensagemPost;
+	private ArrayList<String> hashtags;
 	private String hashtag;
+
 
 	public FactoryPost() {
 
@@ -19,26 +25,27 @@ public class FactoryPost {
 
 	public Post criaPost(String texto, LocalDateTime data)
 			throws DataException, PostException {
-		this.conteudoPost = new ArrayList<String>();
+		this.conteudoPost = new ArrayList<Arquivo>();
+		this.hashtags = new ArrayList<String>();
 		separaString(texto);
-		Post post = new Post(texto, conteudoPost, mensagemPost, data,
+		Post post = new Post (conteudoPost, mensagemPost, data,
 				testaHashtag(hashtag));
 		return post;
 	}
 
-	public String testaHashtag(String hashtag) throws PostException {
+	public ArrayList <String> testaHashtag(String hashtag) throws PostException {
 		String[] novaHashtag = hashtag.split(" ");
 		String hashtagNova = "";
 		for (int i = 0; i < novaHashtag.length; i++) {
 			if (novaHashtag[i].startsWith("#")) {
-				hashtagNova += novaHashtag[i] + ",";
+				hashtags.add(novaHashtag[i]);
 			} else {
 				throw new PostException(
 						"Nao eh possivel criar o post. As hashtags devem comecar com '#'. Erro na hashtag: "
 								+ "'" + novaHashtag[i] + "'.");
 			}
 		}
-		return hashtagNova.substring(0, hashtagNova.length() - 1);
+		return hashtags;
 
 	}
 
@@ -50,12 +57,14 @@ public class FactoryPost {
 				String arquivo = separaArquivo[i];
 				arquivoFormatado += "$arquivo_imagem:"
 						+ formataArquivo(arquivo);
-				conteudoPost.add(arquivoFormatado);
+				Arquivo imagem = new Imagem(arquivoFormatado);
+				conteudoPost.add(imagem);
 			}
 			if (separaArquivo[i].contains("<audio>")) {
 				String arquivo = separaArquivo[i];
 				arquivoFormatado += "$arquivo_audio:" + formataArquivo(arquivo);
-				conteudoPost.add(arquivoFormatado);
+				Arquivo audio = new Audio (arquivoFormatado);
+				conteudoPost.add(audio);
 			}
 		}
 
@@ -104,9 +113,10 @@ public class FactoryPost {
 		}
 
 		this.mensagemPost = mensagemPost;
+		Arquivo textoPost = new Texto(texto);
 
 		tamanhoString(mensagem, hashtag, arquivo);
-		conteudoPost.add(texto);
+		conteudoPost.add(textoPost);
 		adicionaConteudo(arquivo);
 		return texto;
 
@@ -132,5 +142,7 @@ public class FactoryPost {
 		}
 		return arquivoFormatado;
 	}
+	
+
 
 }

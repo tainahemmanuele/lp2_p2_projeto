@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import Pop.ArquivosPost.Arquivo;
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.DataException;
@@ -16,7 +17,8 @@ import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
-import Util.Util;
+import Pop.Usuario.Usuario;
+import Util.FormataData;
 import Util.Verificacao;
 
 public class Controller {
@@ -25,7 +27,7 @@ public class Controller {
 	private boolean statusSistema;
 	private int contadorNotificacao;
 	private Verificacao verificacao;
-	private Util util;
+	private FormataData formataData;
 
 	public Controller() {
 		this.usuarios = new ArrayList<Usuario>();
@@ -35,7 +37,7 @@ public class Controller {
 
 	public void iniciaSistema() {
 		this.verificacao = new Verificacao();
-		this.util = new Util();
+		this.formataData = new FormataData();
 		statusSistema = true;
 
 	}
@@ -47,7 +49,7 @@ public class Controller {
 			Usuario usuario = new Usuario(verificacao.verificaNome(nome),
 					verificacao.verificaEmail(email),
 					verificacao.verificaSenha(senha),
-					util.converteData(dataNascimento), imagem);
+					formataData.converteData(dataNascimento), imagem);
 			this.usuarios.add(usuario);
 			return usuario.getEmail();
 		}catch(Exception e){

@@ -3,6 +3,7 @@ package Pop;
 
 import java.text.ParseException;
 
+import Pop.ArquivosPost.Arquivo;
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.DataException;

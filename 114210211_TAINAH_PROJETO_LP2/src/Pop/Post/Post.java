@@ -1,5 +1,5 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
-package Pop;
+package Pop.Post;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -7,37 +7,37 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import Pop.ArquivosPost.Arquivo;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
-import Util.Util;
+import Util.FormataData;
 
 public class Post {
-	private ArrayList<String> conteudoPost;
+	private ArrayList<Arquivo> conteudoPost;
 	private String mensagemPost;
 	private LocalDateTime data;
-	private String hashtags;
+	private ArrayList<String>hashtags;
 	private String texto;
 	private int popularidade;
 	private int curtidas;
 
-	public Post(String texto, ArrayList<String> conteudoPost,
-			String mensagemPost, LocalDateTime data, String hashtags)
+	public Post(ArrayList<Arquivo> conteudoPost,
+			String mensagemPost, LocalDateTime data, ArrayList<String> hashtags)
 			throws PostException, DataException {
 		this.mensagemPost = mensagemPost;
 		this.data = data;
 		this.hashtags = hashtags;
 		this.conteudoPost = conteudoPost;
-		this.texto = texto;
 		this.popularidade = 0;
 		this.curtidas = 0;
 
 	}
 
 	public String getPost() {
-		return texto + " " + "(" + getData() + ")";
+		return mensagemPost +" " + hashtag()+ " " + "(" + getData() + ")";
 	}
 
-	public ArrayList<String> getConteudoPost() {
+	public ArrayList<Arquivo> getConteudoPost() {
 		return conteudoPost;
 	}
 
@@ -58,14 +58,14 @@ public class Post {
 
 	}
 	
-	public void adicionaHashtag(String hashtag){
-		hashtags += hashtag;
-	}
-
-	public String getHashtags() {
+	public ArrayList<String> getHashtags() {
 		return hashtags;
 	}
 
+	public String hashtagPost(){
+		return hashtag().replace(" ", ",");
+	}
+	
 	public void curtirPost(int pontos) {
 		this.curtidas +=1;
 		this.popularidade += pontos;
@@ -76,4 +76,21 @@ public class Post {
 		this.popularidade -=pontos;
 	}
 
+	public void adicionaHashtag(String hashtag) {
+		hashtags.add(hashtag);
+		
+	}
+
+	public String hashtag(){
+		String hashtagNova = "";
+		for (int i = 0; i < getHashtags().size(); i++) {
+			hashtagNova+= getHashtags().get(i)+" ";
+		}
+			
+		return hashtagNova.substring(0, hashtagNova.length() - 1);
+
+	}
+
+
+	
 }

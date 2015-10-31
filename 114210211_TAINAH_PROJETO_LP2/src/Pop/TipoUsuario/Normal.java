@@ -1,4 +1,6 @@
-package Pop;
+package Pop.TipoUsuario;
+
+import Pop.Post.Post;
 
 public class Normal implements Popularidade{
 	public static final int POP_PONTOS = 10;

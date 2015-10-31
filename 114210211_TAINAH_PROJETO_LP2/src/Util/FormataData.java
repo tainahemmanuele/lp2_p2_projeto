@@ -8,15 +8,10 @@ import java.time.format.DateTimeFormatter;
 
 import Pop.Exceptions.DataException;
 
-public class Util {
-	private LocalDate data = LocalDate.now();
-	private DateTimeFormatter formatter = DateTimeFormatter
-			.ofPattern("dd/MM/yyyy");
-	private LocalDateTime dataHora = LocalDateTime.now();
-	private DateTimeFormatter formatterPost = DateTimeFormatter
-			.ofPattern("dd/MM/yyyy HH:mm:ss");
+public class FormataData {
 
-	public Util() {
+
+	public FormataData() {
 
 	}
 
@@ -50,7 +45,6 @@ public class Util {
 
 
 	public LocalDateTime converteHoraData(String data) throws DataException {
-		dataHora.format(formatterPost);
 		String[] quebraDataHora = data.split(" ");
 		String[] parteDaData= quebraDataHora[0].split("/");
 		String [] parteDaHora = quebraDataHora[1].split(":");

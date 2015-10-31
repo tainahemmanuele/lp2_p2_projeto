@@ -1,4 +1,6 @@
-package Pop;
+package Pop.TipoUsuario;
+
+import Pop.Post.Post;
 
 public class IconePop implements Popularidade{
 	public static final int POP_PONTOS = 50;
