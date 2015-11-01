@@ -4,6 +4,7 @@ package Pop;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import Pop.Exceptions.AtualizaUsuarioException;
@@ -16,6 +17,8 @@ import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
+import Pop.Post.FactoryPost;
+import Pop.Post.Hashtag;
 import Pop.Post.Post;
 import Pop.Post.ArquivosPost.Arquivo;
 import Pop.Usuario.Usuario;
@@ -29,13 +32,18 @@ public class Controller {
 	private int contadorNotificacao;
 	private Verificacao verificacao;
 	private FormataData formataData;
+	private ArrayList<Hashtag> hashtags;
+
 
 	public Controller() {
 		this.usuarios = new ArrayList<Usuario>();
 		this.statusSistema = false;
 		this.usuarioLogado = null;
+		this.hashtags = new ArrayList<Hashtag>();
+
 	}
 
+	
 	public void iniciaSistema() {
 		this.verificacao = new Verificacao();
 		this.formataData = new FormataData();
@@ -208,6 +216,7 @@ public class Controller {
 	public void criaPost(String mensagem, String data) throws PostException,
 			DataException {
 		usuarioLogado.criaPost(mensagem, data);
+
 	}
 
 	public Post getPost(int numeroPost) {
@@ -306,4 +315,20 @@ public class Controller {
 		return null;
 	}
 
+	public ArrayList<Hashtag> getHashtags() {
+		return hashtags;
+	}
+
+
+	public void adicionaHashtag(){
+
+				
+		}
+	
+	
+	public void atualizaRankings(){
+		Collections.sort(usuarios);
+		Collections.reverse(usuarios);
+		
+	}
 }

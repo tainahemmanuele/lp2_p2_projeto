@@ -17,7 +17,6 @@ public class Post {
 	private String mensagemPost;
 	private LocalDateTime data;
 	private ArrayList<String>hashtags;
-	private String texto;
 	private int popularidade;
 	private int curtidas;
 

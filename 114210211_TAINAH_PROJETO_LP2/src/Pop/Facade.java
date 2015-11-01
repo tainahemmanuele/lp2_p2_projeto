@@ -124,11 +124,16 @@ public class Facade {
 	public void curtirPost(String email, int numeroPost) throws PostException {
 		controller.curtirPost(email, numeroPost);
 	}
-	public void decurtirPost(String email, int numeroPost) throws PostException {
+	
+	public void descurtirPost(String email, int numeroPost) throws PostException {
 		controller.descurtirPost(email, numeroPost);
 	}
 
 
+	public void atualizaRankings(){
+		controller.atualizaRankings();
+	}
+	
 	public static void main(String[] args) throws UsuarioException,
 			LoginException {
 		args = new String[] { "Pop.Facade", "diretorio_testes/usecase_1.txt",

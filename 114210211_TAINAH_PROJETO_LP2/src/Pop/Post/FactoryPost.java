@@ -4,6 +4,7 @@ package Pop.Post;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import Pop.Controller;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
 import Pop.Post.ArquivosPost.Arquivo;
@@ -19,7 +20,9 @@ public class FactoryPost {
 	private String hashtag;
 
 
+
 	public FactoryPost() {
+
 
 	}
 
@@ -35,7 +38,6 @@ public class FactoryPost {
 
 	public ArrayList <String> testaHashtag(String hashtag) throws PostException {
 		String[] novaHashtag = hashtag.split(" ");
-		String hashtagNova = "";
 		for (int i = 0; i < novaHashtag.length; i++) {
 			if (novaHashtag[i].startsWith("#")) {
 				hashtags.add(novaHashtag[i]);
@@ -47,6 +49,10 @@ public class FactoryPost {
 		}
 		return hashtags;
 
+	}
+
+	public ArrayList<String> getHashtags() {
+		return hashtags;
 	}
 
 	public void adicionaConteudo(String arquivoMensagem) {
@@ -144,5 +150,7 @@ public class FactoryPost {
 	}
 	
 
+	
+   
 
 }

@@ -238,7 +238,7 @@ public class Usuario implements Comparable <Usuario>{
 			if (amigo.getEmail().equals(email)) {
 				Post post= amigo.getPost(numeroPost);
 				popularidade.adicionaPop(post);
-				popsUsuario(post.getPopularidade());
+				amigo.popsUsuario(post.getPopularidade());
 				amigo.adicionaNotificacao(nome + " curtiu seu post de "
 						+ amigo.getPost("Data", numeroPost) + ".");
 			}
@@ -251,8 +251,8 @@ public class Usuario implements Comparable <Usuario>{
 			if (amigo.getEmail().equals(email)) {
 				Post post= amigo.getPost(numeroPost);
 				popularidade.diminuiPop(post);
-				popsUsuario(post.getPopularidade());
-				amigo.adicionaNotificacao(nome + " curtiu seu post de "
+				amigo.popsUsuario(post.getPopularidade());
+				amigo.adicionaNotificacao(nome + " descurtiu seu post de "
 						+ amigo.getPost("Data", numeroPost) + ".");
 			}
 		}
@@ -276,10 +276,12 @@ public class Usuario implements Comparable <Usuario>{
 	
 	@Override
 	public String toString() {
-		return "Usuario [getNome()=" + getNome() + ", getEmail()=" + getEmail()
-				+ ", getSenha()=" + getSenha() + ", getDataNascimento()="
-				+ getDataNascimento() + ", getTelefone()=" + getTelefone()
-				+ ", getImagem()=" + getImagem() + "]";
+		return "Usuario [nome=" + nome + ", email=" + email + ", senha="
+				+ senha + ", dataNascimento=" + dataNascimento + ", telefone="
+				+ telefone + ", imagem=" + imagem + ", senhaAtual="
+				+ senhaAtual + ", mural=" + mural + ", amigos=" + amigos
+				+ ", notificacoes=" + notificacoes + ", popularidade="
+				+ popularidade + ", quantidadePops=" + quantidadePops + "]";
 	}
 	
 
