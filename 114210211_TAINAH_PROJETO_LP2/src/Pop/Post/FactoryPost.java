@@ -21,8 +21,8 @@ public class FactoryPost {
 
 
 
-	public FactoryPost() {
 
+	public FactoryPost() {
 
 	}
 
@@ -149,6 +149,7 @@ public class FactoryPost {
 		return arquivoFormatado;
 	}
 	
+
 
 	
    

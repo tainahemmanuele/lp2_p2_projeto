@@ -43,6 +43,11 @@ public class Mural {
 	public Post getPost(int numeroPost) {
 		return posts.get(numeroPost);
 	}
+	
+	public ArrayList<String> getHashtags(){
+		ArrayList<String> hashtags = posts.get(posts.size()-1).getHashtags();
+		return hashtags;
+	}
 
 	public String getPost(String atributo, int numeroPost) {
 		Post post = posts.get(numeroPost);

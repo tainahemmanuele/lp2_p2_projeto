@@ -273,7 +273,9 @@ public class Usuario implements Comparable <Usuario>{
 		return quantidadePops;
 	}
 	
-	
+	public ArrayList<String> getHashtags(){
+		return mural.getHashtags();
+	}
 	@Override
 	public String toString() {
 		return "Usuario [nome=" + nome + ", email=" + email + ", senha="

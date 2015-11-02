@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import Pop.Exceptions.AtualizaUsuarioException;
@@ -18,7 +19,6 @@ import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
 import Pop.Post.FactoryPost;
-import Pop.Post.Hashtag;
 import Pop.Post.Post;
 import Pop.Post.ArquivosPost.Arquivo;
 import Pop.Usuario.Usuario;
@@ -32,14 +32,16 @@ public class Controller {
 	private int contadorNotificacao;
 	private Verificacao verificacao;
 	private FormataData formataData;
-	private ArrayList<Hashtag> hashtags;
+	private HashMap<String, Integer> hashtags;
+
+
 
 
 	public Controller() {
 		this.usuarios = new ArrayList<Usuario>();
 		this.statusSistema = false;
 		this.usuarioLogado = null;
-		this.hashtags = new ArrayList<Hashtag>();
+		this.hashtags = new HashMap<String, Integer>();
 
 	}
 
@@ -216,7 +218,7 @@ public class Controller {
 	public void criaPost(String mensagem, String data) throws PostException,
 			DataException {
 		usuarioLogado.criaPost(mensagem, data);
-
+		adicionaHashtag();	
 	}
 
 	public Post getPost(int numeroPost) {
@@ -294,6 +296,7 @@ public class Controller {
 
 	public void curtirPost(String email, int numeroPost) throws PostException {
 		usuarioLogado.curtirPost(email, numeroPost);
+
 	}
 
 	public void descurtirPost(String email, int numeroPost) throws PostException {
@@ -315,14 +318,19 @@ public class Controller {
 		return null;
 	}
 
-	public ArrayList<Hashtag> getHashtags() {
-		return hashtags;
-	}
+
 
 
 	public void adicionaHashtag(){
-
-				
+		int valor = 1;
+		for (String hashtag: usuarioLogado.getHashtags()){
+			if (this.hashtags.containsKey(hashtag)){
+				valor = hashtags.get(hashtag)+1;
+				hashtags.replace(hashtag, valor);
+			}else{
+				hashtags.put(hashtag, valor);
+			}
+		}		
 		}
 	
 	
@@ -331,4 +339,11 @@ public class Controller {
 		Collections.reverse(usuarios);
 		
 	}
+
+
+	public HashMap<String, Integer> getHashtags() {
+		return hashtags;
+	}
+	
+	
 }
