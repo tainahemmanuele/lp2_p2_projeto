@@ -33,6 +33,9 @@ public class Controller {
 	private Verificacao verificacao;
 	private FormataData formataData;
 	private HashMap<String, Integer> hashtags;
+	private String usuariosMaisPopulares;
+	private String usuariosMenosPopulares;
+	private String hashtagsTop;
 
 
 
@@ -42,6 +45,9 @@ public class Controller {
 		this.statusSistema = false;
 		this.usuarioLogado = null;
 		this.hashtags = new HashMap<String, Integer>();
+		this.usuariosMaisPopulares = "Mais Populares";
+		this.usuariosMenosPopulares = "Menos Populares";
+		this.hashtagsTop = "Trending Topics:";
 
 	}
 
@@ -318,14 +324,19 @@ public class Controller {
 		return null;
 	}
 
+/*modelo pra ordenacao:
+ * Treding topics: (1) #naza: 3, (2) #epicwin: 2...
+ * o mesmo vale pros usuarios: ,mais populares: (1) italo: (900)...|
+ * Criar entidade que vai mensurar hashtags!
+ */
 
 
-
-	public void adicionaHashtag(){
+	private void adicionaHashtag(){
 		int valor = 1;
+		
 		for (String hashtag: usuarioLogado.getHashtags()){
 			if (this.hashtags.containsKey(hashtag)){
-				valor = hashtags.get(hashtag)+1;
+				valor += hashtags.get(hashtag);
 				hashtags.replace(hashtag, valor);
 			}else{
 				hashtags.put(hashtag, valor);
@@ -336,7 +347,19 @@ public class Controller {
 	
 	public void atualizaRankings(){
 		Collections.sort(usuarios);
+		
+		for (int i=0; i<3; i++){
+			if (usuarios.size()>i){
+			}
+			
+		}
 		Collections.reverse(usuarios);
+		for (int i=0; i<3; i++){
+			if (usuarios.size()>i){
+			}
+			
+		}
+		
 		
 	}
 

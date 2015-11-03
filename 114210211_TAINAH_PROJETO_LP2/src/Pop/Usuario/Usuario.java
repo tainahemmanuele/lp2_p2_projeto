@@ -276,6 +276,7 @@ public class Usuario implements Comparable <Usuario>{
 	public ArrayList<String> getHashtags(){
 		return mural.getHashtags();
 	}
+	
 	@Override
 	public String toString() {
 		return "Usuario [nome=" + nome + ", email=" + email + ", senha="
@@ -289,6 +290,9 @@ public class Usuario implements Comparable <Usuario>{
 
 	@Override
 	public int compareTo(Usuario usuario) {
+		if (Integer.compare(quantidadePops, usuario.getQuantidadePops())==0){
+			return email.compareTo(usuario.getEmail());
+		}
 		return Integer.compare(quantidadePops, usuario.getQuantidadePops());
 	}
 
