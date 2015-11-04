@@ -139,7 +139,7 @@ public class Facade {
 		args = new String[] { "Pop.Facade", "diretorio_testes/usecase_1.txt",
 				"diretorio_testes/usecase_2.txt",
 				"diretorio_testes/usecase_3.txt",
-				"diretorio_testes/usecase_4.txt" };
+				"diretorio_testes/usecase_4.txt","diretorio_testes/usecase_5.txt","diretorio_testes/usecase_6.txt","diretorio_testes/usecase_7.txt" };
 		EasyAccept.main(args);
 
 	}

@@ -319,6 +319,10 @@ public class Usuario implements Comparable <Usuario>{
 			return false;
 }
 
+	public Popularidade getPopularidade() {
+		return popularidade;
+	}
+
 	
 
 

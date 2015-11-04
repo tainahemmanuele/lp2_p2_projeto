@@ -18,6 +18,7 @@ import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
+import Pop.Exceptions.UsuarioLogadoException;
 import Pop.Post.FactoryPost;
 import Pop.Post.Post;
 import Pop.Post.ArquivosPost.Arquivo;
@@ -188,12 +189,12 @@ public class Controller {
 	}
 
 	public void atualizaPerfil(String atributo, String valor)
-			throws ParseException, AtualizaUsuarioException {
-		if (usuarioLogado == null) {
-			throw new AtualizaUsuarioException(
-					"Nao eh possivel atualizar um perfil. Nenhum usuarix esta logadx no +pop.");
-		}
+			throws ParseException, AtualizaUsuarioException, UsuarioLogadoException {
 		try{
+		if (usuarioLogado == null) {
+			throw new  UsuarioLogadoException();
+					
+		}
 		if (atributo.equals("Nome")) {
 			usuarioLogado.atualizaNome(valor);
 		} else if (atributo.equals("E-mail")) {
