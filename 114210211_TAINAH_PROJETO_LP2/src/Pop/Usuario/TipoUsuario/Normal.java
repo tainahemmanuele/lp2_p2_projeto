@@ -22,4 +22,12 @@ public class Normal implements Popularidade{
 		return POP_PONTOS;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Normal ";
+	}
+	
+	
+
 }

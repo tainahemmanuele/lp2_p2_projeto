@@ -37,4 +37,11 @@ public class CelebridadePop implements Popularidade{
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "CelebridadePop ";
+	}
+	
+//	
+
 }

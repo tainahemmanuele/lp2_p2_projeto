@@ -32,7 +32,7 @@ public class Controller {
 	private int contadorNotificacao;
 	private Verificacao verificacao;
 	private FormataData formataData;
-	private HashMap<String, Integer> hashtags;
+	private ArrayList<tagPost> hashtags;
 	private String usuariosMaisPopulares;
 	private String usuariosMenosPopulares;
 	private String hashtagsTop;
@@ -44,10 +44,10 @@ public class Controller {
 		this.usuarios = new ArrayList<Usuario>();
 		this.statusSistema = false;
 		this.usuarioLogado = null;
-		this.hashtags = new HashMap<String, Integer>();
-		this.usuariosMaisPopulares = "Mais Populares";
-		this.usuariosMenosPopulares = "Menos Populares";
-		this.hashtagsTop = "Trending Topics:";
+		this.hashtags = new ArrayList<tagPost>();
+		this.usuariosMaisPopulares = "Mais Populares ";
+		this.usuariosMenosPopulares = "Menos Populares ";
+		this.hashtagsTop = "Trending Topics: ";
 
 	}
 
@@ -225,6 +225,7 @@ public class Controller {
 			DataException {
 		usuarioLogado.criaPost(mensagem, data);
 		adicionaHashtag();	
+		atualizaRankings();
 	}
 
 	public Post getPost(int numeroPost) {
@@ -332,41 +333,49 @@ public class Controller {
 
 
 	private void adicionaHashtag(){
-		int valor = 1;
-		
+		int ocorrencia = 1;
 		for (String hashtag: usuarioLogado.getHashtags()){
-			if (this.hashtags.containsKey(hashtag)){
-				valor += hashtags.get(hashtag);
-				hashtags.replace(hashtag, valor);
+			if (this.hashtags.contains(hashtag))	{
+				for (tagPost tag: getHashtags()){
+					if (tag.getHashtag().equals(hashtag)){
+						tag.setOcorrencia(1);
+					}
+				}
+					
+				
 			}else{
-				hashtags.put(hashtag, valor);
+				tagPost tag = new tagPost(hashtag, ocorrencia);
+				hashtags.add(tag);
 			}
-		}		
+		}
 		}
 	
 	
 	public void atualizaRankings(){
 		Collections.sort(usuarios);
-		
 		for (int i=0; i<3; i++){
 			if (usuarios.size()>i){
+				usuariosMaisPopulares+= "("+i+")"+usuarios.get(i).getNome()+":"+usuarios.get(i).getQuantidadePops()+ "|";
 			}
 			
 		}
 		Collections.reverse(usuarios);
 		for (int i=0; i<3; i++){
 			if (usuarios.size()>i){
+				usuariosMenosPopulares+= "("+i+")"+usuarios.get(i).getNome()+":"+usuarios.get(i).getQuantidadePops()+ "|";
 			}
 			
 		}
 		
-		
 	}
 
 
-	public HashMap<String, Integer> getHashtags() {
+	public ArrayList<tagPost> getHashtags() {
 		return hashtags;
 	}
+
+
+
 	
 	
 }

@@ -1,12 +1,10 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Pop.Post;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 
+import Pop.tagPost;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
 import Pop.Post.ArquivosPost.Arquivo;
@@ -99,5 +97,38 @@ public class Post {
 		return mensagemPost +" " + hashtag()+ " " + "(" + getData() + ")";
 	}
 
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
+		result = prime * result
+				+ ((mensagemPost == null) ? 0 : mensagemPost.hashCode());
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Post) {
+
+			Post post= (Post) obj;
+			if (post.getMensagemPost().equals(this.getMensagemPost())
+					&& post.getData() == this.getData()) {
+				return true;
+
+			} else {
+
+				return false;
+			}
+		}
+		return false;
+	}
+
+	
+	
 	
 }

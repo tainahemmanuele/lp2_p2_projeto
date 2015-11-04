@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import Pop.tagPost;
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.DataException;
@@ -279,12 +280,8 @@ public class Usuario implements Comparable <Usuario>{
 	
 	@Override
 	public String toString() {
-		return "Usuario [nome=" + nome + ", email=" + email + ", senha="
-				+ senha + ", dataNascimento=" + dataNascimento + ", telefone="
-				+ telefone + ", imagem=" + imagem + ", senhaAtual="
-				+ senhaAtual + ", mural=" + mural + ", amigos=" + amigos
-				+ ", notificacoes=" + notificacoes + ", popularidade="
-				+ popularidade + ", quantidadePops=" + quantidadePops + "]";
+		return "nome=" + nome + " email=" + email  + " amigos=" + amigos + " popularidade="
+				+ popularidade + " quantidadePops " + quantidadePops ;
 	}
 	
 
@@ -296,7 +293,33 @@ public class Usuario implements Comparable <Usuario>{
 		return Integer.compare(quantidadePops, usuario.getQuantidadePops());
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+			if (obj instanceof Usuario) {
+
+				Usuario usuario = (Usuario) obj;
+				if (usuario.getNome().equals(this.getNome())
+						&& usuario.getEmail()== this.getEmail()) {
+					return true;
+
+				} else {
+
+					return false;
+				}
+			}
+			return false;
+}
+
+	
 
 
 
