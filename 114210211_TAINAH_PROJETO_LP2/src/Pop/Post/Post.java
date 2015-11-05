@@ -17,6 +17,7 @@ public class Post {
 	private ArrayList<String>hashtags;
 	private int popularidade;
 	private int curtidas;
+	private int rejeicoes;
 
 	public Post(ArrayList<Arquivo> conteudoPost,
 			String mensagemPost, LocalDateTime data, ArrayList<String> hashtags)
@@ -27,6 +28,7 @@ public class Post {
 		this.conteudoPost = conteudoPost;
 		this.popularidade = 0;
 		this.curtidas = 0;
+		this.rejeicoes =0;
 
 	}
 
@@ -67,7 +69,7 @@ public class Post {
 	}
 
 	public void rejeitaPost(int pontos) {
-		this.curtidas -=1;
+		this.rejeicoes +=1;
 		this.popularidade -=pontos;
 	}
 
@@ -95,6 +97,16 @@ public class Post {
 	@Override
 	public String toString() {
 		return mensagemPost +" " + hashtag()+ " " + "(" + getData() + ")";
+	}
+	
+
+	public int getCurtidas() {
+		return curtidas;
+	}
+
+
+	public int getRejeicoes() {
+		return rejeicoes;
 	}
 
 

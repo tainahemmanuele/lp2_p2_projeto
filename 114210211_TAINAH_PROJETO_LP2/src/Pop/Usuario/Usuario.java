@@ -238,35 +238,42 @@ public class Usuario implements Comparable <Usuario>{
 		for (Usuario amigo : amigos) {
 			if (amigo.getEmail().equals(email)) {
 				Post post= amigo.getPost(numeroPost);
-				popularidade.adicionaPop(post);
-				amigo.popsUsuario(post.getPopularidade());
+				int pontos = popularidade.adicionaPop(post);
+				amigo.adicionaPops(pontos);
 				amigo.adicionaNotificacao(nome + " curtiu seu post de "
 						+ amigo.getPost("Data", numeroPost) + ".");
 			}
 		}
 	}
 	
-	public void descurtirPost(String email, int numeroPost)
+	public void rejeitarPost(String email, int numeroPost)
 			throws PostException {
 		for (Usuario amigo : amigos) {
 			if (amigo.getEmail().equals(email)) {
 				Post post= amigo.getPost(numeroPost);
-				popularidade.diminuiPop(post);
-				amigo.popsUsuario(post.getPopularidade());
+				int pontos= popularidade.diminuiPop(post);
+				amigo.diminuiPops(pontos);
 				amigo.adicionaNotificacao(nome + " descurtiu seu post de "
 						+ amigo.getPost("Data", numeroPost) + ".");
 			}
 		}
 	}
 	
-	public void popsUsuario(int pops){
+	public void adicionaPops(int pops){
 		this.quantidadePops += pops;
+		if((getQuantidadePops()>=500 && getQuantidadePops()<=1000)&& !(this.popularidade instanceof CelebridadePop)){
+			this.popularidade = new CelebridadePop();
+		}else if (getQuantidadePops()>=1000 && !(this.popularidade instanceof IconePop)){
+			this.popularidade = new IconePop();
+		}
+	}
+	
+	public void diminuiPops(int pops){
+		this.quantidadePops -= pops;
 		if (getQuantidadePops()<=500 && !(this.popularidade instanceof Normal)){
 			this.popularidade = new Normal();
 		}else if((getQuantidadePops()>=500 && getQuantidadePops()<=1000)&& !(this.popularidade instanceof CelebridadePop)){
 			this.popularidade = new CelebridadePop();
-		}else if (getQuantidadePops()>=1000 && !(this.popularidade instanceof IconePop)){
-			this.popularidade = new IconePop();
 		}
 	}
 	
@@ -323,6 +330,17 @@ public class Usuario implements Comparable <Usuario>{
 		return popularidade;
 	}
 
+	public int getPopsPost(int numeroPost){
+		return mural.getPopsPost(numeroPost);
+	}
+	
+	public int qtdCurtidasDePost(int numeroPost){
+		return mural.qtdCurtidasDePost(numeroPost);
+	}
+	
+	public int qtdRejeicoesDePost(int numeroPost){
+		return mural.qtdRejeicoesDePost(numeroPost);
+	}
 	
 
 

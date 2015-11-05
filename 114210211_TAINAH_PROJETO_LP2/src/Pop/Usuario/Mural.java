@@ -80,6 +80,17 @@ public class Mural {
 		}
 	}
 
+	public int getPopsPost(int numeroPost){
+		return posts.get(numeroPost).getPopularidade();
+	}
+	
+	public int qtdCurtidasDePost(int numeroPost){
+		return posts.get(numeroPost).getCurtidas();
+	}
+	
+	public int qtdRejeicoesDePost(int numeroPost){
+		return posts.get(numeroPost).getRejeicoes();
+	}
 	
 
 }

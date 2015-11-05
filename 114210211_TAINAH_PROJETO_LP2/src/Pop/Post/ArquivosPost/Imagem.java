@@ -6,5 +6,9 @@ public class Imagem extends Arquivo {
 		super(arquivo);
 		// TODO Auto-generated constructor stub
 	}
+	@Override
+	public String toString() {
+		return "$arquivo_imagem:"+super.toString();
+	}
 
 }

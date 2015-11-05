@@ -37,6 +37,9 @@ public class FactoryPost {
 	}
 
 	public ArrayList <String> testaHashtag(String hashtag) throws PostException {
+		if (hashtag.isEmpty()){
+			return hashtags;
+		}
 		String[] novaHashtag = hashtag.split(" ");
 		for (int i = 0; i < novaHashtag.length; i++) {
 			if (novaHashtag[i].startsWith("#")) {
@@ -57,18 +60,17 @@ public class FactoryPost {
 
 	public void adicionaConteudo(String arquivoMensagem) {
 		String[] separaArquivo = arquivoMensagem.split(" ");
-		for (int i = 1; i < separaArquivo.length; i++) {
+		for (int i = 0; i < separaArquivo.length; i++) {
 			String arquivoFormatado = "";
 			if (separaArquivo[i].contains("<imagem>")) {
 				String arquivo = separaArquivo[i];
-				arquivoFormatado += "$arquivo_imagem:"
-						+ formataArquivo(arquivo);
+				arquivoFormatado = formataArquivo(arquivo);
 				Arquivo imagem = new Imagem(arquivoFormatado);
 				conteudoPost.add(imagem);
 			}
 			if (separaArquivo[i].contains("<audio>")) {
 				String arquivo = separaArquivo[i];
-				arquivoFormatado += "$arquivo_audio:" + formataArquivo(arquivo);
+				arquivoFormatado =  formataArquivo(arquivo);
 				Arquivo audio = new Audio (arquivoFormatado);
 				conteudoPost.add(audio);
 			}
@@ -77,50 +79,27 @@ public class FactoryPost {
 	}
 
 	public String separaString(String mensagem) throws PostException {
-		int contador = 0;
 		String texto = "";
 		String arquivo = "";
 		String hashtag = "";
 		String mensagemPost = "";
 
-		if (mensagem.contains("<") && mensagem.contains("#")) {
-			for (int i = 0; i < mensagem.indexOf(" <"); i++) {
-				texto += mensagem.charAt(i);
-			}
-		}
-		if (!(mensagem.contains("<")) && mensagem.contains("#")) {
-			for (int i = 0; i < mensagem.indexOf(" #"); i++) {
-				texto += mensagem.charAt(i);
-			}
-
-		}
+		
 		if (mensagem.contains("<")) {
-			for (int i = mensagem.indexOf(" <"); i < mensagem.indexOf(" #"); i++) {
-				arquivo += mensagem.charAt(i);
-			}
-
+			texto = mensagem.substring(0, mensagem.indexOf(" <"));
+		    arquivo = mensagem.substring(mensagem.indexOf("<"), mensagem.lastIndexOf(">")+1);
 		}
-
-		if (mensagem.contains("#")) {
-			int tamanho = mensagem.length()
-					- (texto.length() + arquivo.length());
-			for (int i = mensagem.indexOf("#"); i < mensagem.lastIndexOf(""); i++) {
-				hashtag += mensagem.charAt(i);
-			}
+		if (mensagem.contains("#")){
+			hashtag = mensagem.substring(mensagem.indexOf("#"), mensagem.length());
+			mensagemPost = mensagem.substring(0, mensagem.indexOf(" #"));
+		}else{
+			mensagemPost = mensagem.substring(0, mensagem.length());
 		}
 		this.hashtag = hashtag;
-
-		if (mensagem.contains("#")) {
-			int tamanho = mensagem.length()
-					- (texto.length() + arquivo.length());
-			for (int i = 0; i < mensagem.indexOf(" #"); i++) {
-				mensagemPost += mensagem.charAt(i);
-			}
-		}
+		
 
 		this.mensagemPost = mensagemPost;
 		Arquivo textoPost = new Texto(texto);
-
 		tamanhoString(mensagem, hashtag, arquivo);
 		conteudoPost.add(textoPost);
 		adicionaConteudo(arquivo);
@@ -142,10 +121,7 @@ public class FactoryPost {
 	}
 
 	public String formataArquivo(String arquivo) {
-		String arquivoFormatado = "";
-		for (int j = arquivo.indexOf(">") + 1; j < arquivo.lastIndexOf("</"); j++) {
-			arquivoFormatado += arquivo.charAt(j);
-		}
+		String arquivoFormatado= arquivo.substring(arquivo.indexOf(">") + 1,arquivo.lastIndexOf("</"));
 		return arquivoFormatado;
 	}
 	

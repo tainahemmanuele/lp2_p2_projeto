@@ -25,7 +25,7 @@ public class Normal implements Popularidade{
 
 	@Override
 	public String toString() {
-		return "Normal ";
+		return "Normal Pop";
 	}
 	
 	

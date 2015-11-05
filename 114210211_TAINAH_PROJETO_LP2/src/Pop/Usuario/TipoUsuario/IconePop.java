@@ -32,7 +32,7 @@ public class IconePop implements Popularidade{
 
 	@Override
 	public String toString() {
-		return "IconePop ";
+		return "Icone Pop";
 	}
 
 	

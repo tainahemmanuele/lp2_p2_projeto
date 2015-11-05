@@ -15,6 +15,7 @@ import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
 import Pop.Post.Post;
 import Pop.Post.ArquivosPost.Arquivo;
+import Pop.Usuario.TipoUsuario.Popularidade;
 import easyaccept.EasyAccept;
 
 public class Facade {
@@ -125,13 +126,36 @@ public class Facade {
 		controller.curtirPost(email, numeroPost);
 	}
 	
-	public void descurtirPost(String email, int numeroPost) throws PostException {
-		controller.descurtirPost(email, numeroPost);
+	public void rejeitarPost(String email, int numeroPost) throws PostException {
+		controller.rejeitarPost(email, numeroPost);
 	}
 
 
 	public void atualizaRankings(){
 		controller.atualizaRankings();
+	}
+	
+	public Popularidade getPopularidade(){
+		return controller.getPopularidade();
+	}
+	
+	public void adicionaPops(int pops){
+		controller.adicionaPops(pops);
+	}
+	public int getPopsUsuario(String email){
+		return controller.getPopsUsuario(email);
+	}
+	
+	public int getPopsPost(int numeroPost){
+		return controller.getPopsPost(numeroPost);
+	}
+	
+	public int qtdCurtidasDePost(int numeroPost){
+		return controller.qtdCurtidasDePost(numeroPost);
+	}
+	
+	public int qtdRejeicoesDePost(int numeroPost){
+		return controller.qtdRejeicoesDePost(numeroPost);
 	}
 	
 	public static void main(String[] args) throws UsuarioException,

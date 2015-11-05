@@ -23,6 +23,7 @@ import Pop.Post.FactoryPost;
 import Pop.Post.Post;
 import Pop.Post.ArquivosPost.Arquivo;
 import Pop.Usuario.Usuario;
+import Pop.Usuario.TipoUsuario.Popularidade;
 import Util.FormataData;
 import Util.Verificacao;
 
@@ -307,8 +308,8 @@ public class Controller {
 
 	}
 
-	public void descurtirPost(String email, int numeroPost) throws PostException {
-		usuarioLogado.descurtirPost(email, numeroPost);
+	public void rejeitarPost(String email, int numeroPost) throws PostException {
+		usuarioLogado.rejeitarPost(email, numeroPost);
 	}
 
 	public Usuario buscaUsuario(String email) {
@@ -376,7 +377,28 @@ public class Controller {
 	}
 
 
+	public Popularidade getPopularidade(){
+		return usuarioLogado.getPopularidade();
+	}
 
+	public void adicionaPops(int pops){
+		usuarioLogado.adicionaPops(pops);
+	}
 	
+	public int getPopsUsuario(String email){
+		Usuario usuario = buscaUsuario(email);
+		return usuario.getQuantidadePops();
+	}
 	
+	public int getPopsPost(int numeroPost){
+		return usuarioLogado.getPopsPost(numeroPost);
+	}
+	
+	public int qtdCurtidasDePost(int numeroPost){
+		return usuarioLogado.qtdCurtidasDePost(numeroPost);
+	}
+	
+	public int qtdRejeicoesDePost(int numeroPost){
+		return usuarioLogado.qtdRejeicoesDePost(numeroPost);
+	}
 }
