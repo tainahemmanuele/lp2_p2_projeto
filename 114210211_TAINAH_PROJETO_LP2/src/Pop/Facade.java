@@ -5,11 +5,13 @@ import java.text.ParseException;
 
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
+import Pop.Exceptions.CurtidasException;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.InfoUsuarioException;
 import Pop.Exceptions.LoginException;
 import Pop.Exceptions.LogoutException;
 import Pop.Exceptions.NotificacoesException;
+import Pop.Exceptions.PopsException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
@@ -131,8 +133,8 @@ public class Facade {
 	}
 
 
-	public void atualizaRankings(){
-		controller.atualizaRankings();
+	public String atualizaRanking(){
+		return controller.atualizaRankings();
 	}
 	
 	public Popularidade getPopularidade(){
@@ -142,7 +144,7 @@ public class Facade {
 	public void adicionaPops(int pops){
 		controller.adicionaPops(pops);
 	}
-	public int getPopsUsuario(String email){
+	public int getPopsUsuario(String email) throws PopsException{
 		return controller.getPopsUsuario(email);
 	}
 	
@@ -150,7 +152,7 @@ public class Facade {
 		return controller.getPopsPost(numeroPost);
 	}
 	
-	public int qtdCurtidasDePost(int numeroPost){
+	public int qtdCurtidasDePost(int numeroPost) throws CurtidasException{
 		return controller.qtdCurtidasDePost(numeroPost);
 	}
 	
@@ -158,6 +160,13 @@ public class Facade {
 		return controller.qtdRejeicoesDePost(numeroPost);
 	}
 	
+	public int getPopsUsuario(){
+		return controller.getPopsUsuario();
+	}
+	
+	public String atualizaTrendingTopics(){
+		return controller.atualizaTrendingTopics();
+	}
 	public static void main(String[] args) throws UsuarioException,
 			LoginException {
 		args = new String[] { "Pop.Facade", "diretorio_testes/usecase_1.txt",

@@ -15,6 +15,7 @@ import java.util.Scanner;
 import Pop.tagPost;
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
+import Pop.Exceptions.CurtidasException;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.InfoUsuarioException;
 import Pop.Exceptions.NotificacoesException;
@@ -42,7 +43,6 @@ public class Usuario implements Comparable <Usuario>{
 	private ArrayList<String> notificacoes;
 	private FormataData util;
 	private Verificacao verificacao;
-	private String quebraLinha = System.getProperty("line.separator");
 	private String novaNotificacao;
 	private ArrayList<Usuario> notificacaoAmizade;
 	private int contadorNotificacoes;
@@ -334,7 +334,7 @@ public class Usuario implements Comparable <Usuario>{
 		return mural.getPopsPost(numeroPost);
 	}
 	
-	public int qtdCurtidasDePost(int numeroPost){
+	public int qtdCurtidasDePost(int numeroPost) throws CurtidasException{
 		return mural.qtdCurtidasDePost(numeroPost);
 	}
 	

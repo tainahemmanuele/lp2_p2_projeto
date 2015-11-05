@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import org.omg.Messaging.SyncScopeHelper;
 
+import Pop.Exceptions.CurtidasException;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
 import Pop.Post.FactoryPost;
@@ -84,7 +85,10 @@ public class Mural {
 		return posts.get(numeroPost).getPopularidade();
 	}
 	
-	public int qtdCurtidasDePost(int numeroPost){
+	public int qtdCurtidasDePost(int numeroPost) throws CurtidasException{
+		if(numeroPost>=posts.size()){
+			throw new CurtidasException("Post #"+numeroPost+" nao existe. Usuarix possui apenas "+ posts.size() +" post(s).");
+		}
 		return posts.get(numeroPost).getCurtidas();
 	}
 	

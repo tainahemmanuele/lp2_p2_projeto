@@ -7,14 +7,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
+import Pop.Exceptions.CurtidasException;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.InfoUsuarioException;
 import Pop.Exceptions.LoginException;
 import Pop.Exceptions.LogoutException;
 import Pop.Exceptions.NotificacoesException;
+import Pop.Exceptions.PopsException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
@@ -34,7 +37,7 @@ public class Controller {
 	private int contadorNotificacao;
 	private Verificacao verificacao;
 	private FormataData formataData;
-	private ArrayList<tagPost> hashtags;
+	private ArrayList <tagPost> hashtags;
 	private String usuariosMaisPopulares;
 	private String usuariosMenosPopulares;
 	private String hashtagsTop;
@@ -47,8 +50,6 @@ public class Controller {
 		this.statusSistema = false;
 		this.usuarioLogado = null;
 		this.hashtags = new ArrayList<tagPost>();
-		this.usuariosMaisPopulares = "Mais Populares ";
-		this.usuariosMenosPopulares = "Menos Populares ";
 		this.hashtagsTop = "Trending Topics: ";
 
 	}
@@ -227,7 +228,6 @@ public class Controller {
 			DataException {
 		usuarioLogado.criaPost(mensagem, data);
 		adicionaHashtag();	
-		atualizaRankings();
 	}
 
 	public Post getPost(int numeroPost) {
@@ -306,10 +306,12 @@ public class Controller {
 	public void curtirPost(String email, int numeroPost) throws PostException {
 		usuarioLogado.curtirPost(email, numeroPost);
 
+
 	}
 
 	public void rejeitarPost(String email, int numeroPost) throws PostException {
 		usuarioLogado.rejeitarPost(email, numeroPost);
+
 	}
 
 	public Usuario buscaUsuario(String email) {
@@ -340,11 +342,9 @@ public class Controller {
 			if (this.hashtags.contains(hashtag))	{
 				for (tagPost tag: getHashtags()){
 					if (tag.getHashtag().equals(hashtag)){
-						tag.setOcorrencia(1);
+						tag.adicionaOcorrencia(ocorrencia);
 					}
-				}
-					
-				
+				}	
 			}else{
 				tagPost tag = new tagPost(hashtag, ocorrencia);
 				hashtags.add(tag);
@@ -353,22 +353,34 @@ public class Controller {
 		}
 	
 	
-	public void atualizaRankings(){
+	public String atualizaRankings(){
+		this.usuariosMaisPopulares = "Mais Populares: ";
+		this.usuariosMenosPopulares = "Menos Populares: ";
 		Collections.sort(usuarios);
 		for (int i=0; i<3; i++){
 			if (usuarios.size()>i){
-				usuariosMaisPopulares+= "("+i+")"+usuarios.get(i).getNome()+":"+usuarios.get(i).getQuantidadePops()+ "|";
+				usuariosMenosPopulares+= "("+(i+1)+") "+usuarios.get(i).getNome()+" "+usuarios.get(i).getQuantidadePops()+ "; ";
 			}
 			
 		}
 		Collections.reverse(usuarios);
 		for (int i=0; i<3; i++){
 			if (usuarios.size()>i){
-				usuariosMenosPopulares+= "("+i+")"+usuarios.get(i).getNome()+":"+usuarios.get(i).getQuantidadePops()+ "|";
+				usuariosMaisPopulares+= "("+(i+1)+") "+usuarios.get(i).getNome()+" "+usuarios.get(i).getQuantidadePops()+ "; ";
 			}
 			
 		}
+		return usuariosMaisPopulares +"| "+usuariosMenosPopulares.substring(0, (usuariosMenosPopulares.length()-1)) ;
 		
+	}
+	
+	public String atualizaTrendingTopics(){
+		this.hashtagsTop = "Trending Topics: ";
+		Collections.sort(hashtags);
+		for (int i=0; i<3; i++){
+			hashtagsTop+="("+(i+1)+") "+hashtags.get(i)+"; ";
+		}
+		return hashtagsTop.substring(0, (hashtagsTop.length()-1));
 	}
 
 
@@ -385,20 +397,29 @@ public class Controller {
 		usuarioLogado.adicionaPops(pops);
 	}
 	
-	public int getPopsUsuario(String email){
+	public int getPopsUsuario(String email) throws PopsException{
+		if (usuarioLogado ==null){
 		Usuario usuario = buscaUsuario(email);
 		return usuario.getQuantidadePops();
+		}else{
+			throw new PopsException("Erro na consulta de Pops. Um usuarix ainda esta logadx.");
+
+		}
 	}
 	
 	public int getPopsPost(int numeroPost){
 		return usuarioLogado.getPopsPost(numeroPost);
 	}
 	
-	public int qtdCurtidasDePost(int numeroPost){
+	public int qtdCurtidasDePost(int numeroPost) throws CurtidasException{
 		return usuarioLogado.qtdCurtidasDePost(numeroPost);
 	}
 	
 	public int qtdRejeicoesDePost(int numeroPost){
 		return usuarioLogado.qtdRejeicoesDePost(numeroPost);
+	}
+	
+	public int getPopsUsuario(){
+		return usuarioLogado.getQuantidadePops();
 	}
 }

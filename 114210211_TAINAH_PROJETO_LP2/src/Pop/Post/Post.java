@@ -50,7 +50,7 @@ public class Post {
 		if (data.getSecond() == 0) {
 			return data.toString().replace("T", " ") + ":00";
 		} else {
-			return data.toString();
+			return data.toString().replace("T", " ");
 		}
 
 	}

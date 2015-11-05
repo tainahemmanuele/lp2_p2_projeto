@@ -2,7 +2,7 @@ package Pop;
 
 
 
-public class tagPost {
+public class tagPost implements Comparable<tagPost> {
 	private String hashtag;
 	private int ocorrencia;
 	
@@ -21,7 +21,7 @@ public class tagPost {
 	
 	
 
-	public void setOcorrencia(int ocorrencia) {
+	public void adicionaOcorrencia(int ocorrencia) {
 		this.ocorrencia += ocorrencia;
 	}
 
@@ -52,9 +52,16 @@ public class tagPost {
 
 	@Override
 	public String toString() {
-		return hashtag +" "+ ocorrencia;
+		return hashtag+":"+ ocorrencia;
 	}
 	
+	public int compareTo(tagPost tag){
+		if (Integer.compare(ocorrencia, tag.getOcorrencia())==0){
+			return hashtag.compareTo(tag.getHashtag());
+		}else{
+			return Integer.compare(ocorrencia, tag.getOcorrencia());
+		}
+	}
 	
 
 }
