@@ -21,8 +21,8 @@ public class tagPost implements Comparable<tagPost> {
 	
 	
 
-	public void adicionaOcorrencia(int ocorrencia) {
-		this.ocorrencia += ocorrencia;
+	public void adicionaOcorrencia() {
+		this.ocorrencia += 1;
 	}
 
 	@Override
@@ -38,8 +38,7 @@ public class tagPost implements Comparable<tagPost> {
 		if (obj instanceof tagPost) {
 
 			tagPost tagPost= (tagPost) obj;
-			if (tagPost.getHashtag().equals(this.getHashtag())
-					&& tagPost.getOcorrencia() == this.getOcorrencia()) {
+			if (tagPost.getHashtag().equals(this.getHashtag())) {
 				return true;
 
 			} else {
@@ -50,17 +49,18 @@ public class tagPost implements Comparable<tagPost> {
 		return false;
 	}
 
+
 	@Override
 	public String toString() {
-		return hashtag+":"+ ocorrencia;
+		return hashtag+": "+ ocorrencia;
 	}
-	
+	 
 	public int compareTo(tagPost tag){
-		if (Integer.compare(ocorrencia, tag.getOcorrencia())==0){
-			return hashtag.compareTo(tag.getHashtag());
-		}else{
-			return Integer.compare(ocorrencia, tag.getOcorrencia());
+		if(Integer.compare(ocorrencia, tag.getOcorrencia())==0){
+			return -hashtag.compareTo(tag.hashtag);
 		}
+			return -Integer.compare(ocorrencia, tag.getOcorrencia());
+		
 	}
 	
 

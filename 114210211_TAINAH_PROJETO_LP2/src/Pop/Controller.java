@@ -41,6 +41,7 @@ public class Controller {
 	private String usuariosMaisPopulares;
 	private String usuariosMenosPopulares;
 	private String hashtagsTop;
+	
 
 
 
@@ -304,13 +305,14 @@ public class Controller {
 	}
 
 	public void curtirPost(String email, int numeroPost) throws PostException {
-		usuarioLogado.curtirPost(email, numeroPost);
-
-
+		tagPost tag= usuarioLogado.curtirPost(email, numeroPost);
+		 adicionaHashtag(tag);
+	
 	}
 
 	public void rejeitarPost(String email, int numeroPost) throws PostException {
-		usuarioLogado.rejeitarPost(email, numeroPost);
+		tagPost tag =usuarioLogado.rejeitarPost(email, numeroPost);
+		adicionaHashtag(tag);
 
 	}
 
@@ -329,29 +331,37 @@ public class Controller {
 		return null;
 	}
 
-/*modelo pra ordenacao:
- * Treding topics: (1) #naza: 3, (2) #epicwin: 2...
- * o mesmo vale pros usuarios: ,mais populares: (1) italo: (900)...|
- * Criar entidade que vai mensurar hashtags!
- */
-
 
 	private void adicionaHashtag(){
 		int ocorrencia = 1;
 		for (String hashtag: usuarioLogado.getHashtags()){
-			if (this.hashtags.contains(hashtag))	{
-				for (tagPost tag: getHashtags()){
-					if (tag.getHashtag().equals(hashtag)){
-						tag.adicionaOcorrencia(ocorrencia);
-					}
-				}	
+			 tagPost tag = new tagPost(hashtag, ocorrencia);
+			 if (hashtags.contains(tag)){
+				 for (tagPost tagAntiga: hashtags){
+					 if (tagAntiga.equals(tag)){
+						 tagAntiga.adicionaOcorrencia();
+					 }
+				 }
+			 }else{
+				 hashtags.add(tag);
+			 }
+
+		}
+		}
+	
+	private void adicionaHashtag(tagPost tag){
+		if (tag!=null){
+			if(hashtags.contains(tag)){
+				for (tagPost tagAntiga: hashtags){
+					 if (tagAntiga.equals(tag)){
+						 tagAntiga.adicionaOcorrencia();
+					 }
+				 }
 			}else{
-				tagPost tag = new tagPost(hashtag, ocorrencia);
 				hashtags.add(tag);
 			}
 		}
 		}
-	
 	
 	public String atualizaRankings(){
 		this.usuariosMaisPopulares = "Mais Populares: ";
@@ -375,7 +385,7 @@ public class Controller {
 	}
 	
 	public String atualizaTrendingTopics(){
-		this.hashtagsTop = "Trending Topics: ";
+		this.hashtagsTop = "Trending Topics:  ";
 		Collections.sort(hashtags);
 		for (int i=0; i<3; i++){
 			hashtagsTop+="("+(i+1)+") "+hashtags.get(i)+"; ";

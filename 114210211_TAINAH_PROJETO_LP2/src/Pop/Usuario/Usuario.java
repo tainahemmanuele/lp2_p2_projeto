@@ -233,30 +233,42 @@ public class Usuario implements Comparable <Usuario>{
 	}
 	
 
-	public void curtirPost(String email, int numeroPost)
+	public tagPost curtirPost(String email, int numeroPost)
 			throws PostException {
+		tagPost tag = null;
 		for (Usuario amigo : amigos) {
 			if (amigo.getEmail().equals(email)) {
 				Post post= amigo.getPost(numeroPost);
+				int tamanhoLista = post.getHashtags().size();
 				int pontos = popularidade.adicionaPop(post);
 				amigo.adicionaPops(pontos);
 				amigo.adicionaNotificacao(nome + " curtiu seu post de "
 						+ amigo.getPost("Data", numeroPost) + ".");
+			if (post.getHashtags().size() > tamanhoLista){
+				tag = new tagPost(post.getHashtags().get(post.getHashtags().size()-1), 1);
+			}
 			}
 		}
+		return tag;
 	}
 	
-	public void rejeitarPost(String email, int numeroPost)
+	public tagPost rejeitarPost(String email, int numeroPost)
 			throws PostException {
+		tagPost tag = null;
 		for (Usuario amigo : amigos) {
 			if (amigo.getEmail().equals(email)) {
 				Post post= amigo.getPost(numeroPost);
+				int tamanhoLista = post.getHashtags().size();
 				int pontos= popularidade.diminuiPop(post);
 				amigo.diminuiPops(pontos);
 				amigo.adicionaNotificacao(nome + " descurtiu seu post de "
 						+ amigo.getPost("Data", numeroPost) + ".");
+				if (post.getHashtags().size()> tamanhoLista){
+					tag = new tagPost(post.getHashtags().get(0), 1);
+				}
 			}
 		}
+		return tag;
 	}
 	
 	public void adicionaPops(int pops){
