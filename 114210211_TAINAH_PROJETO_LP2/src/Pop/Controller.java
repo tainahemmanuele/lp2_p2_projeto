@@ -1,7 +1,7 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Pop;
 
-import java.text.ParseException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -192,7 +192,7 @@ public class Controller {
 	}
 
 	public void atualizaPerfil(String atributo, String valor)
-			throws ParseException, AtualizaUsuarioException, UsuarioLogadoException {
+			throws  AtualizaUsuarioException, UsuarioLogadoException {
 		try{
 		if (usuarioLogado == null) {
 			throw new  UsuarioLogadoException();

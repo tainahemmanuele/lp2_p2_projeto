@@ -2,6 +2,7 @@
 package Pop.Exceptions;
 
 public class AtualizaUsuarioException extends UsuarioException {
+
 	public AtualizaUsuarioException(String string) {
 		super(string);
 	}

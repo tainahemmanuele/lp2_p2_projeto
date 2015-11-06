@@ -1,9 +1,10 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Pop;
 
-import java.text.ParseException;
+
 
 import Pop.Exceptions.AtualizaUsuarioException;
+
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.CurtidasException;
 import Pop.Exceptions.DataException;
@@ -20,24 +21,62 @@ import Pop.Post.ArquivosPost.Arquivo;
 import Pop.Usuario.TipoUsuario.Popularidade;
 import easyaccept.EasyAccept;
 
-public class Facade {
+/**
+ *  Classe criada com o objeto de delegar as chamadas de metodo para a classe controller. Lanca as Exceptions.
+ * @author Tainah Emmanuele
+ *
+ */
+public class Facade  {
 	private Controller controller;
 
+	/**
+	 * Construtor da classe Facade.
+	 */
 	public Facade() {
 		this.controller = new Controller();
 	}
-
+	
+/**
+ * Metodo utilizado para cadastrar um usuario no +Pop. Chama o metodo de mesmo nome que se encontra na classe
+ * Controller. A Facade delega (forwarding) para a classe Controller.
+ * @param nome: nome do usuario;
+ * @param email: email do usuario;
+ * @param senha: senha do usuario;
+ * @param dataNascimento: data de nascimento do usuario;
+ * @param telefone: telefone do usuario.
+ * @return : retorna uma String com o email do usuario. Esse retorno serve para sinalizar que 
+ * deu certo o cadastro do usuario.
+ * @throws Exception
+ */
 	public String cadastraUsuario(String nome, String email, String senha,
 			String dataNascimento, String telefone) throws Exception {
 		return controller.cadastraUsuario(nome, email, senha, dataNascimento,
 				telefone);
 	}
+	
+	/**
+	 *  Metodo utilizado para cadastrar um usuario no +Pop. Chama o metodo de mesmo nome que se encontra na classe
+ * Controller. A Facade delega (forwarding) para a classe Controller.
+ * @param nome: nome do usuario;
+ * @param email: email do usuario;
+ * @param senha: senha do usuario;
+ * @param dataNascimento: data de nascimento do usuario.
+	 * @return
+	 * @throws Exception
+	 */
 
 	public String cadastraUsuario(String nome, String email, String senha,
 			String dataNascimento) throws Exception {
 		return controller.cadastraUsuario(nome, email, senha, dataNascimento);
 	}
 
+	/**
+	 * Metodo utilizado para um usuario logar no sistema +Pop.
+	 * @param email: email do usuario;
+	 * @param senha: senha do usuario.
+	 * @throws LoginException :Excecao lancada caso ja tenha um usuario logado.
+	 * @throws UsuarioException: Excecao lancada caso o usuario nao esteja cadastrado no sistema +Pop.
+	 */
 	public void login(String email, String senha) throws LoginException,
 			UsuarioException {
 		controller.login(email, senha);
@@ -48,7 +87,7 @@ public class Facade {
 	}
 
 	public void atualizaPerfil(String atributo, String valor)
-			throws ParseException, UsuarioException {
+			throws  UsuarioException {
 		controller.atualizaPerfil(atributo, valor);
 	}
 
@@ -167,6 +206,8 @@ public class Facade {
 	public String atualizaTrendingTopics(){
 		return controller.atualizaTrendingTopics();
 	}
+	
+	
 	public static void main(String[] args) throws UsuarioException,
 			LoginException {
 		args = new String[] { "Pop.Facade", "diretorio_testes/usecase_1.txt",
