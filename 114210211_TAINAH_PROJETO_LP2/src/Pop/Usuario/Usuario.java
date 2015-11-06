@@ -350,7 +350,7 @@ public class Usuario implements Comparable <Usuario>{
 		return mural.qtdCurtidasDePost(numeroPost);
 	}
 	
-	public int qtdRejeicoesDePost(int numeroPost){
+	public int qtdRejeicoesDePost(int numeroPost) throws CurtidasException{
 		return mural.qtdRejeicoesDePost(numeroPost);
 	}
 	

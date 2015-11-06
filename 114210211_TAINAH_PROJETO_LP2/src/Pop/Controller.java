@@ -425,7 +425,7 @@ public class Controller {
 		return usuarioLogado.qtdCurtidasDePost(numeroPost);
 	}
 	
-	public int qtdRejeicoesDePost(int numeroPost){
+	public int qtdRejeicoesDePost(int numeroPost) throws CurtidasException{
 		return usuarioLogado.qtdRejeicoesDePost(numeroPost);
 	}
 	
