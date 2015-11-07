@@ -1,6 +1,7 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Pop.Post;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ import Pop.Exceptions.PostException;
 import Pop.Post.ArquivosPost.Arquivo;
 import Util.FormataData;
 
-public class Post {
+public class Post implements Serializable{
 	private ArrayList<Arquivo> conteudoPost;
 	private String mensagemPost;
 	private LocalDateTime data;

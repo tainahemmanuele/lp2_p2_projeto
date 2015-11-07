@@ -2,6 +2,7 @@
 package Pop;
 
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +37,7 @@ import Util.Verificacao;
  * @author Tainah Emmanuele
  *
  */
-public class Controller {
+public class Controller implements Serializable{
 	private Usuario usuarioLogado;
 	private ArrayList<Usuario> usuarios;
 	private boolean statusSistema;
@@ -375,6 +376,7 @@ public class Controller {
 	 * @param email: email do usuario que se deseja adicionar como amigo.
 	 */
 	public void adicionaAmigo(String email) {
+
 		usuarioLogado.NotificacaoAmizade(email, this.usuarioLogado, usuarios);
 	}
 
@@ -472,7 +474,7 @@ public class Controller {
 	 * @param email: email do usuario que sera removido da lista de amigos.
 	 */
 	public void removeAmigo(String email) {
-		usuarioLogado.removeAmigo(email, this.usuarioLogado.getNome());
+		usuarioLogado.removeAmigo(email);
 	}
 
 	
@@ -534,7 +536,7 @@ public class Controller {
 	private void adicionaHashtag(){
 		int ocorrencia = 1;
 		for (String hashtag: usuarioLogado.getHashtags()){
-			 tagPost tag = new tagPost(hashtag, ocorrencia);
+			 tagPost tag = new tagPost(hashtag);
 			 if (hashtags.contains(tag)){
 				 for (tagPost tagAntiga: hashtags){
 					 if (tagAntiga.equals(tag)){

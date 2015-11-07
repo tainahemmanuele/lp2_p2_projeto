@@ -1,6 +1,7 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Pop.Usuario;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -22,7 +23,7 @@ import Pop.Post.Post;
 import Pop.Post.ArquivosPost.Arquivo;
 import Util.FormataData;
 
-public class Mural {
+public class Mural implements Serializable{
 	private ArrayList<Post> posts;
 	private FactoryPost factory;
 	private Post post;
