@@ -45,5 +45,18 @@ public class Verificacao {
 	}
 
 
+	public String verificaImagem(String imagem) throws InfoUsuarioException {
+		if (imagem.equals("")) {
+			throw new InfoUsuarioException(
+					"Imagem dx usuarix nao pode ser vazia.");
+		} else if (imagem.startsWith(" ")) {
+			throw new InfoUsuarioException(
+					"Imagem dx usuarix nao pode ser vazia.");
+		} else {
+			return imagem;
+
+		}
+	}
+	
 
 }

@@ -42,7 +42,6 @@ public class Usuario implements Comparable <Usuario>, Serializable{
 	private String email;
 	private String senha;
 	private LocalDate dataNascimento;
-	private String telefone;
 	private String imagem;
 	private String senhaAtual;
 	private Mural mural;
@@ -102,9 +101,6 @@ public class Usuario implements Comparable <Usuario>, Serializable{
 		return dataNascimento.toString();
 	}
 
-	public String getTelefone() {
-		return telefone;
-	}
 
 	public String getImagem() {
 		return imagem;
@@ -122,9 +118,10 @@ public class Usuario implements Comparable <Usuario>, Serializable{
 	/**
 	 * Metodo utilizado para atualizar o nome do usuario.
 	 * @param imagem: imagem do usuario.
+	 * @throws InfoUsuarioException : excecao lancada caso a imagem seja vazia.
 	 */
-	public void atualizaImagem(String imagem) {
-		this.imagem = imagem;
+	public void atualizaImagem(String imagem) throws InfoUsuarioException {
+		this.imagem = verificacao.verificaImagem(imagem);
 	}
 
 	/**
@@ -146,13 +143,7 @@ public class Usuario implements Comparable <Usuario>, Serializable{
 		this.dataNascimento = util.converteData(dataNascimento);
 	}
 
-	/**
-	 * Metodo utilizado para atualizar o telefone do usuario.
-	 * @param telefone: telefone do usuario.
-	 */
-	public void atualizaTelefone(String telefone) {
-		this.telefone = telefone;
-	}
+
 
 	/**
 	 * Metodo utilizado para atualizar a senha do usuario.

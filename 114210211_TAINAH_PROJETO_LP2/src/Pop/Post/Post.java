@@ -11,6 +11,11 @@ import Pop.Exceptions.PostException;
 import Pop.Post.ArquivosPost.Arquivo;
 import Util.FormataData;
 
+/**
+ * Classe criada com o objetivo de criar um objeto do tipo Post.
+ * @author Tainah Emmanuele
+ *
+ */
 public class Post implements Serializable{
 	private ArrayList<Arquivo> conteudoPost;
 	private String mensagemPost;
@@ -20,9 +25,15 @@ public class Post implements Serializable{
 	private int curtidas;
 	private int rejeicoes;
 
+	/**
+	 * Construtor de Post.
+	 * @param conteudoPost: conteudo do post (texto, arquivos);
+	 * @param mensagemPost: mensagem de texto do post, sem as hashtags;
+	 * @param data: data do post;
+	 * @param hashtags: lista de hashtags do post.
+	 */
 	public Post(ArrayList<Arquivo> conteudoPost,
-			String mensagemPost, LocalDateTime data, ArrayList<String> hashtags)
-			throws PostException, DataException {
+			String mensagemPost, LocalDateTime data, ArrayList<String> hashtags) {
 		this.mensagemPost = mensagemPost;
 		this.data = data;
 		this.hashtags = hashtags;
@@ -64,16 +75,29 @@ public class Post implements Serializable{
 		return hashtag().replace(" ", ",");
 	}
 	
+	/**
+	 * Metodo utilizado para adicionar pontos (pops) ao post e curtir o post.
+	 * @param pontos: pontos pops do post.
+	 */
 	public void curtirPost(int pontos) {
 		this.curtidas +=1;
 		this.popularidade += pontos;
 	}
 
+	/**
+	 * Metodo utilizado para diminuir pontos (pops) ao post e curtir o post.
+	 * @param pontos: pontos pops do post.
+	 */
 	public void rejeitaPost(int pontos) {
 		this.rejeicoes +=1;
 		this.popularidade -=pontos;
 	}
 
+	/**
+	 * Metodo utilizado para adicionar a hashtag ao post, ao curtir/descurtir o mesmo.
+	 * Metodo valido para usuario que curtem o post que sao do tipo Icone Pop.
+	 * @param hashtag: hashtag a ser adicionada ao post.
+	 */
 	public void adicionaHashtag(String hashtag) {
 		hashtags.add(hashtag);
 		
@@ -124,6 +148,9 @@ public class Post implements Serializable{
 
 
 
+	/**
+	 * Equal de post. Dois posts sao iguais se possuem a mesma mensagem e a mesma data.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Post) {

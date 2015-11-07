@@ -13,6 +13,12 @@ import Pop.Post.ArquivosPost.Imagem;
 import Pop.Post.ArquivosPost.Texto;
 import Util.FormataData;
 
+/**
+ * Classe com o objetivo de fatorar o post, testar as hashtags, a data. Separar a string de texto
+ * em texto, arquivo e hashtags.
+ * @author Tainah Emmanuele
+ *
+ */
 public class FactoryPost {
 	private ArrayList<Arquivo> conteudoPost;
 	private String mensagemPost;
@@ -21,11 +27,21 @@ public class FactoryPost {
 
 
 
-
+/**
+ * Construtor da classe FactoryPost.
+ */
 	public FactoryPost() {
 
 	}
 
+	/**
+	 * Metodo utilizado para criar o Post. Instancia um objeto do tipo Post.
+	 * @param texto: texto do post.
+	 * @param data: data do post.
+	 * @throws PostException: Excecao lancada caso a mensagem do Post apresente algum problema: hashtags
+	 * sem # , por exemplo.
+	 * @throws DataException: Excecao lancada caso a data do post apresente problemas de validacao e formatacao.
+	 */
 	public Post criaPost(String texto, LocalDateTime data)
 			throws DataException, PostException {
 		this.conteudoPost = new ArrayList<Arquivo>();
@@ -36,6 +52,12 @@ public class FactoryPost {
 		return post;
 	}
 
+	/**
+	 * Metodo utilizado para testar as hashtags do post e adicionar na lista de hashtags do pot.
+	 * @param hashtag: hashtag do post.
+	 * @return: retorna um ArrayList de string com as hashtags.
+	 * @throws PostException
+	 */
 	public ArrayList <String> testaHashtag(String hashtag) throws PostException {
 		if (hashtag.isEmpty()){
 			return hashtags;
@@ -58,6 +80,12 @@ public class FactoryPost {
 		return hashtags;
 	}
 
+	/**
+	 * Metodo utilizado para adicionar o conteudo dentro do ArrayList de conteudos do Post.
+	 * Chama o metodo formataArquivo para formatar o arquivo e instancia um objeto do tipo
+	 * imagem, caso seja arquivo de imagem, e audio, caso seja arquivo de audio.
+	 * @param arquivoMensagem: Arquivo do post que sera formatado e adicionado na lista.
+	 */
 	public void adicionaConteudo(String arquivoMensagem) {
 		String[] separaArquivo = arquivoMensagem.split(" ");
 		for (int i = 0; i < separaArquivo.length; i++) {
@@ -78,6 +106,14 @@ public class FactoryPost {
 
 	}
 
+	/**
+	 * Metodo que separa a mensagem do texto em : texto, arquivo, hashtags. Chama
+	 * o metodo que calcula o tamanho do post.
+	 * Instancia um objeto do tipo texto.
+	 * @param mensagem: mensgaem do post, sem a data.
+	 * @return: retorna o texto do post.
+	 * @throws PostException: retorna uma excecao caso o  post possua mais que 200 caracteres.
+	 */
 	public String separaString(String mensagem) throws PostException {
 		String texto = "";
 		String arquivo = "";
@@ -107,6 +143,14 @@ public class FactoryPost {
 
 	}
 
+	/**
+	 * Metodo que calcula o tamanho do post.
+	 * @param mensagem: mensagem do post;
+	 * @param hashtag: hashtag do post;
+	 * @param arquivo: arquivo do post.
+	 * @return: retorna o tamanho do post.
+	 * @throws PostException: Se a quantidade de caractres for mais que 200, o post nao sera criado.
+	 */
 	public int tamanhoString(String mensagem, String hashtag, String arquivo)
 			throws PostException {
 		int tamanhoString = mensagem.length()
@@ -120,6 +164,11 @@ public class FactoryPost {
 
 	}
 
+	/**
+	 * Metodo que formata a string de arquivo.
+	 * @param arquivo: arquivo a ser formatado.
+	 * @return: retorna a string formatada.
+	 */
 	public String formataArquivo(String arquivo) {
 		String arquivoFormatado= arquivo.substring(arquivo.indexOf(">") + 1,arquivo.lastIndexOf("</"));
 		return arquivoFormatado;

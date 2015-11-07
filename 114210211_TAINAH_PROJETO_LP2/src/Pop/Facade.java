@@ -256,8 +256,9 @@ public class Facade  {
 	 * Metodo utilizado para um usuario aceitar ser amigo de outro usuario.Chama o metodo de mesmo nome
 	 * que se encontra na classe Controller.
 	 * @param email: email do usuario a ser adicionado.
+	 * @throws UsuarioException : Excecao lancada caso o usuario nao seja cadastrado no +Pop.
 	 */
-	public void aceitaAmizade(String email) {
+	public void aceitaAmizade(String email) throws UsuarioException {
 		controller.aceitaAmizade(email);
 	}
 

@@ -92,7 +92,7 @@ public class Controller implements Serializable{
 			Usuario usuario = new Usuario(verificacao.verificaNome(nome),
 					verificacao.verificaEmail(email),
 					verificacao.verificaSenha(senha),
-					formataData.converteData(dataNascimento), imagem);
+					formataData.converteData(dataNascimento), verificacao.verificaImagem(imagem));
 			this.usuarios.add(usuario);
 			return usuario.getEmail();
 		}catch(Exception e){
@@ -290,9 +290,6 @@ public class Controller implements Serializable{
 			usuarioLogado.atualizaDataNascimento(valor);
 		}
 
-		else if (atributo.equals("Telefone")) {
-			usuarioLogado.atualizaTelefone(valor);
-		}
 		}catch(Exception e){
 			throw new AtualizaUsuarioException(e);
 		}
@@ -376,7 +373,6 @@ public class Controller implements Serializable{
 	 * @param email: email do usuario que se deseja adicionar como amigo.
 	 */
 	public void adicionaAmigo(String email) {
-
 		usuarioLogado.NotificacaoAmizade(email, this.usuarioLogado, usuarios);
 	}
 
@@ -395,15 +391,29 @@ public class Controller implements Serializable{
 	 * que se encontra na classe Usuario.Essa chamada de metodo so e possivel se tiver um usuario logado
 	 * no sistema.
 	 * @param email: email do usuario a ser adicionado.
+	 * @throws UsuarioException: Excecao lancada caso deseje adicionar amizade de um usuario que
+	 * nao enviou solicitacao.
 	 */
-	public void aceitaAmizade(String email) {
-		for (Usuario amigo : usuarios) {
-			if (amigo.getEmail().equals(email)) {
-				usuarioLogado.aceitaAmigo(amigo);
-				amigo.aceitaAmigo(usuarioLogado);
-				amigo.adicionaNotificacao(usuarioLogado.getNome()
+	public void aceitaAmizade(String email) throws UsuarioException{
+		Usuario usuarioNome = buscaUsuario(email);
+		if (usuarioNome == null) {
+			throw new UsuarioException("Um usuarix com email " + email
+					+ " nao esta cadastradx.");
+
+		}
+		boolean statusConvite = false;
+		for (Usuario amigoFuturo : usuarioLogado.getNotificacaoAmizade()) {
+			if (amigoFuturo.getEmail().equals(email)) {
+				statusConvite = true;
+				amigoFuturo.aceitaAmigo(usuarioLogado);
+				usuarioLogado.aceitaAmigo(amigoFuturo);
+				amigoFuturo.adicionaNotificacao(this.usuarioLogado.getNome()
 						+ " aceitou sua amizade.");
-			}
+		}
+		}
+		if (statusConvite == false) {
+			throw new UsuarioException(usuarioNome.getNome()
+					+ " nao lhe enviou solicitacoes de amizade.");
 		}
 	}
 
@@ -439,9 +449,7 @@ public class Controller implements Serializable{
 				statusConvite = true;
 				amigoFuturo.adicionaNotificacao(this.usuarioLogado.getNome()
 						+ " rejeitou sua amizade.");
-			} else {
-				statusConvite = false;
-			}
+		}
 		}
 		if (statusConvite == false) {
 			throw new UsuarioException(usuarioNome.getNome()
