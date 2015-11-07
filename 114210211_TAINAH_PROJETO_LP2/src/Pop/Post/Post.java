@@ -149,7 +149,7 @@ public class Post implements Serializable{
 
 
 	/**
-	 * Equal de post. Dois posts sao iguais se possuem a mesma mensagem e a mesma data.
+	 * Equals de post. Dois posts sao iguais se possuem a mesma mensagem e a mesma data.
 	 */
 	@Override
 	public boolean equals(Object obj) {

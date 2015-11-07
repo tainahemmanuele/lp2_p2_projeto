@@ -6,16 +6,28 @@ import java.time.LocalDateTime;
 
 import Pop.Post.Post;
 
+/**
+ * Classe que implementa a interface Popularidade.
+ * @author Tainah Emmanuele
+ *
+ */
 public class CelebridadePop implements Popularidade{
 	public static final int POP_PONTOS = 25;
 	public static final int POP_PONTOS_EXTRA = 10;
 	
 	
-	
+	/**
+	 * Construtor de CelebridadePop.
+	 */
 	public CelebridadePop() {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Metodo que adiciona pops a um post.
+	 * @param post: post que tera pops adicionados.
+	 * @return: retorna a quantidade de pops adicionados ao post.
+	 */
 	@Override
 	public int adicionaPop(Post post) {
 		if(post.getDataLocalDate().toLocalDate().equals(LocalDate.now())){
@@ -27,6 +39,11 @@ public class CelebridadePop implements Popularidade{
 		}
 	}
 
+	/**
+	 * Metodo que diminui pops de um post.
+	 * @param post: post que tera pops diminuidos.
+	 * @return: retorna a quantidade de pops diminuidos do post.
+	 */
 	@Override
 	public int diminuiPop(Post post) {
 		if(post.getDataLocalDate().toLocalDate().equals(LocalDate.now())){

@@ -4,12 +4,26 @@ package Util;
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.InfoUsuarioException;
-
+/**
+ * Classe criada com o objetivo de verificar o formato das string nome, email, senha e imagem, utilizadas
+ * na construcao de usuario.
+ * @author Tainah Emmanuele
+ *
+ */
 public class Verificacao {
+	/**
+	 * Construtor de Verificacao.
+	 */
 	public Verificacao() {
 
 	}
 
+	/**
+	 * Metodo utilizado para verificar a string de nome do usuario.
+	 * @param nome: nome do usuario.
+	 * @return: retorna a string verificada.
+	 * @throws InfoUsuarioException: Excecao lancada caso a string esteja vazia.
+	 */
 	public String verificaNome(String nome) throws InfoUsuarioException {
 		if (nome.equals("")) {
 			throw new InfoUsuarioException(
@@ -22,6 +36,12 @@ public class Verificacao {
 		}
 	}
 
+	/**
+	 * Metodo utilizado para verificar a string de email do usuario.
+	 * @param nome: email do usuario.
+	 * @return: retorna a string verificada.
+	 * @throws InfoUsuarioException: Excecao lancada caso a string nao esteja no formato correto.
+	 */
 	public String verificaEmail(String email) throws InfoUsuarioException {
 		if (((email.endsWith(".com") || (email.endsWith(".com.br")))
 				&& (email.matches("(.*)@(.*)")) == true)) {
@@ -31,6 +51,12 @@ public class Verificacao {
 		}
 	}
 
+	/**
+	 * Metodo utilizado para verificar a string de senha  do usuario.
+	 * @param senha: nome do usuario.
+	 * @return: retorna a string verificada.
+	 * @throws InfoUsuarioException: Excecao lancada caso a string esteja vazia.
+	 */
 	public String verificaSenha(String senha) throws InfoUsuarioException {
 		if (senha.equals("")) {
 			throw new InfoUsuarioException(
@@ -45,6 +71,12 @@ public class Verificacao {
 	}
 
 
+	/**
+	 * Metodo utilizado para verificar a string de imagem do usuario.
+	 * @param imagem: imagem do usuario.
+	 * @return: retorna a string verificada.
+	 * @throws InfoUsuarioException: Excecao lancada caso a string esteja vazia.
+	 */
 	public String verificaImagem(String imagem) throws InfoUsuarioException {
 		if (imagem.equals("")) {
 			throw new InfoUsuarioException(

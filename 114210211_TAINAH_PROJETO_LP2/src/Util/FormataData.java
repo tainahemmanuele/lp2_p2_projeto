@@ -7,14 +7,26 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import Pop.Exceptions.DataException;
-
+/**
+ * Classe criada com para formatar a data de nascimento do usuario e a data do post.
+ * @author Tainah Emmmanuele
+ *
+ */
 public class FormataData {
 
-
+	/**
+	 * Construtor de FormataData.
+	 */
 	public FormataData() {
 
 	}
 
+	/**
+	 * Metodo utilizado para converter uma string data em um objeto LocalDate.
+	 * @param dataNascimento: data a ser convertida.
+	 * @return: retorna um objeto do tipo LocalDate.
+	 * @throws DataException: Excecao lancada caso a data seja invalida, tanto formato quanto a data. Ex: 29/02/2001.
+	 */
 	public LocalDate converteData(String dataNascimento) throws DataException {
 		String[] parteDaData = dataNascimento.split("/");		
 		if ((parteDaData[0].length() == 2) && (parteDaData[1].length() == 2) && (parteDaData[2].length() == 4)) {
@@ -43,7 +55,12 @@ public class FormataData {
 
 	}
 
-
+	/**
+	 * Metodo utilizado para converter uma string data em um objeto LocalDateTime.
+	 * @param dataNascimento: data a ser convertida.
+	 * @return: retorna um objeto do tipo LocalDateTime.
+	 * @throws DataException: Excecao lancada caso a data seja invalida, tanto formato quanto a data. Ex: 29/02/2001.
+	 */
 	public LocalDateTime converteHoraData(String data) throws DataException {
 		String[] quebraDataHora = data.split(" ");
 		String[] parteDaData= quebraDataHora[0].split("/");

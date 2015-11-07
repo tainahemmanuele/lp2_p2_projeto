@@ -3,6 +3,11 @@ package Pop.Post.ArquivosPost;
 
 import java.io.Serializable;
 
+/**
+ * Classe criada com o objetivo de criar o arquivo do post.
+ * @author Tainah Emmanuele
+ *
+ */
 public abstract class Arquivo implements Serializable{
 	private String arquivo;
 	
