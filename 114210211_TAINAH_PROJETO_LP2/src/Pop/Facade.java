@@ -46,7 +46,8 @@ public class Facade  {
  * @param telefone: telefone do usuario.
  * @return : retorna uma String com o email do usuario. Esse retorno serve para sinalizar que 
  * deu certo o cadastro do usuario.
- * @throws Exception
+ * @throws Exception: Lanca excecoes caso o nome seja uma string vazia, o email esteja em formato incorreto,
+ * a senha seja vazia e a data de nascimento seja invalida.
  */
 	public String cadastraUsuario(String nome, String email, String senha,
 			String dataNascimento, String telefone) throws Exception {
@@ -61,8 +62,10 @@ public class Facade  {
  * @param email: email do usuario;
  * @param senha: senha do usuario;
  * @param dataNascimento: data de nascimento do usuario.
-	 * @return
-	 * @throws Exception
+ * @return : retorna uma String com o email do usuario. Esse retorno serve para sinalizar que 
+ * deu certo o cadastro do usuario.
+ * @throws Exception: Lanca excecoes caso o nome seja uma string vazia, o email esteja em formato incorreto,
+ * a senha seja vazia e a data de nascimento seja invalida.
 	 */
 
 	public String cadastraUsuario(String nome, String email, String senha,
@@ -71,7 +74,8 @@ public class Facade  {
 	}
 
 	/**
-	 * Metodo utilizado para um usuario logar no sistema +Pop.
+	 * Metodo utilizado para um usuario logar no sistema +Pop. Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
 	 * @param email: email do usuario;
 	 * @param senha: senha do usuario.
 	 * @throws LoginException :Excecao lancada caso ja tenha um usuario logado.
@@ -83,8 +87,10 @@ public class Facade  {
 	}
 	
 	/**
-	 * Metodo utilizado para um usuario deslogar (sair) do sistema +Pop.
-	 * @throws LogoutException
+	 * Metodo utilizado para um usuario deslogar (sair) do sistema +Pop.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
+	 * @throws LogoutException: Excecao lancada caso se tente sair do sistema , mas nao exista usuario
+	 * logado.
 	 */
 
 	public void logout() throws LogoutException {
@@ -93,6 +99,7 @@ public class Facade  {
 
 	/**
 	 * Metodo utilizado para que um usuario atualize suas informacoes pessoais ou as adicione no +Pop.
+	 * Chama o metodo de mesmo nome que se encontra no Controller e retorna o retorno dele.
 	 * @param atributo: informacao a ser atualizada. ex: telefone, email...
 	 * @param valor: nova informacao atualizada.
 	 * @throws UsuarioException: Excecao lancada caso o usuario tente mudar as informacoes, sem estar logado no
@@ -104,7 +111,8 @@ public class Facade  {
 	}
 
 	/**
-	 * Metodo utilizado para atualizar/modificar senha do usuario.
+	 * Metodo utilizado para atualizar/modificar senha do usuario.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
 	 * @param atributo: informacao a ser atualizada, no caso, a senha;
 	 * @param valor: senha atual;
 	 * @param valor2: senha que o usuario deseja utilizar.
@@ -117,6 +125,7 @@ public class Facade  {
 
 	/**
 	 * Metodo utilizado para ver a informacao de um usuario que possua cadastro no +Pop.
+	 * Chama o metodo de mesmo nome que se encontra no Controller e retorna o retorno dele.
 	 * @param atributo: informacao que se deseja ver. Ex: nome, email...
 	 * @param email: email do usuario que se deseja ver a informacao;
 	 * @return: retorna a informacao pesquisada.
@@ -129,6 +138,7 @@ public class Facade  {
 
 	/**
 	 * Metodo utilizado para ver a informacao de um usuario que esta logado no +Pop.
+	 * Chama o metodo de mesmo nome que se encontra no Controller e retorna o retorno dele.
 	 * @param atributo: informacao que se deseja ver. Ex nome, email...
 	 * @return:  retorna a informacao pesquisada.
 	 * @throws UsuarioException: Excecao lancada caso se deseje ver a senha do usuario.
@@ -138,7 +148,8 @@ public class Facade  {
 	}
 
 	/**
-	 * Metodo utilizado para remover o cadastro de um usuario do +Pop.
+	 * Metodo utilizado para remover o cadastro de um usuario do +Pop.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
 	 * @param email: email do usuario que se deseja remover.
 	 * @throws UsuarioException: Excecao lancada caso o usuario a ser removido, nao esteja cadastrado 
 	 * no +Pop.
@@ -149,14 +160,16 @@ public class Facade  {
 	
 	
 /**
- * Metodo utilizado para iniciar o sistema +Pop.
+ * Metodo utilizado para iniciar o sistema +Pop.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
  */
 	public void iniciaSistema() {
 		controller.iniciaSistema();
 	}
 
 	/**
-	 * Metodo utilizado parafechar o sistema +Pop.
+	 * Metodo utilizado parafechar o sistema +Pop.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
 	 * @throws InfoUsuarioException: Excecao ancada caso algum usuario ainda esteja logado no sistema.
 	 */
 	public void fechaSistema() throws InfoUsuarioException {
@@ -164,7 +177,8 @@ public class Facade  {
 	}
 
 	/**
-	 * Metodo utilizado para criar um post no +Pop.
+	 * Metodo utilizado para criar um post no +Pop.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
 	 * @param mensagem: mensagem do post;
 	 * @param data: data do post;
 	 * @throws PostException: Excecao lancada caso a mensagem do Post apresente algum problema: hashtags
@@ -177,7 +191,8 @@ public class Facade  {
 	}
 
 	/**
-	 * Metodo utilizado para ver um determinado post criado no +Pop.
+	 * Metodo utilizado para ver um determinado post criado no +Pop. Chama o metodo de mesmo nome
+	 * que se encontra no Controller e retorna o retorno dele.
 	 * @param numeroPost: numero do Post que se deseja ver.
 	 * @return retorna um objeto do tipo Post com o conteudo do post.
 	 */
@@ -187,6 +202,7 @@ public class Facade  {
 
 	/**
 	 * Metodo utilizado para ver determinadas partes de um post. Ex: data e mensagem do post.
+	 * Chama o metodo de mesmo nome que se encontra no Controller e retorna o retorno dele.
 	 * @param atributo: parte do post que se deseja ver. Ex: data.
 	 * @param numeroPost: numero do post que possui as informacoes.
 	 * @return: retorna uma string com a informacao solicitada.
@@ -197,6 +213,7 @@ public class Facade  {
 
 	/**
 	 * Metodo utilizado para ver o conteudo de um post. Ex: arquivo e o texto do post sem as hashtags.
+	 * Chama o metodo de mesmo nome que se encontra no Controller e retorna o retorno dele.
 	 * @param indice: indice da lista de conteudos do post;
 	 * @param numeroPost: numero do post que possui as informacoes.
 	 * @return: retorna uma string com a informacao solicitada.
@@ -208,7 +225,8 @@ public class Facade  {
 	}
 
 	/**
-	 * Metodo utilizado para adicionar um amigo no +Pop.
+	 * Metodo utilizado para adicionar um amigo no +Pop.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
 	 * @param email: email do usuario que se deseja adicionar como amigo.
 	 */
 	public void adicionaAmigo(String email) {
@@ -216,7 +234,8 @@ public class Facade  {
 	}
 
 	/**
-	 * Metodo utilizado para ver quantidade de notificacoes do usuario.
+	 * Metodo utilizado para ver quantidade de notificacoes do usuario.Chama o metodo de mesmo nome
+	 * que se encontra no Controller e retorna o retorno dele.
 	 * @return: retorna quantidade de notificacoes do usuario.
 	 */
 	public int getNotificacoes() {
@@ -224,7 +243,8 @@ public class Facade  {
 	}
 
 	/**
-	 * Metodo utilizado para ver o conteudo das notificacoes do usuario.
+	 * Metodo utilizado para ver o conteudo das notificacoes do usuario.Chama o metodo de mesmo nome
+	 * que se encontra no Controller e retorna o retorno dele.
 	 * @return: retorna uma string com a notificacao.
 	 * @throws NotificacoesException: Excecao lancada caso o usuario ja tenha visto todas as notificacoes.
 	 */
@@ -233,7 +253,8 @@ public class Facade  {
 	}
 
 	/**
-	 * Metodo utilizado para um usuario aceitar ser amigo de outro usuario.
+	 * Metodo utilizado para um usuario aceitar ser amigo de outro usuario.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
 	 * @param email: email do usuario a ser adicionado.
 	 */
 	public void aceitaAmizade(String email) {
@@ -241,7 +262,8 @@ public class Facade  {
 	}
 
 	/**
-	 * Metodo utilizado para ver a quantidade de amigos de um usuario.
+	 * Metodo utilizado para ver a quantidade de amigos de um usuario.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
 	 * @return: retorna a quantidade de amigos de um usuario.
 	 */
 	public int getQtdAmigos() {
@@ -249,7 +271,8 @@ public class Facade  {
 	}
 
 	/**
-	 * Metodo utilizado para que um usuario rejeite ser amigo de outro usuario.
+	 * Metodo utilizado para que um usuario rejeite ser amigo de outro usuario.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
 	 * @param email: email do usuario que deseja recusar a amizade.
 	 * @throws UsuarioException: Excecao lancada caso deseje recusar a amizade de um usuario que
 	 * nao enviou solicitacao.
@@ -259,7 +282,8 @@ public class Facade  {
 	}
 
 	/**
-	 * Metodo utilizado para um usuario remover um amigo da lista de amigos.
+	 * Metodo utilizado para um usuario remover um amigo da lista de amigos.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
 	 * @param email: email do usuario que sera removido da lista de amigos.
 	 */
 	public void removeAmigo(String email) {
@@ -267,7 +291,8 @@ public class Facade  {
 	}
 
 	/**
-	 * Metodo utilizado para curtir um post de um amigo.
+	 * Metodo utilizado para curtir um post de um amigo.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
 	 * @param email: email do amigo a qual se deseja curtir o post;
 	 * @param numeroPost: numero do post a ser curtido.
 	 * @throws PostException: Excecao lancada caso numero do post nao exista.
@@ -277,7 +302,8 @@ public class Facade  {
 	}
 	
 	/**
-	 * Metodo utilizado para rejeitar um post de um amigo.
+	 * Metodo utilizado para rejeitar um post de um amigo.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
 	 * @param email: email do amigo a qual se deseja curtir o post;
 	 * @param numeroPost: numero do post a ser curtido.
 	 * @throws PostException: Excecao lancada caso numero do post nao exista.
@@ -289,7 +315,8 @@ public class Facade  {
 
 	/**
 	 * Metodo utilizado para ordenar a lista de usuarios mais populares e menos populares do +Pop,
-	 * baseado na quantidade de pops de cada um.
+	 * baseado na quantidade de pops de cada um.Chama o metodo de mesmo nome
+	 * que se encontra no Controller e retorna o retorno dele.
 	 * @return: Retorna uma string com os 3 usuarios mais populares e os 3 usuarios menos populares.
 	 */
 	public String atualizaRanking(){
@@ -298,7 +325,7 @@ public class Facade  {
 	
 	/**
 	 * Metodo utilizado para mostrar a popularidade de um usuario. Se ele é um usuario normal, celebridade pop
-	 * ou icone pop.
+	 * ou icone pop.Chama o metodo de mesmo nome que se encontra no Controller e retorna o retorno dele.
 	 * @return retorna a popularidade do usuario.
 	 */
 	public Popularidade getPopularidade(){
@@ -306,7 +333,8 @@ public class Facade  {
 	}
 	
 	/**
-	 * Metodo utilizado para adicionar pops ao usuario.
+	 * Metodo utilizado para adicionar pops ao usuario.Chama o metodo de mesmo nome
+	 * que se encontra no Controller.
 	 * @param pops: quantidade de pops a ser adicionado.
 	 */
 	public void adicionaPops(int pops){
@@ -314,7 +342,8 @@ public class Facade  {
 	}
 	
 	/**
-	 * Metodo utilizado para ver a quantidade de pops de um determinado usuario.
+	 * Metodo utilizado para ver a quantidade de pops de um determinado usuario.Chama o metodo de mesmo nome
+	 * que se encontra no Controller e retorna o retorno dele.
 	 * @param email: email do usuario.
 	 * @return: retorna a quantidade de pops.
 	 * @throws PopsException: Excecao lancada caso se deseje ver a quantidade de pops de um usuario, mas ele
@@ -325,7 +354,8 @@ public class Facade  {
 	}
 	
 	/**
-	 * Metodo utilizado para ver quantidade de pops de um post.
+	 * Metodo utilizado para ver quantidade de pops de um post.Chama o metodo de mesmo nome
+	 * que se encontra no Controller e retorna o retorno dele.
 	 * @param numeroPost: numero do post que se deseja ver a quantidade de pops.
 	 * @return: retorna a quantidade de pops do post.
 	 */
@@ -334,7 +364,8 @@ public class Facade  {
 	}
 	
 	/**
-	 * Metodo utilizado para ver a quantidade de curtidas de um post.
+	 * Metodo utilizado para ver a quantidade de curtidas de um post.Chama o metodo de mesmo nome
+	 * que se encontra no Controller e retorna o retorno dele.
 	 * @param numeroPost: numero do post que se deseja ver as curtidas.
 	 * @return: retorna o numero de curtidas do post.
 	 * @throws CurtidasException:Excecao lancada caso se deseje ver as curtidas de um post
@@ -345,7 +376,8 @@ public class Facade  {
 	}
 	
 	/**
-	 * Metodo utilizado para ver a quantidade de rejeicoes de um post.
+	 * Metodo utilizado para ver a quantidade de rejeicoes de um post.Chama o metodo de mesmo nome
+	 * que se encontra no Controller e retorna o retorno dele.
 	 * @param numeroPost: numero do post que se deseja ver as rejeicoes.
 	 * @return: retorna o numero de rejeicoes do post.
 	 * @throws CurtidasException:Excecao lancada caso se deseje ver as rejeicoes de um post
@@ -356,7 +388,8 @@ public class Facade  {
 	}
 	
 	/**
-	 * Metodo utilizado para ver a quantidade de pops do usuario que esta logado.
+	 * Metodo utilizado para ver a quantidade de pops do usuario que esta logado.Chama o metodo de mesmo nome
+	 * que se encontra no Controller e retorna o retorno dele.
 	 * @return : quantidade de pops.
 	 */
 	public int getPopsUsuario(){
@@ -364,7 +397,8 @@ public class Facade  {
 	}
 	
 	/**
-	 * Metodo utilizado para ordenar a lista de hashtags do +Pop.
+	 * Metodo utilizado para ordenar a lista de hashtags do +Pop. Chama o metodo de mesmo nome
+	 * que se encontra no Controller e retorna o retorno dele.
 	 * @return: uma string com as 3 hashtags mais populares e com as 3 hashtags menos populares.
 	 */
 	public String atualizaTrendingTopics(){
