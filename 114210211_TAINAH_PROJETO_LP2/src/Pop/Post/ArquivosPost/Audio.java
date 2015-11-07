@@ -3,6 +3,7 @@ package Pop.Post.ArquivosPost;
 
 /**
  * Classe herdada de arquivo. Cria arquivo do tipo audio.
+ * 
  * @author Tainah Emmanuele
  *
  */
@@ -15,6 +16,6 @@ public class Audio extends Arquivo {
 
 	@Override
 	public String toString() {
-		return "$arquivo_audio:"+super.toString();
+		return "$arquivo_audio:" + super.toString();
 	}
 }

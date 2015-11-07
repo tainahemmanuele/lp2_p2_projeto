@@ -1,7 +1,7 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Pop.Exceptions;
 
-public class UsuarioLogadoException extends UsuarioException{
+public class UsuarioLogadoException extends UsuarioException {
 
 	public UsuarioLogadoException(String string) {
 		super(string);

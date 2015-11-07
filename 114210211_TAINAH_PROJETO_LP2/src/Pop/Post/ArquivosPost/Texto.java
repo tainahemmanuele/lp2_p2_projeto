@@ -3,10 +3,11 @@ package Pop.Post.ArquivosPost;
 
 /**
  * Classe herdada de arquivo. Cria arquivo do tipo texto.
+ * 
  * @author Tainah Emmanuele
  *
  */
-public class Texto extends Arquivo{
+public class Texto extends Arquivo {
 
 	public Texto(String arquivo) {
 		super(arquivo);

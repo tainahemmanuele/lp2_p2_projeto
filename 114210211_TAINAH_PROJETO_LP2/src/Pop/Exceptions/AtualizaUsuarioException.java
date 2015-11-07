@@ -6,9 +6,9 @@ public class AtualizaUsuarioException extends UsuarioException {
 	public AtualizaUsuarioException(String string) {
 		super(string);
 	}
-	
+
 	public AtualizaUsuarioException(Exception e) {
-		super("Erro na atualizacao de perfil."+" "+e.getMessage());
+		super("Erro na atualizacao de perfil." + " " + e.getMessage());
 	}
 
 	public AtualizaUsuarioException() {

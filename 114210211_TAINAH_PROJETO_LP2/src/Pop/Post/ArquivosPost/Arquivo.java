@@ -5,12 +5,13 @@ import java.io.Serializable;
 
 /**
  * Classe criada com o objetivo de criar o arquivo do post.
+ * 
  * @author Tainah Emmanuele
  *
  */
-public abstract class Arquivo implements Serializable{
+public abstract class Arquivo implements Serializable {
 	private String arquivo;
-	
+
 	public Arquivo(String arquivo) {
 		this.arquivo = arquivo;
 	}
@@ -23,9 +24,5 @@ public abstract class Arquivo implements Serializable{
 	public String getArquivo() {
 		return arquivo;
 	}
-	
-	
-	
-	
 
 }

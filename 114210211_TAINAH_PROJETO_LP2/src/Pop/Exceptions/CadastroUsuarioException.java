@@ -8,9 +8,9 @@ public class CadastroUsuarioException extends UsuarioException {
 	}
 
 	public CadastroUsuarioException(Exception e) {
-		super("Erro no cadastro de Usuarios."+ " "+e.getMessage());
+		super("Erro no cadastro de Usuarios." + " " + e.getMessage());
 	}
-	
+
 	public CadastroUsuarioException() {
 		super("Falha no cadastro. tente novamente");
 	}

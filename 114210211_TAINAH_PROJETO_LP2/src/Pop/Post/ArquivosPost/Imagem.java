@@ -3,6 +3,7 @@ package Pop.Post.ArquivosPost;
 
 /**
  * Classe herdada de arquivo. Cria arquivo do tipo imagem.
+ * 
  * @author Tainah Emmanuele
  *
  */
@@ -12,9 +13,10 @@ public class Imagem extends Arquivo {
 		super(arquivo);
 		// TODO Auto-generated constructor stub
 	}
+
 	@Override
 	public String toString() {
-		return "$arquivo_imagem:"+super.toString();
+		return "$arquivo_imagem:" + super.toString();
 	}
 
 }

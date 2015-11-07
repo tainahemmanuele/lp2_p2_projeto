@@ -9,6 +9,7 @@ public class InfoUsuarioException extends PesquisaUsuarioException {
 	public InfoUsuarioException(Exception e) {
 		super(e.getMessage() + "Um usuarix ainda esta logadx.");
 	}
+
 	public InfoUsuarioException() {
 		super("A senha dx usuarix eh protegida.");
 	}
