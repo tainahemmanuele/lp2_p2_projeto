@@ -58,7 +58,7 @@ public class tagPost implements Comparable<tagPost> {
 	 
 	public int compareTo(tagPost tag){
 		if(Integer.compare(ocorrencia, tag.getOcorrencia())==0){
-			return -hashtag.compareTo(tag.hashtag);
+			return -hashtag.compareToIgnoreCase(tag.getHashtag());
 		}
 			return -Integer.compare(ocorrencia, tag.getOcorrencia());
 		

@@ -92,7 +92,7 @@ public class Mural {
 		return posts.get(numeroPost).getCurtidas();
 	}
 	
-	public int qtdRejeicoesDePost(int numeroPost)throws CurtidasException{
+	public int qtdRejeicoesDePost(int numeroPost) throws CurtidasException{
 		if(numeroPost>=posts.size()){
 			throw new CurtidasException("Post #"+numeroPost+" nao existe. Usuarix possui apenas "+ posts.size() +" post(s).");
 		}
