@@ -9,6 +9,11 @@ package Pop.Post.ArquivosPost;
  */
 public class Audio extends Arquivo {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6231570138459104706L;
+
 	public Audio(String arquivo) {
 		super(arquivo);
 		// TODO Auto-generated constructor stub

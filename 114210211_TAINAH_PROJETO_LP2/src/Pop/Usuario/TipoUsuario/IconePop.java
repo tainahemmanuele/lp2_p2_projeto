@@ -10,6 +10,10 @@ import Pop.Post.Post;
  *
  */
 public class IconePop implements Popularidade {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6582642118430981549L;
 	public static final int POP_PONTOS = 50;
 	public static final String HASHTAG_CURTIR = "#epicwin";
 	public static final String HASHTAG_DESCURTIR = "#epicfail";

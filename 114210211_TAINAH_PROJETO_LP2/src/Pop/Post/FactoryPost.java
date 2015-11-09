@@ -1,6 +1,7 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Pop.Post;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -20,7 +21,11 @@ import Util.FormataData;
  * @author Tainah Emmanuele
  *
  */
-public class FactoryPost {
+public class FactoryPost implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2897790101007602389L;
 	private ArrayList<Arquivo> conteudoPost;
 	private String mensagemPost;
 	private ArrayList<String> hashtags;

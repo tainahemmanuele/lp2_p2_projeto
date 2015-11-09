@@ -1,8 +1,13 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Pop;
 
-import Pop.Exceptions.AtualizaUsuarioException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
+import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.CurtidasException;
 import Pop.Exceptions.DataException;
@@ -211,6 +216,20 @@ public class Facade {
 	 * que se encontra no Controller.
 	 */
 	public void iniciaSistema() {
+		File diretorio = new File("SystemData");
+		diretorio.mkdir();
+		File arquivo = new File(diretorio, "Dados.dat");
+		try{
+		if(arquivo.createNewFile() == false) {
+			FileInputStream fluxoSaida = new FileInputStream(arquivo);
+			ObjectInputStream fluxoObjeto = new ObjectInputStream(fluxoSaida);
+			this.controller= (Controller) fluxoObjeto.readObject();
+			fluxoObjeto.close();
+			fluxoSaida.close();
+		}
+		}catch (Exception e){
+			e.getMessage();
+		}
 		controller.iniciaSistema();
 	}
 
@@ -219,10 +238,25 @@ public class Facade {
 	 * que se encontra no Controller.
 	 * 
 	 * @throws InfoUsuarioException
-	 *             : Excecao ancada caso algum usuario ainda esteja logado no
+	 *             : Excecao lancada caso algum usuario ainda esteja logado no
 	 *             sistema.
 	 */
 	public void fechaSistema() throws InfoUsuarioException {
+		File diretorio = new File("SystemData");
+		diretorio.mkdir();
+		File arquivo = new File(diretorio, "Dados.dat");
+		try{
+		arquivo.createNewFile();
+		FileOutputStream fluxoSaida = new FileOutputStream(arquivo);
+		ObjectOutputStream fluxoObjeto = new ObjectOutputStream(fluxoSaida);
+		fluxoObjeto.writeObject(controller);
+		fluxoObjeto.flush();
+		fluxoObjeto.close();
+		fluxoSaida.flush();
+		fluxoSaida.close();
+		}catch (Exception e){
+			e.getMessage();
+		}
 		controller.fechaSistema();
 	}
 
@@ -422,7 +456,7 @@ public class Facade {
 	}
 
 	/**
-	 * Metodo utilizado para mostrar a popularidade de um usuario. Se ele é um
+	 * Metodo utilizado para mostrar a popularidade de um usuario. Se ele ï¿½ um
 	 * usuario normal, celebridade pop ou icone pop.Chama o metodo de mesmo nome
 	 * que se encontra na classe Controller e retorna o retorno dele.
 	 * 

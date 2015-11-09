@@ -18,6 +18,10 @@ import Util.FormataData;
  *
  */
 public class Post implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8491555101033953415L;
 	private ArrayList<Arquivo> conteudoPost;
 	private String mensagemPost;
 	private LocalDateTime data;

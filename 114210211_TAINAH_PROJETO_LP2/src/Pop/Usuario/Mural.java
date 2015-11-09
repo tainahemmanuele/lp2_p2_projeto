@@ -31,6 +31,10 @@ import Util.FormataData;
  *
  */
 public class Mural implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3090356912365039204L;
 	private ArrayList<Post> posts;
 	private FactoryPost factory;
 	private Post post;

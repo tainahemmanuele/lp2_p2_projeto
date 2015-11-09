@@ -10,6 +10,10 @@ import java.io.Serializable;
  *
  */
 public abstract class Arquivo implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3770006331027554565L;
 	private String arquivo;
 
 	public Arquivo(String arquivo) {

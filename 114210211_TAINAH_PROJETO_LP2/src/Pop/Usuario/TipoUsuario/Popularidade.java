@@ -1,6 +1,8 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Pop.Usuario.TipoUsuario;
 
+import java.io.Serializable;
+
 import Pop.Post.Post;
 
 /**
@@ -10,7 +12,7 @@ import Pop.Post.Post;
  * @author Tainah Emmanuele
  *
  */
-public interface Popularidade {
+public interface Popularidade extends Serializable{
 
 	/**
 	 * Metodo que adiciona pops a um post.

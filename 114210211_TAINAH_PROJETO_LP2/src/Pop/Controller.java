@@ -39,6 +39,10 @@ import Util.Verificacao;
  *
  */
 public class Controller implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8751940697882850368L;
 	private Usuario usuarioLogado;
 	private ArrayList<Usuario> usuarios;
 	private boolean statusSistema;
@@ -731,7 +735,7 @@ public class Controller implements Serializable {
 	}
 
 	/**
-	 * Metodo utilizado para mostrar a popularidade de um usuario. Se ele é um
+	 * Metodo utilizado para mostrar a popularidade de um usuario. Se ele ï¿½ um
 	 * usuario normal, celebridade pop ou icone pop.Chama o metodo de mesmo nome
 	 * que se encontra na classe Usuario. Essa chamada de metodo so e possivel
 	 * se tiver um usuario logado no sistema.

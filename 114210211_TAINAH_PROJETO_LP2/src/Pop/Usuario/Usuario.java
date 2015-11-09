@@ -41,6 +41,10 @@ import Util.Verificacao;
  *
  */
 public class Usuario implements Comparable<Usuario>, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8126778503194560548L;
 	private String nome;
 	private String email;
 	private String senha;
@@ -578,7 +582,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	}
 
 	/**
-	 * Metodo utilizado para mostrar a popularidade de um usuario. Se ele é um
+	 * Metodo utilizado para mostrar a popularidade de um usuario. Se ele ï¿½ um
 	 * usuario normal, celebridade pop ou icone pop.
 	 * 
 	 * @return retorna a popularidade do usuario.
