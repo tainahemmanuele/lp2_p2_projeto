@@ -1,6 +1,7 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Util;
 
+import java.io.Serializable;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,7 +16,12 @@ import Pop.Exceptions.DataException;
  * @author Tainah Emmmanuele
  *
  */
-public class FormataData {
+public class FormataData implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2471976678046711251L;
 
 	/**
 	 * Construtor de FormataData.

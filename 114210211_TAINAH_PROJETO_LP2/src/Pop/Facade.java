@@ -228,7 +228,7 @@ public class Facade {
 			fluxoSaida.close();
 		}
 		}catch (Exception e){
-			e.getMessage();
+			e.printStackTrace();
 		}
 		controller.iniciaSistema();
 	}
@@ -255,7 +255,7 @@ public class Facade {
 		fluxoSaida.flush();
 		fluxoSaida.close();
 		}catch (Exception e){
-			e.getMessage();
+			e.printStackTrace();
 		}
 		controller.fechaSistema();
 	}
@@ -570,6 +570,10 @@ public class Facade {
 				"diretorio_testes/usecase_6.txt",
 				"diretorio_testes/usecase_7.txt" };
 		EasyAccept.main(args);
+		
+		/*Facade f = new Facade();
+		f.iniciaSistema();
+		System.out.println(f.atualizaRanking());*/
 
 	}
 }

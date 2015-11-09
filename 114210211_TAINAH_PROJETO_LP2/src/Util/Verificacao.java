@@ -1,6 +1,8 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Util;
 
+import java.io.Serializable;
+
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.InfoUsuarioException;
@@ -12,7 +14,12 @@ import Pop.Exceptions.InfoUsuarioException;
  * @author Tainah Emmanuele
  *
  */
-public class Verificacao {
+public class Verificacao implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5754735587308538903L;
+
 	/**
 	 * Construtor de Verificacao.
 	 */
