@@ -9,6 +9,8 @@ import Pop.tagPost;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
 import Pop.Post.ArquivosPost.Arquivo;
+import Pop.Post.ArquivosPost.Audio;
+import Pop.Post.ArquivosPost.Imagem;
 import Util.FormataData;
 
 /**
@@ -17,7 +19,7 @@ import Util.FormataData;
  * @author Tainah Emmanuele
  *
  */
-public class Post implements Serializable {
+public class Post implements Serializable, Comparable<Post> {
 	/**
 	 * 
 	 */
@@ -137,6 +139,23 @@ public class Post implements Serializable {
 		return mensagemPost + " " + hashtag() + " " + "(" + getData() + ")";
 	}
 
+	public String toStringExtra() {
+		final String QUEBRA_LINHA = System.getProperty("line.separator");
+		String imagem = "";
+		String audio = "";
+		for (int i = 1; i < getConteudoPost().size(); i++) {
+			if (getConteudoPost().get(i) instanceof Imagem) {
+				imagem += getConteudoPost().get(i).getArquivo()+QUEBRA_LINHA;
+			} else if (getConteudoPost().get(i) instanceof Audio) {
+				audio += getConteudoPost().get(i).getArquivo()+QUEBRA_LINHA;
+			}
+		}
+
+		return getData() + QUEBRA_LINHA + "Conteudo:" + QUEBRA_LINHA
+				+ mensagemPost + QUEBRA_LINHA + imagem + audio + hashtag().replace(',', ' ')+ QUEBRA_LINHA + "+Pop: "+ getPopularidade();
+
+	}
+
 	public int getCurtidas() {
 		return curtidas;
 	}
@@ -174,6 +193,11 @@ public class Post implements Serializable {
 			}
 		}
 		return false;
+	}
+
+	public int compareTo(Post post) {
+		return data.compareTo(post.getDataLocalDate());
+
 	}
 
 }

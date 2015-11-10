@@ -559,21 +559,28 @@ public class Facade {
 	public String atualizaTrendingTopics() {
 		return controller.atualizaTrendingTopics();
 	}
+	
+	public void exportarPost(){
+		controller.exportarPost();
+	}
 
 	public static void main(String[] args) throws UsuarioException,
 			LoginException {
-		args = new String[] { "Pop.Facade", "diretorio_testes/usecase_1.txt",
+		/*args = new String[] { "Pop.Facade", "diretorio_testes/usecase_1.txt",
 				"diretorio_testes/usecase_2.txt",
 				"diretorio_testes/usecase_3.txt",
 				"diretorio_testes/usecase_4.txt",
 				"diretorio_testes/usecase_5.txt",
 				"diretorio_testes/usecase_6.txt",
 				"diretorio_testes/usecase_7.txt" };
-		EasyAccept.main(args);
+		EasyAccept.main(args);*/
 		
-		/*Facade f = new Facade();
+		
+		Facade f = new Facade();
 		f.iniciaSistema();
-		System.out.println(f.atualizaRanking());*/
+		f.login("naza_foguete@hotmail.com", "belzinha");
+		f.exportarPost();
+
 
 	}
 }

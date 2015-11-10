@@ -1,6 +1,9 @@
 /* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Pop;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -834,5 +837,25 @@ public class Controller implements Serializable {
 	 */
 	public int getPopsUsuario() {
 		return usuarioLogado.getQuantidadePops();
+	}
+
+	public void exportarPost() {
+		final String QUEBRA_LINHA = System.getProperty("line.separator");
+		File arquivoPost = new File("SystemData/posts_"
+				+ usuarioLogado.getEmail());
+		try {
+			arquivoPost.createNewFile();
+			FileWriter escritaPost = new FileWriter(arquivoPost);
+			BufferedWriter buffer = new BufferedWriter(escritaPost);
+			for (int i = 0; i < usuarioLogado.getPosts().size(); i++) {
+				buffer.write("Post #" + (i+1)+" "+ usuarioLogado.getPosts().get(i).toStringExtra()+QUEBRA_LINHA); 
+
+			}
+			buffer.close();
+			escritaPost.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

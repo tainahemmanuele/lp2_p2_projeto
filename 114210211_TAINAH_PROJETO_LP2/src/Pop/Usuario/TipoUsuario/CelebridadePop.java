@@ -19,6 +19,7 @@ public class CelebridadePop implements Popularidade {
 	private static final long serialVersionUID = 1122802401371589508L;
 	public static final int POP_PONTOS = 25;
 	public static final int POP_PONTOS_EXTRA = 10;
+	public static final int POSTS_AMIGO =4;
 
 	/**
 	 * Construtor de CelebridadePop.

@@ -17,6 +17,7 @@ public class IconePop implements Popularidade {
 	public static final int POP_PONTOS = 50;
 	public static final String HASHTAG_CURTIR = "#epicwin";
 	public static final String HASHTAG_DESCURTIR = "#epicfail";
+	public static final int POSTS_AMIGO = 6;
 
 	/**
 	 * Construtor de IconePop.

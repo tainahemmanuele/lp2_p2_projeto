@@ -9,8 +9,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 import Pop.tagPost;
@@ -635,4 +637,11 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		return mural.qtdRejeicoesDePost(numeroPost);
 	}
 
+	public ArrayList<Post> getPosts(){
+		return mural.getPosts();
+	}
+	
+	public void atualizaFeed(){
+	
+	}
 }

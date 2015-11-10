@@ -15,6 +15,7 @@ public class Normal implements Popularidade {
 	 */
 	private static final long serialVersionUID = -5703924533061708691L;
 	public static final int POP_PONTOS = 10;
+	public static final int POSTS_AMIGO =2;
 
 	/**
 	 * Construtor de Normal.

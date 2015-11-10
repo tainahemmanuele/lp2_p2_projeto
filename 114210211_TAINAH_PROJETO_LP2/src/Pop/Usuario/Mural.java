@@ -194,4 +194,9 @@ public class Mural implements Serializable {
 		return posts.get(numeroPost).getRejeicoes();
 	}
 
+	public ArrayList<Post> getPosts() {
+		return posts;
+	}
+
+	
 }
