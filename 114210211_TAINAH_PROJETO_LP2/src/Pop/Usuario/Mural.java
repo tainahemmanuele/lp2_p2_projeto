@@ -2,25 +2,18 @@
 package Pop.Usuario;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.omg.Messaging.SyncScopeHelper;
+import java.time.LocalDateTime;
+
+import java.util.ArrayList;
+
 
 import Pop.Exceptions.CurtidasException;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
 import Pop.Post.FactoryPost;
 import Pop.Post.Post;
-import Pop.Post.ArquivosPost.Arquivo;
+
 import Util.FormataData;
 
 /**

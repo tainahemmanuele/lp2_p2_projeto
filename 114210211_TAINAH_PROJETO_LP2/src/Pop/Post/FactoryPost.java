@@ -5,14 +5,14 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import Pop.Controller;
+
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
 import Pop.Post.ArquivosPost.Arquivo;
 import Pop.Post.ArquivosPost.Audio;
 import Pop.Post.ArquivosPost.Imagem;
 import Pop.Post.ArquivosPost.Texto;
-import Util.FormataData;
+
 
 /**
  * Classe com o objetivo de fatorar o post, testar as hashtags, a data. Separar

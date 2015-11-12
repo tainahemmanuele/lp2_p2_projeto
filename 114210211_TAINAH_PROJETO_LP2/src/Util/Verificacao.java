@@ -3,8 +3,7 @@ package Util;
 
 import java.io.Serializable;
 
-import Pop.Exceptions.AtualizaUsuarioException;
-import Pop.Exceptions.CadastroUsuarioException;
+
 import Pop.Exceptions.InfoUsuarioException;
 
 /**

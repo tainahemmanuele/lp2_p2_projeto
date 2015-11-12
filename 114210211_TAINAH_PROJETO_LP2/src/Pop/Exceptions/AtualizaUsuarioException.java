@@ -3,6 +3,11 @@ package Pop.Exceptions;
 
 public class AtualizaUsuarioException extends UsuarioException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2603851502356007672L;
+
 	public AtualizaUsuarioException(String string) {
 		super(string);
 	}

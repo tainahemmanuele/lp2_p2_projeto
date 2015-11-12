@@ -3,6 +3,11 @@ package Pop.Exceptions;
 
 public class LogoutException extends LoginException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6943138484332579718L;
+
 	public LogoutException(String string) {
 		super(string);
 	}

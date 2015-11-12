@@ -5,12 +5,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Serializable;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+
 import java.util.Iterator;
-import java.util.List;
+
 
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
@@ -25,9 +25,7 @@ import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
 import Pop.Exceptions.PesquisaUsuarioException;
 import Pop.Exceptions.UsuarioLogadoException;
-import Pop.Post.FactoryPost;
 import Pop.Post.Post;
-import Pop.Post.ArquivosPost.Arquivo;
 import Pop.Usuario.Usuario;
 import Pop.Usuario.TipoUsuario.Popularidade;
 import Util.FormataData;
@@ -52,7 +50,7 @@ public class Controller implements Serializable {
 	private int contadorNotificacao;
 	private Verificacao verificacao;
 	private FormataData formataData;
-	private ArrayList<tagPost> hashtags;
+	private ArrayList<TagPost> hashtags;
 	private String usuariosMaisPopulares;
 	private String usuariosMenosPopulares;
 	private String hashtagsTop;
@@ -64,7 +62,7 @@ public class Controller implements Serializable {
 		this.usuarios = new ArrayList<Usuario>();
 		this.statusSistema = false;
 		this.usuarioLogado = null;
-		this.hashtags = new ArrayList<tagPost>();
+		this.hashtags = new ArrayList<TagPost>();
 		this.hashtagsTop = "Trending Topics: ";
 
 	}
@@ -75,7 +73,7 @@ public class Controller implements Serializable {
 	public void iniciaSistema() {
 		this.verificacao = new Verificacao();
 		this.formataData = new FormataData();
-		statusSistema = true;
+		this.statusSistema = true;
 
 	}
 
@@ -586,7 +584,7 @@ public class Controller implements Serializable {
 	 *             : Excecao lancada caso numero do post nao exista.
 	 */
 	public void curtirPost(String email, int numeroPost) throws PostException {
-		tagPost tag = usuarioLogado.curtirPost(email, numeroPost);
+		TagPost tag = usuarioLogado.curtirPost(email, numeroPost);
 		adicionaHashtag(tag);
 
 	}
@@ -605,7 +603,7 @@ public class Controller implements Serializable {
 	 *             : Excecao lancada caso numero do post nao exista.
 	 */
 	public void rejeitarPost(String email, int numeroPost) throws PostException {
-		tagPost tag = usuarioLogado.rejeitarPost(email, numeroPost);
+		TagPost tag = usuarioLogado.rejeitarPost(email, numeroPost);
 		adicionaHashtag(tag);
 
 	}
@@ -641,9 +639,9 @@ public class Controller implements Serializable {
 	private void adicionaHashtag() {
 		int ocorrencia = 1;
 		for (String hashtag : usuarioLogado.getHashtags()) {
-			tagPost tag = new tagPost(hashtag);
+			TagPost tag = new TagPost(hashtag);
 			if (hashtags.contains(tag)) {
-				for (tagPost tagAntiga : hashtags) {
+				for (TagPost tagAntiga : hashtags) {
 					if (tagAntiga.equals(tag)) {
 						tagAntiga.adicionaOcorrencia();
 					}
@@ -664,10 +662,10 @@ public class Controller implements Serializable {
 	 * @param tag
 	 *            : hashtag a ser adicionada na lista.
 	 */
-	private void adicionaHashtag(tagPost tag) {
+	private void adicionaHashtag(TagPost tag) {
 		if (tag != null) {
 			if (hashtags.contains(tag)) {
-				for (tagPost tagAntiga : hashtags) {
+				for (TagPost tagAntiga : hashtags) {
 					if (tagAntiga.equals(tag)) {
 						tagAntiga.adicionaOcorrencia();
 					}
@@ -733,7 +731,7 @@ public class Controller implements Serializable {
 	 * 
 	 * @return: retorna uma lista do tipo tagPost.
 	 */
-	public ArrayList<tagPost> getHashtags() {
+	public ArrayList<TagPost> getHashtags() {
 		return hashtags;
 	}
 
@@ -837,6 +835,23 @@ public class Controller implements Serializable {
 	 */
 	public int getPopsUsuario() {
 		return usuarioLogado.getQuantidadePops();
+	}
+	
+	public void atualizaFeed(){
+		usuarioLogado.atualizaFeed();
+	
+	}
+	
+	public void ordena(){
+		usuarioLogado.ordena();
+	}
+	
+	public void mudaOrdenacaoTempo(){
+		usuarioLogado.mudaOrdenacaoTempo();
+	}
+	
+	public void mudaOrdenacaoPopularidade(){
+		usuarioLogado.mudaOrdenacaoPopularidade();
 	}
 
 	public void exportarPost() {

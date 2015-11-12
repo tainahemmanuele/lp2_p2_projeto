@@ -2,7 +2,7 @@
 package Pop.Usuario.TipoUsuario;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 import Pop.Post.Post;
 

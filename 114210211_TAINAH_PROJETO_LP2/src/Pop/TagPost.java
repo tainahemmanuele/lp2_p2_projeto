@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Tainah Emmanuele
  *
  */
-public class tagPost implements Comparable<tagPost>, Serializable {
+public class TagPost implements Comparable<TagPost>, Serializable {
 	/**
 	 * 
 	 */
@@ -26,7 +26,7 @@ public class tagPost implements Comparable<tagPost>, Serializable {
 	 * @param hashtag
 	 *            : hashtag do post.
 	 */
-	public tagPost(String hashtag) {
+	public TagPost(String hashtag) {
 		this.hashtag = hashtag;
 		this.ocorrencia = 1;
 	}
@@ -61,9 +61,9 @@ public class tagPost implements Comparable<tagPost>, Serializable {
 	 * Equals de tagPost. Duas tags sao iguais se possuem a mesma String.
 	 */
 	public boolean equals(Object obj) {
-		if (obj instanceof tagPost) {
+		if (obj instanceof TagPost) {
 
-			tagPost tagPost = (tagPost) obj;
+			TagPost tagPost = (TagPost) obj;
 			if (tagPost.getHashtag().equals(this.getHashtag())) {
 				return true;
 
@@ -86,7 +86,7 @@ public class tagPost implements Comparable<tagPost>, Serializable {
 	 * ocorrencia de a for maior que a de b. Se as ocorrencias forem iguais, o
 	 * criterio de desempate e a hashtag (String) do objeto tagPost.
 	 */
-	public int compareTo(tagPost tag) {
+	public int compareTo(TagPost tag) {
 		if (Integer.compare(ocorrencia, tag.getOcorrencia()) == 0) {
 			return -hashtag.compareToIgnoreCase(tag.getHashtag());
 		}

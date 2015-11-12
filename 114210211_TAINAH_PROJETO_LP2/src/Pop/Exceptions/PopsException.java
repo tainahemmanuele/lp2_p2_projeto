@@ -3,6 +3,11 @@ package Pop.Exceptions;
 
 public class PopsException extends PostException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3392590179074847465L;
+
 	public PopsException(String string) {
 		super(string);
 	}

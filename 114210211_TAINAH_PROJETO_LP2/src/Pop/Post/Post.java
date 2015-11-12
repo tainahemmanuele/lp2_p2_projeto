@@ -5,13 +5,11 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import Pop.tagPost;
-import Pop.Exceptions.DataException;
-import Pop.Exceptions.PostException;
+
 import Pop.Post.ArquivosPost.Arquivo;
 import Pop.Post.ArquivosPost.Audio;
 import Pop.Post.ArquivosPost.Imagem;
-import Util.FormataData;
+
 
 /**
  * Classe criada com o objetivo de criar um objeto do tipo Post.

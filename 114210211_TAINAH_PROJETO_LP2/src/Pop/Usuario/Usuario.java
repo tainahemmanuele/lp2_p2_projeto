@@ -2,30 +2,20 @@
 package Pop.Usuario;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
 
-import Pop.tagPost;
-import Pop.Exceptions.AtualizaUsuarioException;
-import Pop.Exceptions.CadastroUsuarioException;
+
+
+import Pop.TagPost;
 import Pop.Exceptions.CurtidasException;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.InfoUsuarioException;
 import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PostException;
-import Pop.Exceptions.UsuarioException;
 import Pop.Post.Post;
-import Pop.Post.ArquivosPost.Arquivo;
+import Pop.Usuario.Feed.Feed;
 import Pop.Usuario.TipoUsuario.CelebridadePop;
 import Pop.Usuario.TipoUsuario.IconePop;
 import Pop.Usuario.TipoUsuario.Normal;
@@ -52,7 +42,6 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	private String senha;
 	private LocalDate dataNascimento;
 	private String imagem;
-	private String senhaAtual;
 	private Mural mural;
 	private ArrayList<Usuario> amigos;
 	private ArrayList<String> notificacoes;
@@ -63,6 +52,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	private int contadorNotificacoes;
 	private Popularidade popularidade;
 	private int quantidadePops;
+	private Feed feed;
 
 	/**
 	 * Contrutor usado para criar um usuario.
@@ -99,6 +89,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		this.contadorNotificacoes = 0;
 		this.popularidade = new Normal();
 		this.quantidadePops = 0;
+		this.feed = new Feed();
 
 	}
 
@@ -427,9 +418,9 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * @throws PostException
 	 *             : Excecao lancada caso numero do post nao exista.
 	 */
-	public tagPost curtirPost(String email, int numeroPost)
+	public TagPost curtirPost(String email, int numeroPost)
 			throws PostException {
-		tagPost tag = null;
+		TagPost tag = null;
 		for (Usuario amigo : amigos) {
 			if (amigo.getEmail().equals(email)) {
 				Post post = amigo.getPost(numeroPost);
@@ -439,7 +430,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 				amigo.adicionaNotificacao(nome + " curtiu seu post de "
 						+ amigo.getPost("Data", numeroPost) + ".");
 				if (post.getHashtags().size() > tamanhoLista) {
-					tag = new tagPost(post.getHashtags().get(
+					tag = new TagPost(post.getHashtags().get(
 							post.getHashtags().size() - 1));
 				}
 			}
@@ -459,9 +450,9 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * @throws PostException
 	 *             : Excecao lancada caso numero do post nao exista.
 	 */
-	public tagPost rejeitarPost(String email, int numeroPost)
+	public TagPost rejeitarPost(String email, int numeroPost)
 			throws PostException {
-		tagPost tag = null;
+		TagPost tag = null;
 		for (Usuario amigo : amigos) {
 			if (amigo.getEmail().equals(email)) {
 				Post post = amigo.getPost(numeroPost);
@@ -471,7 +462,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 				amigo.adicionaNotificacao(nome + " descurtiu seu post de "
 						+ amigo.getPost("Data", numeroPost) + ".");
 				if (post.getHashtags().size() > tamanhoLista) {
-					tag = new tagPost(post.getHashtags().get(0));
+					tag = new TagPost(post.getHashtags().get(0));
 				}
 			}
 		}
@@ -642,6 +633,19 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	}
 	
 	public void atualizaFeed(){
+		feed.atualiza(amigos);
 	
+	}
+	
+	public void ordena(){
+		feed.ordena();
+	}
+	
+	public void mudaOrdenacaoTempo(){
+		feed.ordenaTempo();
+	}
+	
+	public void mudaOrdenacaoPopularidade(){
+		feed.ordenaPopularidade();
 	}
 }

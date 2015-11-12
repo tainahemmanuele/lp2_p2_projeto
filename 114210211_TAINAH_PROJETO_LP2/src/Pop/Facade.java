@@ -7,8 +7,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import Pop.Exceptions.AtualizaUsuarioException;
-import Pop.Exceptions.CadastroUsuarioException;
+
 import Pop.Exceptions.CurtidasException;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.InfoUsuarioException;
@@ -18,9 +17,7 @@ import Pop.Exceptions.NotificacoesException;
 import Pop.Exceptions.PopsException;
 import Pop.Exceptions.PostException;
 import Pop.Exceptions.UsuarioException;
-import Pop.Exceptions.PesquisaUsuarioException;
 import Pop.Post.Post;
-import Pop.Post.ArquivosPost.Arquivo;
 import Pop.Usuario.TipoUsuario.Popularidade;
 import easyaccept.EasyAccept;
 
@@ -563,17 +560,34 @@ public class Facade {
 	public void exportarPost(){
 		controller.exportarPost();
 	}
+	
+	public void atualizaFeed(){
+		controller.atualizaFeed();
+	
+	}
+	
+	public void ordena(){
+		controller.ordena();
+	}
+	
+	public void mudaOrdenacaoTempo(){
+		controller.mudaOrdenacaoTempo();
+	}
+	
+	public void mudaOrdenacaoPopularidade(){
+		controller.mudaOrdenacaoPopularidade();
+	}
 
 	public static void main(String[] args) throws UsuarioException,
 			LoginException {
-		/*args = new String[] { "Pop.Facade", "diretorio_testes/usecase_1.txt",
+		args = new String[] { "Pop.Facade", "diretorio_testes/usecase_1.txt",
 				"diretorio_testes/usecase_2.txt",
 				"diretorio_testes/usecase_3.txt",
 				"diretorio_testes/usecase_4.txt",
 				"diretorio_testes/usecase_5.txt",
 				"diretorio_testes/usecase_6.txt",
 				"diretorio_testes/usecase_7.txt" };
-		EasyAccept.main(args);*/
+		EasyAccept.main(args);
 		
 		
 		Facade f = new Facade();
