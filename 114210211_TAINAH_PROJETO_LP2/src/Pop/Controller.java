@@ -854,17 +854,19 @@ public class Controller implements Serializable {
 		usuarioLogado.mudaOrdenacaoPopularidade();
 	}
 
-	public void exportarPost() {
+	public void baixaPosts() {
+		File diretorio = new File("arquivos");
+		diretorio.mkdir();
 		final String QUEBRA_LINHA = System.getProperty("line.separator");
-		File arquivoPost = new File("SystemData/posts_"
-				+ usuarioLogado.getEmail());
+		String quebraString =usuarioLogado.getEmail().replace(".","");
+		String nomeArquivo = quebraString.replace("@", "[at]");
+		File arquivoPost = new File(diretorio,"/posts_"+nomeArquivo+".txt");
 		try {
 			arquivoPost.createNewFile();
 			FileWriter escritaPost = new FileWriter(arquivoPost);
 			BufferedWriter buffer = new BufferedWriter(escritaPost);
 			for (int i = 0; i < usuarioLogado.getPosts().size(); i++) {
-				buffer.write("Post #" + (i+1)+" "+ usuarioLogado.getPosts().get(i).toStringExtra()+QUEBRA_LINHA); 
-
+				buffer.write("Post #" + (i+1)+" - "+ usuarioLogado.getPosts().get(i).toStringExtra()+QUEBRA_LINHA); 
 			}
 			buffer.close();
 			escritaPost.close();
@@ -872,5 +874,17 @@ public class Controller implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int getTotalPosts(){
+		return usuarioLogado.getTotalPosts();
+	}
+	
+	public Post getPostFeedNoticiasRecentes (int post){
+		return usuarioLogado.getPostFeedNoticiasRecentes(post);
+	}
+	
+	public Post getPostFeedNoticiasMaisPopulares (int post){
+		return usuarioLogado.getPostFeedNoticiasMaisPopulares(post);
 	}
 }

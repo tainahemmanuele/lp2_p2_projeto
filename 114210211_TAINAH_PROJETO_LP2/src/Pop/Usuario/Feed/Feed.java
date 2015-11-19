@@ -20,11 +20,11 @@ public class Feed implements Serializable {
 	OrdenaPost ordena;
 
 	public Feed() {
-		this.postAmigos = new ArrayList<Post>();
 		this.ordena = new OrdenaPostTempo();
 	}
 
 	public void atualiza(List<Usuario> amigos) {
+		this.postAmigos = new ArrayList<Post>();
 		for (Usuario amigo : amigos) {
 			Collections.sort(amigo.getPosts());
 			Collections.reverse(amigo.getPosts());
@@ -56,5 +56,26 @@ public class Feed implements Serializable {
 
 	public void ordena() {
 		this.ordena.ordenaListaFeed(postAmigos);
+	}
+	
+	public Post getPostFeedNoticiasRecentes (List<Usuario> amigos,int post){
+		atualiza(amigos);
+		ordenaTempo();
+		ordena();
+		return getPostAmigos().get(post);
+		
+	}
+
+	
+	public Post getPostFeedNoticiasMaisPopulares (List<Usuario> amigos,int post){
+		atualiza(amigos);
+		ordenaPopularidade();
+		ordena();
+		return getPostAmigos().get(post);
+		
+	}
+
+	public List<Post> getPostAmigos() {
+		return postAmigos;
 	}
 }

@@ -3,7 +3,9 @@ package Pop.Post;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
 
 
 import Pop.Post.ArquivosPost.Arquivo;
@@ -75,6 +77,7 @@ public class Post implements Serializable, Comparable<Post> {
 
 	}
 
+
 	public ArrayList<String> getHashtags() {
 		return hashtags;
 	}
@@ -121,10 +124,15 @@ public class Post implements Serializable, Comparable<Post> {
 	public String hashtag() {
 		String hashtagNova = "";
 		for (int i = 0; i < getHashtags().size(); i++) {
+			if(i == getHashtags().size()-1){
+				hashtagNova += getHashtags().get(i);
+				
+			}else{
 			hashtagNova += getHashtags().get(i) + " ";
+			}
 		}
 
-		return hashtagNova.substring(0, hashtagNova.length() - 1);
+		return hashtagNova;
 
 	}
 
@@ -149,7 +157,7 @@ public class Post implements Serializable, Comparable<Post> {
 			}
 		}
 
-		return getData() + QUEBRA_LINHA + "Conteudo:" + QUEBRA_LINHA
+		return getData()+ QUEBRA_LINHA + "Conteudo:" + QUEBRA_LINHA
 				+ mensagemPost + QUEBRA_LINHA + imagem + audio + hashtag().replace(',', ' ')+ QUEBRA_LINHA + "+Pop: "+ getPopularidade();
 
 	}

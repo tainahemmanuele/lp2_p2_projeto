@@ -15,7 +15,7 @@ public class OrdenaPostTempo implements OrdenaPost {
 	@Override
 	public void ordenaListaFeed(List<Post> posts) {
 		Collections.sort(posts);
-		Collections.reverse(posts);
+		
 	}
 
 }

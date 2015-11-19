@@ -191,5 +191,8 @@ public class Mural implements Serializable {
 		return posts;
 	}
 
+	public int getTotalPosts(){
+		return posts.size();
+	}
 	
 }

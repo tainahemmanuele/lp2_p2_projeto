@@ -342,7 +342,7 @@ public class Facade {
 	 * 
 	 * @return: retorna quantidade de notificacoes do usuario.
 	 */
-	public int getNotificacoes() {
+	public int getNotificacoes() throws NotificacoesException {
 		return controller.getNotificacoes();
 	}
 
@@ -557,8 +557,8 @@ public class Facade {
 		return controller.atualizaTrendingTopics();
 	}
 	
-	public void exportarPost(){
-		controller.exportarPost();
+	public void baixaPosts(){
+		controller.baixaPosts();
 	}
 	
 	public void atualizaFeed(){
@@ -577,23 +577,37 @@ public class Facade {
 	public void mudaOrdenacaoPopularidade(){
 		controller.mudaOrdenacaoPopularidade();
 	}
+	
+	public int getTotalPosts(){
+		return controller.getTotalPosts();
+	}
 
+	
+	public Post getPostFeedNoticiasRecentes (int post){
+		return controller.getPostFeedNoticiasRecentes(post);
+	
+	}
+	
+	public Post getPostFeedNoticiasMaisPopulares (int post){
+		return controller.getPostFeedNoticiasMaisPopulares(post);
+	}
 	public static void main(String[] args) throws UsuarioException,
 			LoginException {
-		args = new String[] { "Pop.Facade", "diretorio_testes/usecase_1.txt",
-				"diretorio_testes/usecase_2.txt",
-				"diretorio_testes/usecase_3.txt",
-				"diretorio_testes/usecase_4.txt",
-				"diretorio_testes/usecase_5.txt",
-				"diretorio_testes/usecase_6.txt",
-				"diretorio_testes/usecase_7.txt" };
+		args = new String[] { "Pop.Facade", "testes/usecase_1.txt",
+				"testes/usecase_2.txt",
+				"testes/usecase_3.txt",
+				"testes/usecase_4.txt",
+				"testes/usecase_5.txt",
+				"testes/usecase_6.txt",
+				"testes/usecase_7.txt","testes/usecase_8.txt" ,"testes/usecase_9.txt", 
+				"testes/usecase_10.txt" };
 		EasyAccept.main(args);
 		
 		
-		Facade f = new Facade();
+		/*Facade f = new Facade();
 		f.iniciaSistema();
 		f.login("naza_foguete@hotmail.com", "belzinha");
-		f.exportarPost();
+		f.exportarPost();*/
 
 
 	}

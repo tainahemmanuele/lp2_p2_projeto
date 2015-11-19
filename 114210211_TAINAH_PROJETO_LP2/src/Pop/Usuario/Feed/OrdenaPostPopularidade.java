@@ -18,11 +18,15 @@ public class OrdenaPostPopularidade implements OrdenaPost{
 		Collections.sort(posts, new Comparator<Post>(){
 			@Override
 			public int compare(Post post1, Post post2) {
-				return Integer.compare(post1.getPopularidade(),post2.getPopularidade());
+				int valor = Integer.compare(post1.getPopularidade(),post2.getPopularidade());
+				if (valor==0){
+					return -1;
+				}else{
+				return valor;
 			}
-		});
-		Collections.reverse(posts);
+		}
 		
+	});
 	}
 
 }

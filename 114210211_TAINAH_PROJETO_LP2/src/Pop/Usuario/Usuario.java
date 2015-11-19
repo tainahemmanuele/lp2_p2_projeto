@@ -8,6 +8,8 @@ import java.util.Iterator;
 
 
 
+import java.util.List;
+
 import Pop.TagPost;
 import Pop.Exceptions.CurtidasException;
 import Pop.Exceptions.DataException;
@@ -648,4 +650,19 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	public void mudaOrdenacaoPopularidade(){
 		feed.ordenaPopularidade();
 	}
+	
+	public int getTotalPosts(){
+		return mural.getTotalPosts();
+	}
+	
+	
+	public Post getPostFeedNoticiasRecentes (int post){
+		return feed.getPostFeedNoticiasRecentes(amigos, post);
+
+	}
+	
+	public Post getPostFeedNoticiasMaisPopulares (int post){
+		return feed.getPostFeedNoticiasMaisPopulares(amigos, post);
+	}
+
 }
