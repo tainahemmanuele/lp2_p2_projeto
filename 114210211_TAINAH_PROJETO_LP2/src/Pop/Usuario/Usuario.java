@@ -6,8 +6,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
-
 import java.util.List;
 
 import Pop.TagPost;
@@ -274,17 +272,11 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 *            : lista com os usuarios.
 	 */
 	public void NotificacaoAmizade(String emailUsuario, Usuario usuarioLogado,
-			ArrayList<Usuario> usuarios) {
+			Usuario amigo) {
 		String novaNotificacao = "";
-		for (Usuario usuario : usuarios) {
-			if (usuario.getEmail().equals(emailUsuario)) {
-				novaNotificacao += usuarioLogado.getNome()
-						+ " quer sua amizade.";
-				usuario.adicionaNotificacao(novaNotificacao);
-				usuario.adicionaEmail(usuarioLogado);
-
-			}
-		}
+		novaNotificacao += usuarioLogado.getNome() + " quer sua amizade.";
+		amigo.adicionaNotificacao(novaNotificacao);
+		amigo.adicionaEmail(usuarioLogado);
 
 	}
 
@@ -310,7 +302,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		for (String notificacao : notificacoes) {
 			if (notificacoes.size() >= 2) {
 				novaNotificacao = notificacoes.get(contadorNotificacoes);
-				if(contadorNotificacoes==notificacoes.size()-1){
+				if (contadorNotificacoes == notificacoes.size() - 1) {
 					limpaNotificacoes();
 				}
 				contadorNotificacoes += 1;
@@ -580,7 +572,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	}
 
 	/**
-	 * Metodo utilizado para mostrar a popularidade de um usuario. Se ele � um
+	 * Metodo utilizado para mostrar a popularidade de um usuario. Se ele e um
 	 * usuario normal, celebridade pop ou icone pop.
 	 * 
 	 * @return retorna a popularidade do usuario.
@@ -633,38 +625,50 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		return mural.qtdRejeicoesDePost(numeroPost);
 	}
 
-	public ArrayList<Post> getPosts(){
+	/**
+	 * Metodo que permite que o usuario acesse sua lista de posts.
+	 * 
+	 * @return: lista de posts.
+	 */
+	public ArrayList<Post> getPosts() {
 		return mural.getPosts();
 	}
-	
-	public void atualizaFeed(){
-		feed.atualiza(amigos);
-	
-	}
-	
-	public void ordena(){
-		feed.ordena();
-	}
-	
-	public void mudaOrdenacaoTempo(){
-		feed.ordenaTempo();
-	}
-	
-	public void mudaOrdenacaoPopularidade(){
-		feed.ordenaPopularidade();
-	}
-	
-	public int getTotalPosts(){
+
+	/**
+	 * Metodo utilizado para que um usuario veja a quantidade de posts que
+	 * possui.Chama o metodo de mesmo nome que se encontra na classe Mural.
+	 * 
+	 * @return: Quantidade de posts que o usuario possui.
+	 */
+	public int getTotalPosts() {
 		return mural.getTotalPosts();
 	}
-	
-	
-	public Post getPostFeedNoticiasRecentes (int post){
+
+	/**
+	 * Retorna um post da lista de posts dos amigos do usuario,com base na
+	 * ordenacao por tempo. Chama o metodo de mesmo nome que se encontra
+	 * na classe Feed.
+	 * 
+	 * @param post
+	 *            : numero do post que o usuario quer ver.
+	 * @return: post.
+	 */
+
+	public Post getPostFeedNoticiasRecentes(int post) {
 		return feed.getPostFeedNoticiasRecentes(amigos, post);
 
 	}
-	
-	public Post getPostFeedNoticiasMaisPopulares (int post){
+
+	/**
+	 * Retorna um post da lista de posts dos amigos do usuario,com base na
+	 * ordenacao por popularidade.Chama o metodo de mesmo nome que se encontra
+	 * na classe Feed.
+	 * 
+	 * @param post
+	 *            : numero do post que o usuario quer ver.
+	 * @return: post.
+	 */
+	public Post getPostFeedNoticiasMaisPopulares(int post) {
 		return feed.getPostFeedNoticiasMaisPopulares(amigos, post);
 	}
 

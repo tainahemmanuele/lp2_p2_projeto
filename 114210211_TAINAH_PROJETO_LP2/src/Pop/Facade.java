@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-
 import Pop.Exceptions.CurtidasException;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.InfoUsuarioException;
@@ -216,15 +215,16 @@ public class Facade {
 		File diretorio = new File("SystemData");
 		diretorio.mkdir();
 		File arquivo = new File(diretorio, "Dados.dat");
-		try{
-		if(arquivo.createNewFile() == false) {
-			FileInputStream fluxoSaida = new FileInputStream(arquivo);
-			ObjectInputStream fluxoObjeto = new ObjectInputStream(fluxoSaida);
-			this.controller= (Controller) fluxoObjeto.readObject();
-			fluxoObjeto.close();
-			fluxoSaida.close();
-		}
-		}catch (Exception e){
+		try {
+			if (arquivo.createNewFile() == false) {
+				FileInputStream fluxoSaida = new FileInputStream(arquivo);
+				ObjectInputStream fluxoObjeto = new ObjectInputStream(
+						fluxoSaida);
+				this.controller = (Controller) fluxoObjeto.readObject();
+				fluxoObjeto.close();
+				fluxoSaida.close();
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		controller.iniciaSistema();
@@ -242,16 +242,16 @@ public class Facade {
 		File diretorio = new File("SystemData");
 		diretorio.mkdir();
 		File arquivo = new File(diretorio, "Dados.dat");
-		try{
-		arquivo.createNewFile();
-		FileOutputStream fluxoSaida = new FileOutputStream(arquivo);
-		ObjectOutputStream fluxoObjeto = new ObjectOutputStream(fluxoSaida);
-		fluxoObjeto.writeObject(controller);
-		fluxoObjeto.flush();
-		fluxoObjeto.close();
-		fluxoSaida.flush();
-		fluxoSaida.close();
-		}catch (Exception e){
+		try {
+			arquivo.createNewFile();
+			FileOutputStream fluxoSaida = new FileOutputStream(arquivo);
+			ObjectOutputStream fluxoObjeto = new ObjectOutputStream(fluxoSaida);
+			fluxoObjeto.writeObject(controller);
+			fluxoObjeto.flush();
+			fluxoObjeto.close();
+			fluxoSaida.flush();
+			fluxoSaida.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		controller.fechaSistema();
@@ -556,59 +556,65 @@ public class Facade {
 	public String atualizaTrendingTopics() {
 		return controller.atualizaTrendingTopics();
 	}
-	
-	public void baixaPosts() throws PostException{
+
+	/**
+	 * Metodo utilizado para que um usuario salve seus posts em um arquivo.
+	 * Chama o metodo de mesmo nome que se encontra na classe Controller.
+	 * 
+	 * @throws PostException
+	 *             : Excecao lancada caso o usuario nao tenha posts.
+	 */
+	public void baixaPosts() throws PostException {
 		controller.baixaPosts();
 	}
-	
-	public void atualizaFeed(){
-		controller.atualizaFeed();
-	
-	}
-	
-	public void ordena(){
-		controller.ordena();
-	}
-	
-	public void mudaOrdenacaoTempo(){
-		controller.mudaOrdenacaoTempo();
-	}
-	
-	public void mudaOrdenacaoPopularidade(){
-		controller.mudaOrdenacaoPopularidade();
-	}
-	
-	public int getTotalPosts(){
+
+	/**
+	 * Metodo utilizado para que um usuario veja a quantidade de posts que
+	 * possui. Chama o metodo de mesmo nome que se encontra na classe
+	 * Controller.
+	 * 
+	 * @return: Quantidade de posts que o usuario possui.
+	 */
+	public int getTotalPosts() {
 		return controller.getTotalPosts();
 	}
 
-	
-	public Post getPostFeedNoticiasRecentes (int post){
+	/**
+	 * Retorna um post da lista de posts dos amigos do usuario,com base na
+	 * ordenacao por tempo. Chama o metodo de mesmo nome que se encontra na
+	 * classe Controller.
+	 * 
+	 * @param post
+	 *            : numero do post que o usuario quer ver.
+	 * @return: post.
+	 */
+	public Post getPostFeedNoticiasRecentes(int post) {
 		return controller.getPostFeedNoticiasRecentes(post);
-	
+
 	}
-	
-	public Post getPostFeedNoticiasMaisPopulares (int post){
+
+	/**
+	 * Retorna um post da lista de posts dos amigos do usuario,com base na
+	 * ordenacao por popularidade. Chama o metodo de mesmo nome que se encontra
+	 * na classe Controller.
+	 * 
+	 * @param post
+	 *            : numero do post que o usuario quer ver.
+	 * @return: post.
+	 */
+	public Post getPostFeedNoticiasMaisPopulares(int post) {
 		return controller.getPostFeedNoticiasMaisPopulares(post);
 	}
+
 	public static void main(String[] args) throws UsuarioException,
 			LoginException {
 		args = new String[] { "Pop.Facade", "testes/usecase_1.txt",
-				"testes/usecase_2.txt",
-				"testes/usecase_3.txt",
-				"testes/usecase_4.txt",
-				"testes/usecase_5.txt",
-				"testes/usecase_6.txt",
-				"testes/usecase_7.txt","testes/usecase_8.txt" ,"testes/usecase_9.txt", 
+				"testes/usecase_2.txt", "testes/usecase_3.txt",
+				"testes/usecase_4.txt", "testes/usecase_5.txt",
+				"testes/usecase_6.txt", "testes/usecase_7.txt",
+				"testes/usecase_8.txt", "testes/usecase_9.txt",
 				"testes/usecase_10.txt" };
 		EasyAccept.main(args);
-		
-		
-		/*Facade f = new Facade();
-		f.iniciaSistema();
-		f.login("naza_foguete@hotmail.com", "belzinha");
-		f.exportarPost();*/
-
 
 	}
 }

@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 
-
 import Pop.Exceptions.CurtidasException;
 import Pop.Exceptions.DataException;
 import Pop.Exceptions.PostException;
@@ -191,8 +190,14 @@ public class Mural implements Serializable {
 		return posts;
 	}
 
-	public int getTotalPosts(){
+	/**
+	 * Metodo utilizado para que um usuario veja a quantidade de posts que
+	 * possui.
+	 * 
+	 * @return: Quantidade de posts que o usuario possui.
+	 */
+	public int getTotalPosts() {
 		return posts.size();
 	}
-	
+
 }

@@ -11,7 +11,6 @@ import java.util.Collections;
 
 import java.util.Iterator;
 
-
 import Pop.Exceptions.AtualizaUsuarioException;
 import Pop.Exceptions.CadastroUsuarioException;
 import Pop.Exceptions.CurtidasException;
@@ -187,7 +186,7 @@ public class Controller implements Serializable {
 	 */
 	public void logout() throws LogoutException {
 		if (usuarioLogado != null) {
-			//usuarioLogado.limpaNotificacoes();
+			// usuarioLogado.limpaNotificacoes();
 			usuarioLogado.limpaEmail();
 			usuarioLogado = null;
 		} else {
@@ -444,7 +443,8 @@ public class Controller implements Serializable {
 	 *            : email do usuario que se deseja adicionar como amigo.
 	 */
 	public void adicionaAmigo(String email) {
-		usuarioLogado.NotificacaoAmizade(email, this.usuarioLogado, usuarios);
+		Usuario amigo = buscaUsuario(email);
+		usuarioLogado.NotificacaoAmizade(email, this.usuarioLogado, amigo);
 	}
 
 	/**
@@ -837,65 +837,82 @@ public class Controller implements Serializable {
 	public int getPopsUsuario() {
 		return usuarioLogado.getQuantidadePops();
 	}
-	
-	public void atualizaFeed(){
-		usuarioLogado.atualizaFeed();
-	
-	}
-	
-	public void ordena(){
-		usuarioLogado.ordena();
-	}
-	
-	public void mudaOrdenacaoTempo(){
-		usuarioLogado.mudaOrdenacaoTempo();
-	}
-	
-	public void mudaOrdenacaoPopularidade(){
-		usuarioLogado.mudaOrdenacaoPopularidade();
-	}
 
+	/**
+	 * Metodo utilizado para que um usuario salve seus posts em um arquivo.
+	 * 
+	 * @throws PostException
+	 *             : Excecao lancada caso o usuario nao tenha posts.
+	 */
 	public void baixaPosts() throws PostException {
-		if (usuarioLogado.getPosts().size() ==0){
-			throw new PostException("Erro ao baixar posts. O usuario nao possui posts.");
+		if (usuarioLogado.getPosts().size() == 0) {
+			throw new PostException(
+					"Erro ao baixar posts. O usuario nao possui posts.");
 		}
 		File diretorio = new File("arquivos");
 		diretorio.mkdir();
 		final String QUEBRA_LINHA = System.getProperty("line.separator");
-		String quebraString =usuarioLogado.getEmail().replace(".","");
+		String quebraString = usuarioLogado.getEmail().replace(".", "");
 		String nomeArquivo = quebraString.replace("@", "[at]");
-		File arquivoPost = new File(diretorio,"/posts_"+nomeArquivo+".txt");
+		File arquivoPost = new File(diretorio, "/posts_" + nomeArquivo + ".txt");
 
 		try {
 			arquivoPost.createNewFile();
 			FileWriter escritaPost = new FileWriter(arquivoPost);
 			BufferedWriter buffer = new BufferedWriter(escritaPost);
 			for (int i = 0; i < usuarioLogado.getPosts().size(); i++) {
-				if(i+1 == usuarioLogado.getPosts().size()){
-					buffer.write("Post #" + (i+1)+" - "+ usuarioLogado.getPosts().get(i).toStringExtra());
-				}else{
-				
-				buffer.write("Post #" + (i+1)+" - "+ usuarioLogado.getPosts().get(i).toStringExtra()+QUEBRA_LINHA+QUEBRA_LINHA+QUEBRA_LINHA); 
-				
-			}
+				if (i + 1 == usuarioLogado.getPosts().size()) {
+					buffer.write("Post #" + (i + 1) + " - "
+							+ usuarioLogado.getPosts().get(i).toStringExtra());
+				} else {
+
+					buffer.write("Post #" + (i + 1) + " - "
+							+ usuarioLogado.getPosts().get(i).toStringExtra()
+							+ QUEBRA_LINHA + QUEBRA_LINHA + QUEBRA_LINHA);
+
+				}
 			}
 			buffer.close();
 			escritaPost.close();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public int getTotalPosts(){
+
+	/**
+	 * Metodo utilizado para que um usuario veja a quantidade de posts que
+	 * possui. Chama o metodo de mesmo nome que se encontra na classe Usuario.
+	 * 
+	 * @return: Quantidade de posts que o usuario possui.
+	 */
+	public int getTotalPosts() {
 		return usuarioLogado.getTotalPosts();
 	}
-	
-	public Post getPostFeedNoticiasRecentes (int post){
+
+	/**
+	 * Retorna um post da lista de posts dos amigos do usuario,com base na
+	 * ordenacao por tempo. Chama o metodo de mesmo nome que se encontra na
+	 * classe Usuario.
+	 * 
+	 * @param post
+	 *            : numero do post quer o usuario que ver.
+	 * @return: post.
+	 */
+	public Post getPostFeedNoticiasRecentes(int post) {
 		return usuarioLogado.getPostFeedNoticiasRecentes(post);
 	}
-	
-	public Post getPostFeedNoticiasMaisPopulares (int post){
+
+	/**
+	 * Retorna um post da lista de posts dos amigos do usuario,com base na
+	 * ordenacao por popularidade. Chama o metodo de mesmo nome que se encontra
+	 * na classe Usuario.
+	 * 
+	 * @param post
+	 *            : numero do post quer o usuario que ver.
+	 * @return: post.
+	 */
+	public Post getPostFeedNoticiasMaisPopulares(int post) {
 		return usuarioLogado.getPostFeedNoticiasMaisPopulares(post);
 	}
 }

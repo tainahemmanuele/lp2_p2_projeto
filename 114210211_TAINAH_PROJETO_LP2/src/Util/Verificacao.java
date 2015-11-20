@@ -3,7 +3,6 @@ package Util;
 
 import java.io.Serializable;
 
-
 import Pop.Exceptions.InfoUsuarioException;
 
 /**
@@ -13,7 +12,7 @@ import Pop.Exceptions.InfoUsuarioException;
  * @author Tainah Emmanuele
  *
  */
-public class Verificacao implements Serializable{
+public class Verificacao implements Serializable {
 	/**
 	 * 
 	 */

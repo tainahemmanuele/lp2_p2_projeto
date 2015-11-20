@@ -3,17 +3,11 @@ package Pop.Post;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
-
-
-
 
 import Pop.Post.ArquivosPost.Arquivo;
 import Pop.Post.ArquivosPost.Audio;
 import Pop.Post.ArquivosPost.Imagem;
-
 
 /**
  * Classe criada com o objetivo de criar um objeto do tipo Post.
@@ -33,8 +27,6 @@ public class Post implements Serializable, Comparable<Post> {
 	private int popularidade;
 	private int curtidas;
 	private int rejeicoes;
-
-
 
 	/**
 	 * Construtor de Post.
@@ -81,12 +73,18 @@ public class Post implements Serializable, Comparable<Post> {
 
 	}
 
-
-	public String getDataExtra(){
+	/**
+	 * Metodo utilizado para mudar a formatacao da data do post.
+	 * 
+	 * @return: Data do post em nova formatacao.
+	 */
+	public String getDataExtra() {
 		String[] pedacosData = getData().split(" ");
-		String [] pedacos = pedacosData[0].split("-");
-		return pedacos[2]+"/"+pedacos[1]+"/"+pedacos[0]+" "+ pedacosData[1];
+		String[] pedacos = pedacosData[0].split("-");
+		return pedacos[2] + "/" + pedacos[1] + "/" + pedacos[0] + " "
+				+ pedacosData[1];
 	}
+
 	public ArrayList<String> getHashtags() {
 		return hashtags;
 	}
@@ -130,25 +128,31 @@ public class Post implements Serializable, Comparable<Post> {
 
 	}
 
+	/**
+	 * Metodo utilizado para retornar as hashtags em formato de String.
+	 * 
+	 * @return: Hashtags em formato de String.
+	 */
 	public String hashtag() {
 		String hashtagNova = "";
 		for (int i = 0; i < getHashtags().size(); i++) {
-			if(i == getHashtags().size()-1){
+			if (i == getHashtags().size() - 1) {
 				hashtagNova += getHashtags().get(i);
-				
-			}else{
-			hashtagNova += getHashtags().get(i) + " ";
+
+			} else {
+				hashtagNova += getHashtags().get(i) + " ";
 			}
 		}
 
 		return hashtagNova;
 
 	}
-	
-	public String textoPost(){
-		return getConteudoPost().get(0).toString();
-	}
 
+	/**
+	 * Metodo utilizado para ver a quantidade de pops de um post.
+	 * 
+	 * @return: Quantidade de pops de um post.
+	 */
 	public int getPopularidade() {
 		return popularidade;
 	}
@@ -158,35 +162,55 @@ public class Post implements Serializable, Comparable<Post> {
 		return mensagemPost + " " + hashtag() + " " + "(" + getData() + ")";
 	}
 
+	/**
+	 * toString utilizado para salvar o post em um arquivo.Retorna o post no
+	 * formato de String.
+	 * 
+	 * @return: Post formatado.
+	 */
 	public String toStringExtra() {
-		String post ="";
+		String post = "";
 		final String QUEBRA_LINHA = System.getProperty("line.separator");
 		String imagem = "";
 		String audio = "";
 		for (int i = 1; i < getConteudoPost().size(); i++) {
 			if (getConteudoPost().get(i) instanceof Imagem) {
-				imagem += "<imagem>"+getConteudoPost().get(i).getArquivo()+"</imagem>"+QUEBRA_LINHA;
+				imagem += "<imagem>" + getConteudoPost().get(i).getArquivo()
+						+ "</imagem>" + QUEBRA_LINHA;
 			} else if (getConteudoPost().get(i) instanceof Audio) {
-				audio += "<audio>"+ getConteudoPost().get(i).getArquivo()+"</audio>"+QUEBRA_LINHA;
+				audio += "<audio>" + getConteudoPost().get(i).getArquivo()
+						+ "</audio>" + QUEBRA_LINHA;
 			}
 		}
 
-		if (imagem.equals("") && audio.equals("") && hashtag().equals("")){
-			post =getDataExtra()+ QUEBRA_LINHA + "Conteudo:" + QUEBRA_LINHA
-					+ conteudoPost.get(0) + QUEBRA_LINHA + "+Pop: "+ getPopularidade() ;
-		}else{
-			post =getDataExtra()+ QUEBRA_LINHA + "Conteudo:" + QUEBRA_LINHA
-					+ conteudoPost.get(0) + QUEBRA_LINHA + imagem + audio + hashtag().replace(',', ' ') + QUEBRA_LINHA + "+Pop: "+ getPopularidade() ;
+		if (imagem.equals("") && audio.equals("") && hashtag().equals("")) {
+			post = getDataExtra() + QUEBRA_LINHA + "Conteudo:" + QUEBRA_LINHA
+					+ conteudoPost.get(0) + QUEBRA_LINHA + "+Pop: "
+					+ getPopularidade();
+		} else {
+			post = getDataExtra() + QUEBRA_LINHA + "Conteudo:" + QUEBRA_LINHA
+					+ conteudoPost.get(0) + QUEBRA_LINHA + imagem + audio
+					+ hashtag().replace(',', ' ') + QUEBRA_LINHA + "+Pop: "
+					+ getPopularidade();
 		}
 		return post;
 
-
 	}
 
+	/**
+	 * Metodo que retorna a quantidade de curtidas do post.
+	 * 
+	 * @return: quantidade de curtidas.
+	 */
 	public int getCurtidas() {
 		return curtidas;
 	}
 
+	/**
+	 * Metodo que retorna a quantidade de rejeicoes do post.
+	 * 
+	 * @return: quantidade de rejeicoes.
+	 */
 	public int getRejeicoes() {
 		return rejeicoes;
 	}
@@ -222,6 +246,10 @@ public class Post implements Serializable, Comparable<Post> {
 		return false;
 	}
 
+	/**
+	 * Metodo utilizado para comparar dois objetos do tipo Post. Um objeto Post
+	 * e maior do que o outro se for mais antigo do que o outro Post.
+	 */
 	public int compareTo(Post post) {
 		return data.compareTo(post.getDataLocalDate());
 

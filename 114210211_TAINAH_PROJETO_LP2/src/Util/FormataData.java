@@ -6,7 +6,6 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-
 import Pop.Exceptions.DataException;
 
 /**
@@ -49,7 +48,7 @@ public class FormataData implements Serializable {
 				int mes = Integer.valueOf(parteDaData[1]);
 				int ano = Integer.valueOf(parteDaData[2]);
 				LocalDate dataTemporaria = LocalDate.of(ano, mes, dia);
-				if (dia == 29 && mes ==2) {
+				if (dia == 29 && mes == 2) {
 					if (!(dataTemporaria.isLeapYear() && dia == 29 && mes == 2)) {
 						throw new DataException("Data nao existe.");
 					}

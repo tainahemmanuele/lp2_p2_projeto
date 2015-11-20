@@ -1,3 +1,4 @@
+/* 114210211 - Tainah Emmanuele Silva: Projeto : +Pop - Turma 3 */
 package Pop.Usuario.Feed;
 
 import java.io.Serializable;
@@ -11,18 +12,38 @@ import Pop.Usuario.TipoUsuario.CelebridadePop;
 import Pop.Usuario.TipoUsuario.IconePop;
 import Pop.Usuario.TipoUsuario.Normal;
 
+/**
+ * Classe criada com o objetivo de permitir que o usuario gerencie os posts dos
+ * seus amigos. Permite que a lista de posts dos amigos do usuario seja
+ * atualizada e ordenada de acordo com o tempo (data do post) ou com a
+ * popularidade do mesmo.
+ * 
+ * @author Tainah Emmanuele
+ *
+ */
 public class Feed implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2915614674606805591L;
-	List<Post> postAmigos;
-	OrdenaPost ordena;
+	private List<Post> postAmigos;
+	private OrdenaPost ordena;
 
+	/**
+	 * Construtor de Feed.
+	 */
 	public Feed() {
 		this.ordena = new OrdenaPostTempo();
 	}
 
+	/**
+	 * Metodo utilizado para atualizar a lista de posts de amigos do usuario. A
+	 * partir do tipo de usuario do amigo(Normal, IconePop, CelebridadePop), e
+	 * definida a quantidade de posts que o usuario pode ver do mesmo.
+	 * 
+	 * @param amigos
+	 *            :
+	 */
 	public void atualiza(List<Usuario> amigos) {
 		this.postAmigos = new ArrayList<Post>();
 		for (Usuario amigo : amigos) {
@@ -46,33 +67,57 @@ public class Feed implements Serializable {
 		}
 	}
 
+	/**
+	 * Metodo que atualiza a lista de posts dos amigos pelo tempo.
+	 */
 	public void ordenaTempo() {
 		this.ordena = new OrdenaPostTempo();
 	}
 
+	/**
+	 * Metodo que atualiza a lista de posts dos amigos pela popularidade.
+	 */
 	public void ordenaPopularidade() {
 		this.ordena = new OrdenaPostPopularidade();
 	}
 
+	/**
+	 * Metodo que ordena a lista de posts.
+	 */
 	public void ordena() {
 		this.ordena.ordenaListaFeed(postAmigos);
 	}
-	
-	public Post getPostFeedNoticiasRecentes (List<Usuario> amigos,int post){
+
+	/**
+	 * Retorna um post da lista de posts dos amigos do usuario,com base na
+	 * ordenacao por tempo.
+	 * 
+	 * @param post
+	 *            : numero do post quer o usuario que ver.
+	 * @return: post.
+	 */
+	public Post getPostFeedNoticiasRecentes(List<Usuario> amigos, int post) {
 		atualiza(amigos);
 		ordenaTempo();
 		ordena();
 		return getPostAmigos().get(post);
-		
+
 	}
 
-	
-	public Post getPostFeedNoticiasMaisPopulares (List<Usuario> amigos,int post){
+	/**
+	 * Retorna um post da lista de posts dos amigos do usuario,com base na
+	 * ordenacao por popularidade.
+	 * 
+	 * @param post
+	 *            : numero do post que o usuario quer ver.
+	 * @return: post.
+	 */
+	public Post getPostFeedNoticiasMaisPopulares(List<Usuario> amigos, int post) {
 		atualiza(amigos);
 		ordenaPopularidade();
 		ordena();
 		return getPostAmigos().get(post);
-		
+
 	}
 
 	public List<Post> getPostAmigos() {

@@ -12,7 +12,7 @@ import Pop.Post.Post;
  * @author Tainah Emmanuele
  *
  */
-public interface Popularidade extends Serializable{
+public interface Popularidade extends Serializable {
 
 	/**
 	 * Metodo que adiciona pops a um post.
