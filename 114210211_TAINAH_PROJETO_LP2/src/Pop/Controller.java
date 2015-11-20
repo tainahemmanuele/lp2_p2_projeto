@@ -854,19 +854,29 @@ public class Controller implements Serializable {
 		usuarioLogado.mudaOrdenacaoPopularidade();
 	}
 
-	public void baixaPosts() {
+	public void baixaPosts() throws PostException {
+		if (usuarioLogado.getPosts().size() ==0){
+			throw new PostException("Erro ao baixar posts. O usuario nao possui posts.");
+		}
 		File diretorio = new File("arquivos");
 		diretorio.mkdir();
 		final String QUEBRA_LINHA = System.getProperty("line.separator");
 		String quebraString =usuarioLogado.getEmail().replace(".","");
 		String nomeArquivo = quebraString.replace("@", "[at]");
 		File arquivoPost = new File(diretorio,"/posts_"+nomeArquivo+".txt");
+
 		try {
 			arquivoPost.createNewFile();
 			FileWriter escritaPost = new FileWriter(arquivoPost);
 			BufferedWriter buffer = new BufferedWriter(escritaPost);
 			for (int i = 0; i < usuarioLogado.getPosts().size(); i++) {
-				buffer.write("Post #" + (i+1)+" - "+ usuarioLogado.getPosts().get(i).toStringExtra()+QUEBRA_LINHA); 
+				if(i+1 == usuarioLogado.getPosts().size()){
+					buffer.write("Post #" + (i+1)+" - "+ usuarioLogado.getPosts().get(i).toStringExtra());
+				}else{
+				
+				buffer.write("Post #" + (i+1)+" - "+ usuarioLogado.getPosts().get(i).toStringExtra()+QUEBRA_LINHA+QUEBRA_LINHA+QUEBRA_LINHA); 
+				
+			}
 			}
 			buffer.close();
 			escritaPost.close();

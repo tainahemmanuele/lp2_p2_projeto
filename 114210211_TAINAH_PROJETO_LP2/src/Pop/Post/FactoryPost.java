@@ -146,10 +146,16 @@ public class FactoryPost implements Serializable{
 					mensagem.lastIndexOf(">") + 1);
 		}
 		if (mensagem.contains("#")) {
+			if (texto.equals("")){
+			texto = mensagem.substring(0, mensagem.indexOf(" #"));
+			}
 			hashtag = mensagem.substring(mensagem.indexOf("#"),
 					mensagem.length());
 			mensagemPost = mensagem.substring(0, mensagem.indexOf(" #"));
 		} else {
+			if (texto.equals("")){
+				texto = mensagem.substring(0, mensagem.length());
+				}
 			mensagemPost = mensagem.substring(0, mensagem.length());
 		}
 		this.hashtag = hashtag;

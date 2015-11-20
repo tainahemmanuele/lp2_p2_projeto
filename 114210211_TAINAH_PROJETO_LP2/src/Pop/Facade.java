@@ -557,7 +557,7 @@ public class Facade {
 		return controller.atualizaTrendingTopics();
 	}
 	
-	public void baixaPosts(){
+	public void baixaPosts() throws PostException{
 		controller.baixaPosts();
 	}
 	

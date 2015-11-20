@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 
 
+
+
 import Pop.Post.ArquivosPost.Arquivo;
 import Pop.Post.ArquivosPost.Audio;
 import Pop.Post.ArquivosPost.Imagem;
@@ -31,6 +33,8 @@ public class Post implements Serializable, Comparable<Post> {
 	private int popularidade;
 	private int curtidas;
 	private int rejeicoes;
+
+
 
 	/**
 	 * Construtor de Post.
@@ -78,6 +82,11 @@ public class Post implements Serializable, Comparable<Post> {
 	}
 
 
+	public String getDataExtra(){
+		String[] pedacosData = getData().split(" ");
+		String [] pedacos = pedacosData[0].split("-");
+		return pedacos[2]+"/"+pedacos[1]+"/"+pedacos[0]+" "+ pedacosData[1];
+	}
 	public ArrayList<String> getHashtags() {
 		return hashtags;
 	}
@@ -135,6 +144,10 @@ public class Post implements Serializable, Comparable<Post> {
 		return hashtagNova;
 
 	}
+	
+	public String textoPost(){
+		return getConteudoPost().get(0).toString();
+	}
 
 	public int getPopularidade() {
 		return popularidade;
@@ -146,19 +159,27 @@ public class Post implements Serializable, Comparable<Post> {
 	}
 
 	public String toStringExtra() {
+		String post ="";
 		final String QUEBRA_LINHA = System.getProperty("line.separator");
 		String imagem = "";
 		String audio = "";
 		for (int i = 1; i < getConteudoPost().size(); i++) {
 			if (getConteudoPost().get(i) instanceof Imagem) {
-				imagem += getConteudoPost().get(i).getArquivo()+QUEBRA_LINHA;
+				imagem += "<imagem>"+getConteudoPost().get(i).getArquivo()+"</imagem>"+QUEBRA_LINHA;
 			} else if (getConteudoPost().get(i) instanceof Audio) {
-				audio += getConteudoPost().get(i).getArquivo()+QUEBRA_LINHA;
+				audio += "<audio>"+ getConteudoPost().get(i).getArquivo()+"</audio>"+QUEBRA_LINHA;
 			}
 		}
 
-		return getData()+ QUEBRA_LINHA + "Conteudo:" + QUEBRA_LINHA
-				+ mensagemPost + QUEBRA_LINHA + imagem + audio + hashtag().replace(',', ' ')+ QUEBRA_LINHA + "+Pop: "+ getPopularidade();
+		if (imagem.equals("") && audio.equals("") && hashtag().equals("")){
+			post =getDataExtra()+ QUEBRA_LINHA + "Conteudo:" + QUEBRA_LINHA
+					+ conteudoPost.get(0) + QUEBRA_LINHA + "+Pop: "+ getPopularidade() ;
+		}else{
+			post =getDataExtra()+ QUEBRA_LINHA + "Conteudo:" + QUEBRA_LINHA
+					+ conteudoPost.get(0) + QUEBRA_LINHA + imagem + audio + hashtag().replace(',', ' ') + QUEBRA_LINHA + "+Pop: "+ getPopularidade() ;
+		}
+		return post;
+
 
 	}
 
