@@ -187,7 +187,7 @@ public class Controller implements Serializable {
 	 */
 	public void logout() throws LogoutException {
 		if (usuarioLogado != null) {
-			usuarioLogado.limpaNotificacoes();
+			//usuarioLogado.limpaNotificacoes();
 			usuarioLogado.limpaEmail();
 			usuarioLogado = null;
 		} else {
@@ -549,6 +549,7 @@ public class Controller implements Serializable {
 	 */
 	public String getNextNotificacao() throws NotificacoesException {
 		if (contadorNotificacao == getNotificacoes()) {
+			usuarioLogado.limpaNotificacoes();
 			throw new NotificacoesException();
 		} else {
 			contadorNotificacao += 1;

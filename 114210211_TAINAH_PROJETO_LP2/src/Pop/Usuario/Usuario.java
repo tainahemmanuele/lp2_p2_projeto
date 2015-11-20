@@ -310,6 +310,9 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		for (String notificacao : notificacoes) {
 			if (notificacoes.size() >= 2) {
 				novaNotificacao = notificacoes.get(contadorNotificacoes);
+				if(contadorNotificacoes==notificacoes.size()-1){
+					limpaNotificacoes();
+				}
 				contadorNotificacoes += 1;
 				return novaNotificacao;
 			} else {
